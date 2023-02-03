@@ -43,10 +43,10 @@ html
         //- logo + scripts + map
         div#logo-wrap
             -if (user)
-                a.logo-link.loggingIn(href="http://127.0.0.1:3000/userMenu")
+                a.logo-link.loggingIn(href="/userMenu")
                     div.logo-big(style=`background-image: url(/img/users/${user.logo})`)
             -else
-                a.logo-link(href="http://127.0.0.1:3000/login")    
+                a.logo-link(href="/login")    
                     div.logo-big(style=`background-image: url(/img/users/default.jpg)`)
         +scripts('axios.min', 'constants', 'login', 'leaflet', 'script', 'writeEdit', 'reset', 'userMenu', 'write', 'edit', 'preview','articles', 'leafletAddons')
         script(src="https://unpkg.com/leaflet@1.9.3/dist/leaflet.js" integrity="sha256-WBkoXOwTeyKclOHuWtc+i2uENFpDZ9YPdf5Hf+D7ewM=" crossorigin="")

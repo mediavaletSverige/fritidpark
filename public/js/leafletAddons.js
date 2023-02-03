@@ -55,12 +55,12 @@ function useMarker(page, type = null) {
 }
 
 // ARTICLES
-if (location.href !== 'http://127.0.0.1:3000/write' && !location.href.startsWith('http://127.0.0.1:3000/article/')) {
+if (location.href !== '/write' && !location.href.startsWith('/article/')) {
   const getArticles = async () => {
     try {
       const res = await axios({
         method: 'GET',
-        url: `http://127.0.0.1:3000/api/articles`,
+        url: `/api/articles`,
       });
 
       if (res.data.status === 'success') {
@@ -149,7 +149,7 @@ if (location.href !== 'http://127.0.0.1:3000/write' && !location.href.startsWith
 }
 
 // PREVIEW
-if (location.href === 'http://127.0.0.1:3000/write') {
+if (location.href === '/write') {
   navigator.geolocation.getCurrentPosition((e) => {
     const { latitude, longitude } = e.coords;
     const map = L.map('map').setView([latitude, longitude], 13);

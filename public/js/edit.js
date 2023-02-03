@@ -3,7 +3,7 @@
 const editForm = document.getElementById('writeForm');
 const editUserId = editForm.dataset.userid;
 
-if (window.location.href === 'http://127.0.0.1:3000/edit') {
+if (window.location.href === '/edit') {
   document.querySelector('#art_header').textContent = 'redigera artikel';
   document.querySelector('main').style.display = 'block';
   backFromMenu.textContent = '←';
@@ -31,7 +31,7 @@ if (window.location.href === 'http://127.0.0.1:3000/edit') {
     try {
       const res = await axios({
         method: 'GET',
-        url: `http://127.0.0.1:3000/api/articles/${articleId}`,
+        url: `/api/articles/${articleId}`,
       });
 
       if (res.data.status === 'success') {
@@ -154,7 +154,7 @@ if (window.location.href === 'http://127.0.0.1:3000/edit') {
             try {
               const res = await axios({
                 method: 'PATCH',
-                url: `http://127.0.0.1:3000/api/articles/${articleId}`,
+                url: `/api/articles/${articleId}`,
                 data,
               });
 
@@ -174,15 +174,12 @@ if (window.location.href === 'http://127.0.0.1:3000/edit') {
             try {
               const res = await axios({
                 method: 'PATCH',
-                url: `http://127.0.0.1:3000/api/articles/images/${articleId}`,
+                url: `/api/articles/images/${articleId}`,
                 editFormData,
               });
               if (res.data.status === 'success') {
                 console.log('Updating with Images');
-                setTimeout(
-                  () => (window.location.href = `http://127.0.0.1:3000/article/${localStorage.getItem('goToSlug')}`),
-                  2500
-                );
+                setTimeout(() => (window.location.href = `/article/${localStorage.getItem('goToSlug')}`), 2500);
               }
             } catch (e) {
               console.log(e.response.data.message);

@@ -6,7 +6,7 @@ const loginEmail = document.getElementById('form-email');
 const loginPassword = document.getElementById('form-password');
 const userLogo = document.querySelector('#logo-wrap .logo-big');
 
-if (window.location.href === 'http://127.0.0.1:3000/') {
+if (window.location.href === '/') {
   main.style.display = 'none';
 }
 
@@ -16,7 +16,7 @@ const login = async (email, password) => {
   try {
     const res = await axios({
       method: 'POST',
-      url: 'http://127.0.0.1:3000/api/users/login',
+      url: '/api/users/login',
       data: {
         email,
         password,
@@ -31,7 +31,7 @@ const login = async (email, password) => {
         </div>
       `;
       setTimeout(function () {
-        location.href = 'http://127.0.0.1:3000/articles';
+        location.href = '/articles';
       }, 2000);
     }
   } catch (e) {
@@ -40,7 +40,7 @@ const login = async (email, password) => {
         <h3 style="color: white; text-align: center; font-size: 2rem;">Försök igen!</h3>
       `;
     setTimeout(function () {
-      location.href = 'http://127.0.0.1:3000/login';
+      location.href = '/login';
     }, 2000);
   }
 };

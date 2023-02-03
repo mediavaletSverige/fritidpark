@@ -7,6 +7,8 @@ const mongoSanitize = require('express-mongo-sanitize');
 const xss = require('xss-clean');
 const hpp = require('hpp');
 const cookieParser = require('cookie-parser');
+const compression = require('compression');
+
 const articleRouter = require('./routes/articleRoutes');
 const userRouter = require('./routes/userRoutes');
 const reviewRouter = require('./routes/reviewRoutes');
@@ -58,6 +60,9 @@ app.use(hpp({ whitelist: ['h'] }));
 
 // Serving static files
 app.use(express.static(path.join(__dirname, 'public')));
+
+// COMPRESSES TEXT THAT IS SENT TO CLIENT
+app.use(compression());
 
 // 2) ROUTES
 

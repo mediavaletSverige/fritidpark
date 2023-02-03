@@ -4,43 +4,33 @@ const toUserMenu = document.querySelector('.loggingIn');
 const backFromMenu = document.querySelector('#art_btn p');
 const userMenuSubmit = document.querySelector('.userMenuSubmit');
 const userMenuSubmitButton = document.querySelector('.sparaKnapp');
-const userMenuPasswordCurrent = document.getElementById(
-  'userMenuPasswordCurrent'
-);
+const userMenuPasswordCurrent = document.getElementById('userMenuPasswordCurrent');
 const userMenuPassword = document.getElementById('userMenuPassword');
-const userMenuPasswordConfirm = document.getElementById(
-  'userMenuPasswordConfirm'
-);
+const userMenuPasswordConfirm = document.getElementById('userMenuPasswordConfirm');
 const userMenuLogo = document.getElementById('userMenuLogo');
 const userMenuLogoImg = document.querySelector('.logo-big.bytLogga');
 
 toUserMenu.addEventListener('click', function (e) {
   e.preventDefault();
-  window.location.href = 'http://127.0.0.1:3000/userMenu';
+  window.location.href = '/userMenu';
 });
 
 // Användarmeny gränssnitt + tillbakaknapp
 
-if (window.location.href === 'http://127.0.0.1:3000/userMenu') {
+if (window.location.href === '/userMenu') {
   document.querySelector('#art_header').textContent = 'användarmeny';
   document.querySelector('main').style.display = 'block';
   backFromMenu.textContent = '🖹';
-  backFromMenu.addEventListener(
-    'click',
-    () => (window.location.href = 'http://127.0.0.1:3000/articles')
-  );
+  backFromMenu.addEventListener('click', () => (window.location.href = '/articles'));
 }
 
 // Mina artiklar gränssnitt + tillbakaknapp
 
-if (window.location.href === 'http://127.0.0.1:3000/myArticles') {
+if (window.location.href === '/myArticles') {
   document.querySelector('#art_header').textContent = 'mina artiklar';
   document.querySelector('main').style.display = 'block';
   backFromMenu.textContent = '←';
-  backFromMenu.addEventListener(
-    'click',
-    () => (window.location.href = 'http://127.0.0.1:3000/userMenu')
-  );
+  backFromMenu.addEventListener('click', () => (window.location.href = '/userMenu'));
 }
 
 // Uppdatera namn, epost och lösenord
@@ -49,9 +39,7 @@ const updateUserData = async (data, type) => {
   try {
     const res = await axios({
       method: 'PATCH',
-      url: `http://127.0.0.1:3000/api/users/${
-        type === 'data' ? 'updateMe' : 'updateMyPassword'
-      }`,
+      url: `/api/users/${type === 'data' ? 'updateMe' : 'updateMyPassword'}`,
       data,
     });
 
@@ -62,7 +50,7 @@ const updateUserData = async (data, type) => {
         userMenuSubmitButton.textContent = `sparar${(dot += '.')}`;
       }, 250);
       setTimeout(function () {
-        location.href = 'http://127.0.0.1:3000/userMenu';
+        location.href = '/userMenu';
       }, 2000);
     }
   } catch (e) {
@@ -70,7 +58,7 @@ const updateUserData = async (data, type) => {
         <h3 style="color: black; text-align: center; font-size: 2rem;">${e.response.data.message}</h3>
       `;
     setTimeout(function () {
-      location.href = 'http://127.0.0.1:3000/userMenu';
+      location.href = '/userMenu';
     }, 2000);
   }
 };
@@ -102,8 +90,7 @@ userMenuSubmit.addEventListener('submit', function (e) {
     passwordConfirm.length === 0
   )
     updateUserData(userMenuForm, 'data');
-  else
-    updateUserData({ passwordCurrent, password, passwordConfirm }, 'password');
+  else updateUserData({ passwordCurrent, password, passwordConfirm }, 'password');
 });
 
 // Logga ut
@@ -111,21 +98,14 @@ userMenuSubmit.addEventListener('submit', function (e) {
 const logout = async () => {
   const res = await axios({
     method: 'GET',
-    url: 'http://127.0.0.1:3000/api/users/logout',
+    url: '/api/users/logout',
   });
   if (res.data.status === 'success') location.reload(true);
-  location.href = 'http://127.0.0.1:3000/';
+  location.href = '/';
 };
 
-document
-  .getElementById('loggingOutBtn')
-  .addEventListener('click', () => logout());
+document.getElementById('loggingOutBtn').addEventListener('click', () => logout());
 
 // Mina artiklar
 
-document
-  .querySelector('.toMyArticles')
-  .addEventListener(
-    'click',
-    () => (location.href = 'http://127.0.0.1:3000/myArticles')
-  );
+document.querySelector('.toMyArticles').addEventListener('click', () => (location.href = '/myArticles'));

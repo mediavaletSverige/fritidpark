@@ -3,11 +3,11 @@
 const writeForm = document.getElementById('writeForm');
 const writeUserId = writeForm.dataset.userid;
 
-if (window.location.href === 'http://127.0.0.1:3000/write') {
+if (window.location.href === '/write') {
   //localStorage.clear();
   document.querySelector('#art_header').textContent = 'nytt inlägg';
   backFromMenu.textContent = '🖹';
-  backFromMenu.addEventListener('click', () => (window.location.href = 'http://127.0.0.1:3000/articles'));
+  backFromMenu.addEventListener('click', () => (window.location.href = '/articles'));
 
   // CHECKS IF IMAGES HAS BEEN SWAPPED
 
@@ -60,7 +60,7 @@ if (window.location.href === 'http://127.0.0.1:3000/write') {
       try {
         const res = await axios({
           method: 'POST',
-          url: 'http://127.0.0.1:3000/api/articles',
+          url: '/api/articles',
           data,
         });
 
@@ -80,14 +80,11 @@ if (window.location.href === 'http://127.0.0.1:3000/write') {
         const articleId = await returnedDataId;
         const res = await axios({
           method: 'PATCH',
-          url: `http://127.0.0.1:3000/api/articles/images/${articleId}`,
+          url: `/api/articles/images/${articleId}`,
           data,
         });
         if (res.data.status === 'success') {
-          setTimeout(
-            () => (window.location.href = `http://127.0.0.1:3000/article/${localStorage.getItem('goToSlug')}`),
-            1500
-          );
+          setTimeout(() => (window.location.href = `/article/${localStorage.getItem('goToSlug')}`), 1500);
         }
       } catch (e) {
         console.log(res.status);

@@ -9,7 +9,7 @@ const localArticleImages = document.querySelectorAll('.pImg');
 let clickedDeleteButtonOnce = false;
 
 // GOES BACK TO ARTICLES WHEN CLICKING THE CLOSE BUTTON
-if (window.location.href === `http://127.0.0.1:3000/article/${articleSlug}`) {
+if (window.location.href === `/article/${articleSlug}`) {
   localStorage.setItem('coords', articleArticle.location.coordinates);
   add_button.forEach((button) =>
     button.addEventListener('click', function () {
@@ -43,7 +43,7 @@ if (artImg2.clientHeight < 100) {
 }
 
 // THIS CONDITION WILL ONLY WORK IF YOU ARE THE OWNER OF THE ARTICLE
-if (window.location.href === `http://127.0.0.1:3000/article/${articleSlug}` && articleOwner === read_art.dataset.user) {
+if (window.location.href === `/article/${articleSlug}` && articleOwner === read_art.dataset.user) {
   localStorage.clear();
 
   // STORES CRUCIAL VALES FOR EDITING ARTICLE
@@ -82,7 +82,7 @@ if (window.location.href === `http://127.0.0.1:3000/article/${articleSlug}` && a
 
   document.querySelector('.toEdit').addEventListener('click', function (e) {
     e.preventDefault();
-    window.location.href = 'http://127.0.0.1:3000/edit';
+    window.location.href = '/edit';
   });
 
   // DELETES ARTICLE IF YOU CLICK THE BUTTON TWICE
@@ -92,10 +92,10 @@ if (window.location.href === `http://127.0.0.1:3000/article/${articleSlug}` && a
         try {
           const res = await axios({
             method: 'DELETE',
-            url: `http://127.0.0.1:3000/api/articles/${localStorage.getItem('articleId')}`,
+            url: `/api/articles/${localStorage.getItem('articleId')}`,
           });
           console.log('Article is deleted!');
-          window.location.href = 'http://127.0.0.1:3000/myArticles';
+          window.location.href = '/myArticles';
         } catch (e) {
           console.log(e.message);
         }
@@ -118,14 +118,11 @@ if (window.location.href === `http://127.0.0.1:3000/article/${articleSlug}` && a
     try {
       const res = await axios({
         method: 'PATCH',
-        url: `http://127.0.0.1:3000/api/articles/privacy/${localStorage.getItem('articleId')}`,
+        url: `/api/articles/privacy/${localStorage.getItem('articleId')}`,
         data,
       });
       if (res.data.status === 'success') {
-        setTimeout(
-          () => (window.location.href = `http://127.0.0.1:3000/article/${localStorage.getItem('goToSlug')}`),
-          100
-        );
+        setTimeout(() => (window.location.href = `/article/${localStorage.getItem('goToSlug')}`), 100);
       }
     } catch (e) {
       console.log(e.message);
