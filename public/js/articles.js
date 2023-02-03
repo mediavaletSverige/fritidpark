@@ -9,7 +9,9 @@ const localArticleImages = document.querySelectorAll('.pImg');
 let clickedDeleteButtonOnce = false;
 
 // GOES BACK TO ARTICLES WHEN CLICKING THE CLOSE BUTTON
-if (window.location.href === `/article/${articleSlug}`) {
+if (
+  location.href === `${'http://127.0.0.1:3000' || 'https://dry-caverns-52406.herokuapp.com'}/article/${articleSlug}`
+) {
   localStorage.setItem('coords', articleArticle.location.coordinates);
   add_button.forEach((button) =>
     button.addEventListener('click', function () {

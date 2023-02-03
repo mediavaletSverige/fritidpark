@@ -55,7 +55,7 @@ function useMarker(page, type = null) {
 }
 
 // ARTICLES
-if (location.href !== '/write' && !location.href.startsWith('/article/')) {
+if (location.href !== '/write' && !location.href.includes('/article/')) {
   const getArticles = async () => {
     try {
       const res = await axios({
