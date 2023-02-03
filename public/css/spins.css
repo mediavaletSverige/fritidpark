@@ -1,0 +1,205 @@
+/* Article menu top */
+
+#article_menu-top-container {
+  width: 80%;
+  height: 5.5rem;
+  z-index: 2;
+  position: absolute;
+  display: flex;
+  justify-content: end;
+  left: 50%;
+  top: 5rem;
+  transform: translateX(-50%);
+  transition: 500ms all;
+}
+
+@media (max-width: 550px) {
+  #article_menu-top-container {
+    width: 95%;
+  }
+}
+
+@media (max-width: 800px) {
+  #article_menu-top-container {
+    top: 2.75rem;
+    opacity: 0;
+    pointer-events: none;
+    filter: grayscale(50%);
+  }
+}
+
+@media (max-height: 500px) {
+  #article_menu-top-container {
+    top: 5rem;
+    opacity: 100%;
+    pointer-events: visible;
+    filter: none;
+  }
+}
+
+#article_menu-top-container > #article_menu-top {
+  width: 15rem;
+  height: inherit;
+  background-color: var(--fritid-color);
+  border-radius: 0 0 1rem 1rem;
+  filter: drop-shadow(0 2px 1rem rgba(0, 0, 0, 0.75));
+  margin-right: 1.25rem;
+  display: flex;
+  justify-content: center;
+  align-items: end;
+  user-select: none;
+}
+
+@media (max-width: 550px) {
+  #article_menu-top-container > #article_menu-top {
+    width: 10rem;
+  }
+}
+
+@media (max-width: 450px) {
+  #article_menu-top-container > #article_menu-top {
+    transform: rotateY(180deg);
+    width: 5rem;
+  }
+}
+
+@media (max-width: 450px) {
+  #article_menu-top-container > #article_menu-top > p:last-of-type {
+    margin-right: 0;
+    margin-left: -0.25rem;
+  }
+}
+
+#article_menu-top-container > #article_menu-top:hover {
+  background-color: white;
+  color: var(--park-color);
+  cursor: pointer;
+}
+
+#article_menu-top-container > #article_menu-top:active {
+  background-color: rgb(236, 235, 235);
+  filter: drop-shadow(0 0.5px 1rem rgba(0, 0, 0, 0.25));
+  outline: 1px solid lightgray;
+  width: calc(15rem * 0.98);
+}
+
+@media (max-width: 550px) {
+  #article_menu-top-container > #article_menu-top:active {
+    width: calc(10rem * 0.98);
+  }
+}
+
+@media (max-width: 450px) {
+  #article_menu-top-container > #article_menu-top:active {
+    width: calc(5rem * 0.98);
+  }
+}
+
+#article_menu-top > p:first-of-type {
+  font-size: 1.5rem;
+  margin-bottom: 0.5rem;
+  font-weight: bold;
+}
+
+#article_menu-top > p:last-of-type {
+  font-size: 2.5rem;
+  margin-left: 1rem;
+  margin-bottom: -0.75rem;
+}
+
+/* Article menu bottom */
+
+#article_menu-bottom-container {
+  width: 10rem;
+  height: 5.5rem;
+  z-index: 2;
+  position: absolute;
+  bottom: 12rem;
+  transform: rotate(-90deg);
+  transition: 500ms height;
+  left: -6.5rem;
+  opacity: 0;
+  pointer-events: none;
+  filter: grayscale(50%);
+}
+
+@media (max-height: 500px) {
+  #article_menu-bottom-container {
+    display: none;
+  }
+}
+
+@media (max-width: 800px) {
+  #article_menu-bottom-container {
+    pointer-events: auto;
+    filter: none;
+    left: -4.75rem;
+    opacity: 100%;
+  }
+}
+
+@media (max-width: 550px) or (max-height: 700px) {
+  #article_menu-bottom-container {
+    left: -1.75rem;
+    width: 5rem;
+    height: calc(5.5rem * 0.5);
+    bottom: 11rem;
+  }
+}
+
+#article_menu-bottom-container > #article_menu-bottom {
+  width: inherit;
+  height: inherit;
+  background-color: var(--fritid-color);
+  border-radius: 0 0 1rem 1rem;
+  filter: drop-shadow(0 2px 1rem rgba(0, 0, 0, 0.75));
+  margin-right: 1.25rem;
+  display: flex;
+  justify-content: center;
+  align-items: end;
+  user-select: none;
+}
+
+@media (max-width: 550px) or (max-height: 700px) {
+  #article_menu-bottom-container > #article_menu-bottom > p:last-of-type {
+    margin-right: 0.65rem;
+  }
+}
+
+#article_menu-bottom-container > #article_menu-bottom:hover {
+  background-color: white;
+  color: var(--park-color);
+  cursor: pointer;
+}
+
+#article_menu-bottom-container > #article_menu-bottom:active {
+  background-color: rgb(236, 235, 235);
+  filter: drop-shadow(0 0.5px 1rem rgba(0, 0, 0, 0.25));
+  outline: 1px solid lightgray;
+  width: calc(10rem * 0.94);
+}
+
+@media (max-width: 550px) or (max-height: 700px) {
+  #article_menu-bottom-container > #article_menu-bottom:active {
+    width: 4.8rem;
+  }
+}
+
+#article_menu-bottom > p:first-of-type {
+  font-size: 1rem;
+  margin-bottom: 1rem;
+  font-weight: bold;
+}
+
+#article_menu-bottom > p:last-of-type {
+  font-size: 2.5rem;
+  margin-left: 0.5rem;
+  margin-bottom: -0.5rem;
+}
+
+@media (max-width: 550px) {
+  #article_menu-bottom > p:last-of-type {
+    margin-left: 0.5rem;
+    margin-bottom: -0.85rem;
+  }
+}

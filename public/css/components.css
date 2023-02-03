@@ -1,0 +1,127 @@
+:root {
+  --font-size: 15rem;
+  --font-color: white;
+  --fritid-color: #e9cbb0;
+  --park-color: #b2c29d;
+  --park-color-transparent: #b2c29dc0;
+  --bad-color: #90cccb;
+  --footer-header-width: 80%;
+  --header-components-margin-top: 2.75rem;
+}
+
+/* hide element */
+
+.hidden {
+  display: none;
+}
+
+/* centering element */
+
+.center {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* margin bottom 1rem */
+
+.mrg-bottom {
+  margin-bottom: 1rem !important;
+}
+
+/* margin left 1rem */
+
+.mrg-left {
+  margin-left: 1rem !important;
+}
+
+/* form inputs */
+
+.inp-style {
+  height: 3rem;
+  width: 100%;
+  font-size: 1.5rem;
+  border-radius: 1rem;
+  border: 2px solid rgba(211, 211, 211, 0.5);
+  padding: 0 2rem 0 1rem;
+}
+
+/* form input checkstyles */
+
+.chk-style {
+  appearance: none;
+  background: white;
+  height: 2rem;
+  width: 2rem !important;
+  border-radius: 50%;
+}
+
+/* labels */
+
+.lbl-style {
+  font-size: 2rem;
+  margin-inline: 1rem;
+}
+
+/* form textareas */
+
+.txt-style {
+  height: 7rem;
+  width: 100%;
+  font-size: 1.5rem;
+  border-radius: 1rem;
+  border: 2px solid rgba(211, 211, 211, 0.5);
+  padding: 0 2rem 0 1rem;
+  margin-bottom: 0.5rem;
+}
+
+/* buttons */
+
+.btn-style {
+  height: 3rem;
+  font-size: 1.25rem;
+  border-radius: 1rem;
+  border: 2px solid rgba(211, 211, 211, 0.5);
+  padding: 0 0.5rem 0 0.5rem;
+  text-align: center;
+  background: var(--park-color);
+  color: white;
+  font-weight: bold;
+}
+
+/* Main buttons */
+
+.main-btn {
+  flex-shrink: 0;
+  width: 3rem;
+  height: 3rem;
+  background-color: #eabc93;
+  filter: drop-shadow(0 0.5px 0.2rem rgba(0, 0, 0, 0.25));
+  border: 0.1px solid rgba(122, 122, 122, 0.5);
+  font-weight: bold;
+  transition: 750ms width height;
+  border-radius: 0.5rem;
+}
+
+.main-btn:hover {
+  background-color: white !important;
+  cursor: pointer;
+}
+
+.main-btn:hover > p {
+  color: var(--fritid-color) !important;
+}
+
+.main-btn:active {
+  filter: drop-shadow(0 0.1px 0.1rem rgba(0, 0, 0, 0.1));
+  outline: 1px solid lightgray;
+  transform: scale(0.95);
+}
+
+.main-btn > p {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  user-select: none;
+}

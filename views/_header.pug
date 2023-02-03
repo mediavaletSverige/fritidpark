@@ -1,0 +1,20 @@
+//- article menus
+
+div#article_menu-top-container
+    div#article_menu-top
+        p ANNONSER
+        p &#x2935
+        
+div#article_menu-bottom-container
+    div#article_menu-bottom
+        p ANNONSER
+        p &#x2935
+
+//- header
+div#header-wrap
+    header
+        if(user)
+            form#search_form
+                button &#9740
+                input(type='search' placeholder='sök artikel, tag eller geografiskt område...')
+            div.add_button: p.add_button_text &#215;

@@ -1,0 +1,14 @@
+extends base
+
+block content
+    div#read_art 
+        form#loginForm
+            dialog
+                input#form-email.inp-err.inp-style(type='email' placeholder="epost" pattern='[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$')
+                input#form-password.inp-err.inp-style(type='password' placeholder='lösenord')
+                div
+                    button.btn-style.btn-login-style Logga in
+                    button.btn-style.btn-login-style Skapa konto
+
+        
+    

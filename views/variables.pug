@@ -1,0 +1,9 @@
+//- Background for articles based on topic(s)
+
+- let f = 'rgba(233, 203, 176, 0.75)';
+- let p = 'rgba(178, 194, 157, 0.75)';
+- let b = 'rgba(144, 204, 203, 0.75)';
+- let F = article.topics.includes('fritid')
+- let P = article.topics.includes('park')
+- let B = article.topics.includes('bad') 
+- let backgroundTopic = F && !P && !B ? f : !F && P && !B ? p : !F && !P && B ? b : F && P && !B ? `linear-gradient(${f}, ${p})` : F && !P && B ? `linear-gradient(${f}, ${b})` : !F && P && B ? `linear-gradient(${p}, ${b})` : F && P && B ? `linear-gradient(${f}, ${p}, ${b})` : 'transparent'; 

@@ -1,0 +1,79 @@
+.commentsContainer {
+  display: flex;
+  min-height: 2rem;
+  width: 100%;
+  margin-bottom: 2rem;
+  gap: 4rem;
+  flex-wrap: wrap;
+  justify-content: center;
+  margin-bottom: 3rem;
+}
+
+.comment {
+  display: flex;
+  background-color: #fff;
+  padding: 1rem;
+  border-radius: 3rem;
+  min-width: 21.5rem;
+  max-width: 27.5rem;
+  min-height: 1rem;
+  margin: 2rem;
+  position: relative;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  color: darkgray;
+  font-size: 2rem;
+  flex-direction: column;
+}
+.comment:before,
+.comment:after {
+  content: '';
+  background-color: white;
+  border-radius: 50%;
+  display: block;
+  position: absolute;
+  z-index: -1;
+}
+
+.comment:before {
+  width: 6.4rem;
+  height: 6.4rem;
+  top: -1.2rem;
+  left: 2.8rem;
+  box-shadow: -5rem 3rem 0 -1.2rem white;
+}
+.comment:after {
+  z-index: -1;
+  bottom: -1rem;
+  right: 2.6rem;
+  width: 3rem;
+  height: 3rem;
+  box-shadow: 4rem -3.4rem 0 0 white, -2.8rem -0.6rem 0 -0.2rem white,
+    -2.4rem 1.7rem 0 -0.6rem yellow, -0.5rem 2.5rem 0 -1rem white;
+}
+
+.topCommentArea {
+  width: 100%;
+  font-size: 3rem;
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+}
+
+.topCommentArea-left {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.bottomCommentArea {
+  font-size: 3rem;
+  text-align: end;
+  margin-right: 1rem;
+  padding: 0.5rem 0 0.5rem 0;
+}
+
+.commentDot {
+  background-color: darkgray;
+}

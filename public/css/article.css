@@ -1,0 +1,22 @@
+.articleContainer {
+  padding: 2rem 2rem 7rem 2rem;
+  columns: 3 30rem;
+  column-rule: 0.2rem solid white;
+}
+
+figure {
+  column-span: all;
+  margin-top: 2rem;
+}
+
+.comment {
+  break-inside: before;
+}
+
+.articleTags {
+  column-span: all;
+}
+
+.articleLastHr {
+  column-span: all;
+}

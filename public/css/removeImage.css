@@ -1,0 +1,22 @@
+figure {
+  position: relative;
+}
+
+img + div {
+  position: absolute !important;
+  background-color: rgb(232, 156, 156) !important;
+  margin: unset !important;
+  width: 3rem !important;
+  height: 3rem !important;
+  top: 1rem;
+  right: 1rem;
+}
+
+img + div > p {
+  font-size: 2rem !important;
+  color: white !important;
+}
+
+.deleteButton:hover .deleteButtonText {
+  color: rgb(232, 156, 156) !important;
+}

@@ -1,0 +1,20 @@
+extends base
+
+block content
+    div#read_art  
+        section.card-container
+            each article in articles.filter(el => el.owner === user.id)
+                a.card(href=`/article/${article.slug}` style=`background-image: url("/img/articles/${article.img1}")`) 
+                    div.card_top
+                        div.card_top_left
+                            img#pLogga(src=`/img/users/user-${article.owner}.jpeg`)
+                            - const authorArr = article.author.split(' ')
+                            p#pSkribent=`${authorArr[0][0]}. ${authorArr[authorArr.length-1]}`
+                        div.card_top_right
+                            p#pTime=article.date.toLocaleString('sv-SE', {day: 'numeric', month: 'short', year: '2-digit'})
+                    div.card_bottom
+                        include variables
+                        h3(style=`background: ${backgroundTopic}`).card-rubrik=article.h
+                    
+                     
+                    

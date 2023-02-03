@@ -1,0 +1,39 @@
+div#write_art
+        -if (user?.role !== 'member' && user?.logo !== 'default.jpg')
+            form#writeForm(data-userId=user._id)
+                div#form_left
+                    button#btn-exchange-img.btn-style.hidden &#x21c4
+                    button#btn-file-new.btn-style Bild
+                    label(for='btn-file-old').lbl-style välj 1 eller 2 bilder
+                    input#btn-file-old.hidden(type='file' accept="image/*" multiple)
+                    input.inp-style(type='text' placeholder='skribent' name="author")
+                    input.inp-style(type='text' placeholder='koordinater' readonly name="location")
+                    input.inp-style(type='text' placeholder='rubrik' name="header")
+                    input#bildtext.inp-style(type='text' placeholder='bildtext 1' name="fig1")
+                    input#bildtext2.inp-style.hidden(type='text' placeholder='bildtext 2' name="fig2")  
+                    input#taggar.inp-err.inp-style.mrg-bottom(type='text' placeholder='taggar' name="tags")
+                    div#form_cat
+                        label(for='fritid-inp').lbl-style.center Fritid:
+                        input#fritid-inp.chk-style(type='checkbox')
+                        label(for='park-inp').lbl-style.center Park:
+                        input#park-inp.chk-style(type='checkbox')
+                        label(for='bad-inp').lbl-style.center bad:
+                        input#bad-inp.chk-style(type='checkbox')
+                                    
+                div#form_right
+                    textarea#citat.txt-style(placeholder='citat' name="q")
+                    textarea#p1.txt-style(placeholder='paragraf 1' name="p1")
+                    textarea#p2.txt-style(placeholder='paragraf 2' name="p2")
+                    textarea#p3.txt-style(placeholder='paragraf 3' name="p3")
+                    div
+                        button.btn-style Öppna
+                        button.btn-style(type='reset') Återställ
+                        button#spara.btn-style(disabled) Spara
+                        button#publicera.btn-style(type='submit' disabled) Publicera
+                    
+                div#preview
+
+        -if(user?.logo === 'default.jpg' && user?.role !== 'member')
+            h3 Ändra din logga innan du skapar ett inlägg
+        -if(user?.role === 'member')
+            h3 Det är endast skribenter som kan skapa inlägg

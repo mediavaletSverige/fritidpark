@@ -1,0 +1,44 @@
+extends base
+
+block content
+    div#read_art 
+        div.userMenuContainer
+            div.userMenuLeft
+                div
+                    div#loggingOutBtn
+                        p Logga
+                        p ut
+                div
+                    - if (user.role !== 'member')
+                        a.toMyArticles(href="#")
+                            div.minData
+                                p Mina artiklar
+                    a(href="#")
+                        div.minData
+                            p Mina kommentarer
+                    a(href="#")
+                        div.minData
+                            p Mitt abonnemang
+            div.userMenuRight
+                form.userMenuSubmit
+                    h3.userMenuHeaders Dina inställningar
+                    p Namn
+                    input#userMenuName.inp-style.um-inp-style(type="name" placeholder=user.name)
+                    p Epost
+                    input#userMenuEmail.inp-style.um-inp-style(type="email" placeholder=user.email)
+                    div.loggaSparaContainer
+                        div.andraLogga
+                            label(for='userMenuLogo')
+                                img.logo-big.bytLogga(src=`/img/users/${user.logo}`)
+                            input(type="file" accept="image/*" id="userMenuLogo" name="logo" hidden)
+                            label.andraLoggan(for='userMenuLogo') Ändra Logga
+                    hr
+                    h3.userMenuHeaders Byt lösenord
+                    p Befintligt lösenord
+                    input#userMenuPasswordCurrent.inp-style.um-inp-style(type="password" placeholder="********")
+                    p Nytt lösenord 
+                    input#userMenuPassword.inp-style.um-inp-style(type="password" placeholder="********")
+                    p Bekräfta lösenord
+                    input#userMenuPasswordConfirm.inp-style.um-inp-style(type="password" placeholder="********")
+                    div.sparaKnappContainer
+                        button(type='submit').sparaKnapp spara

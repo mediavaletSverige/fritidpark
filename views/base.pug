@@ -1,0 +1,54 @@
+mixin stylesheets(...files)
+    each file in files
+        link(rel='stylesheet' href=`/css/${file}.css`)
+
+mixin scripts(...files)
+    each file in files
+        script(src=`/js/${file}.js`)
+
+html  
+    head
+        link(rel="stylesheet" href="https://unpkg.com/leaflet@1.9.3/dist/leaflet.css" integrity="sha256-kLaT2GOSpHechhsozzB+flnD+zUyjE2LlfWPgU04xyI=" crossorigin="")
+        +stylesheets('components', 'leaflet', 'body', 'spins', 'header', 'main', 'preview', 'footer', 'card', 'comments', 'article', 'login', 'userMenu', 'removeImage')
+        link(rel='shortcut icon' type='image/svg' href='/img/images/fp_logo.svg')
+        meta(charset='UTF-8')
+        meta(name='viewport' content='width=device-width, initial-scale=1.0')
+        title Fritid & Park i Sverige | #{title}
+    body
+
+        //- article menus + header
+        include _header
+
+        //- article container + read and write sections
+        
+        main   
+            div#art_container 
+                div#art_header_container
+                    if(typeof article === 'undefined') 
+                        p#art_header Artiklar
+                    if(typeof article === 'object')
+                        p#art_header Artikel
+                    div#art_header_button.main-btn.mrg-left: p ?
+                if(typeof article === 'undefined')    
+                    div#art_btn.main-btn: p.center 🖌
+                if(typeof article === 'object')    
+                    a.toMyArticles2(href='#' style="color: inherit;")
+                        div#art_btn.main-btn: p.center &larr;
+          
+            block content 
+          
+        //- footer
+        include _footer
+        
+        //- logo + scripts + map
+        div#logo-wrap
+            -if (user)
+                a.logo-link.loggingIn(href="http://127.0.0.1:3000/userMenu")
+                    div.logo-big(style=`background-image: url(/img/users/${user.logo})`)
+            -else
+                a.logo-link(href="http://127.0.0.1:3000/login")    
+                    div.logo-big(style=`background-image: url(/img/users/default.jpg)`)
+        +scripts('axios.min', 'constants', 'login', 'leaflet', 'script', 'writeEdit', 'reset', 'userMenu', 'write', 'edit', 'preview','articles', 'leafletAddons')
+        script(src="https://unpkg.com/leaflet@1.9.3/dist/leaflet.js" integrity="sha256-WBkoXOwTeyKclOHuWtc+i2uENFpDZ9YPdf5Hf+D7ewM=" crossorigin="")
+        noscript Du behöver aktivera JavaScript för att få tillgång till sidan!
+        div#map    

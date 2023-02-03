@@ -1,0 +1,143 @@
+.userMenuContainer {
+  padding: 1rem 1rem 2rem 1rem;
+  display: flex;
+  flex-wrap: wrap;
+  height: 100%;
+  width: 100%;
+}
+
+.userMenuContainer > div {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.userMenuContainer a {
+  text-decoration: none;
+}
+
+.userMenuLeft {
+  width: 50%;
+  height: 95%;
+}
+
+.userMenuRight {
+  width: 40%;
+  height: 80%;
+}
+
+@media (max-width: 800px) {
+  .userMenuRight {
+    width: 50%;
+    height: 91.5%;
+  }
+}
+
+#loggingOutBtn {
+  width: 7.5rem;
+  height: 7.5rem;
+  background: var(--fritid-color);
+  border-radius: 50%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  font-size: 2.5rem;
+  text-transform: uppercase;
+}
+
+#loggingOutBtn:hover {
+  color: var(--fritid-color);
+  background: white;
+  cursor: pointer;
+}
+
+.minData {
+  width: 14rem !important;
+  height: 4rem;
+  background: var(--park-color);
+  margin-bottom: 1rem;
+  color: white;
+  font-size: 2.5rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: 2rem;
+}
+
+@media (max-width: 375px) {
+  .minData {
+    width: 12rem !important;
+    font-size: 2rem;
+  }
+}
+
+.minData:hover {
+  background: white;
+  color: var(--park-color);
+}
+
+.userMenuHeaders {
+  font-size: 3rem;
+}
+
+@media (max-width: 375px) {
+  .userMenuHeaders {
+    font-size: 2.5rem;
+  }
+}
+
+.loggaSparaContainer {
+  display: flex;
+  justify-content: space-between;
+  width: 100% !important;
+  align-items: center;
+}
+
+.andraLogga {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-items: center;
+}
+
+.andraLoggan {
+  font-size: 1.5rem;
+  margin-left: 1rem;
+  text-decoration: underline;
+  text-underline-offset: 0.5rem;
+}
+
+.bytLogga {
+  width: 5rem !important;
+  height: 5rem !important;
+  border: 0.25rem solid white;
+}
+
+.sparaKnapp {
+  width: 10rem !important;
+  height: 3rem;
+  background: var(--bad-color);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 2rem;
+  border-radius: 2rem;
+  color: white;
+  border: none;
+}
+
+.sparaKnappContainer {
+  width: 100%;
+  min-height: 2rem;
+  display: flex;
+  justify-content: end;
+}
+
+.userMenuRight {
+  font-size: 5rem;
+}
+
+.userMenuSubmit > * {
+  margin-top: 0.5rem;
+}

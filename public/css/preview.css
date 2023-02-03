@@ -1,0 +1,126 @@
+#preview {
+  border-radius: 1rem;
+  padding: 2rem;
+  font-size: 5rem;
+}
+
+#pCredWrapper {
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  text-align: center;
+  margin-bottom: 1rem;
+}
+
+#pLogga {
+  width: 3rem;
+  height: 3rem;
+  border-radius: 50%;
+  border: 2px solid white;
+}
+
+#pSkribent {
+  font-size: 1.6rem;
+  text-transform: capitalize;
+}
+
+#pTime {
+  font-size: 1.6rem;
+}
+
+.dot {
+  width: 0.5rem;
+  height: 0.5rem;
+  background: white;
+  border-radius: 50%;
+}
+
+#pRubrik {
+  margin-bottom: 1rem;
+}
+
+#pRubrik::first-letter {
+  text-transform: capitalize;
+}
+
+.pParagraphContainer {
+  margin-top: 2rem;
+  margin-bottom: 2rem;
+}
+
+.pParagraph {
+  font-size: 1.8rem;
+}
+
+.pParagraph::first-letter {
+  text-transform: capitalize;
+}
+
+.pImg {
+  width: 100%;
+  border-radius: 1rem;
+  margin-bottom: 0.5rem;
+}
+
+#pFig {
+  font-size: 1.4rem;
+  margin-bottom: 2rem;
+  font-weight: lighter;
+  padding-inline: 0.5rem;
+  font-style: italic;
+  text-align: center;
+}
+
+#pFig::first-letter {
+  text-transform: capitalize;
+}
+
+#pQuote {
+  margin: 0 auto;
+  display: block;
+  quotes: none;
+  font-size: 2.4rem;
+  border-left: 0.5rem solid var(--fritid-color);
+  padding-inline: 2rem;
+  margin-bottom: 2rem;
+  width: 98%;
+}
+
+#pQuote::first-letter {
+  text-transform: capitalize;
+}
+
+hr {
+  margin-top: 1rem;
+  margin-bottom: 1rem;
+}
+
+.pBr {
+  content: '';
+  margin-block: 2rem;
+  display: block;
+  font-size: 1.8rem;
+}
+
+#pTags {
+  display: flex;
+  flex-wrap: wrap;
+  margin-bottom: 1rem;
+}
+
+.pTag {
+  text-transform: uppercase;
+  font-size: 1.4rem;
+  color: white;
+  text-decoration: none;
+  border: 1px solid;
+  border-radius: 0.5rem;
+  padding: 0.6rem 1.2rem;
+  margin-top: 1rem;
+  margin-right: 1rem;
+}
+
+.pTag:hover {
+  border-color: var(--fritid-color);
+  color: var(--fritid-color);
+}
