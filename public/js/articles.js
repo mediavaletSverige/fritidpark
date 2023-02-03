@@ -9,9 +9,7 @@ const localArticleImages = document.querySelectorAll('.pImg');
 let clickedDeleteButtonOnce = false;
 
 // GOES BACK TO ARTICLES WHEN CLICKING THE CLOSE BUTTON
-if (
-  location.href === `${'http://127.0.0.1:3000' || 'https://dry-caverns-52406.herokuapp.com'}/article/${articleSlug}`
-) {
+if (location.href === `${host}/article/${articleSlug}`) {
   localStorage.setItem('coords', articleArticle.location.coordinates);
   add_button.forEach((button) =>
     button.addEventListener('click', function () {
@@ -45,7 +43,7 @@ if (artImg2.clientHeight < 100) {
 }
 
 // THIS CONDITION WILL ONLY WORK IF YOU ARE THE OWNER OF THE ARTICLE
-if (window.location.href === `/article/${articleSlug}` && articleOwner === read_art.dataset.user) {
+if (location.href === `${host}/article/${articleSlug}` && articleOwner === read_art.dataset.user) {
   localStorage.clear();
 
   // STORES CRUCIAL VALES FOR EDITING ARTICLE
@@ -94,10 +92,10 @@ if (window.location.href === `/article/${articleSlug}` && articleOwner === read_
         try {
           const res = await axios({
             method: 'DELETE',
-            url: `/api/articles/${localStorage.getItem('articleId')}`,
+            url: `${host}/api/articles/${localStorage.getItem('articleId')}`,
           });
           console.log('Article is deleted!');
-          window.location.href = '/myArticles';
+          location.href = `${host}/myArticles`;
         } catch (e) {
           console.log(e.message);
         }
@@ -120,11 +118,11 @@ if (window.location.href === `/article/${articleSlug}` && articleOwner === read_
     try {
       const res = await axios({
         method: 'PATCH',
-        url: `/api/articles/privacy/${localStorage.getItem('articleId')}`,
+        url: `${host}/api/articles/privacy/${localStorage.getItem('articleId')}`,
         data,
       });
       if (res.data.status === 'success') {
-        setTimeout(() => (window.location.href = `/article/${localStorage.getItem('goToSlug')}`), 100);
+        setTimeout(() => (location.href = `${host}/article/${localStorage.getItem('goToSlug')}`), 100);
       }
     } catch (e) {
       console.log(e.message);

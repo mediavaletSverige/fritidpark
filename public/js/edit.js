@@ -3,7 +3,7 @@
 const editForm = document.getElementById('writeForm');
 const editUserId = editForm.dataset.userid;
 
-if (window.location.href === '/edit') {
+if (location.href === `${host}/edit`) {
   document.querySelector('#art_header').textContent = 'redigera artikel';
   document.querySelector('main').style.display = 'block';
   backFromMenu.textContent = '←';
@@ -31,7 +31,7 @@ if (window.location.href === '/edit') {
     try {
       const res = await axios({
         method: 'GET',
-        url: `/api/articles/${articleId}`,
+        url: `${host}/api/articles/${articleId}`,
       });
 
       if (res.data.status === 'success') {
@@ -154,7 +154,7 @@ if (window.location.href === '/edit') {
             try {
               const res = await axios({
                 method: 'PATCH',
-                url: `/api/articles/${articleId}`,
+                url: `${host}/api/articles/${articleId}`,
                 data,
               });
 
@@ -174,12 +174,12 @@ if (window.location.href === '/edit') {
             try {
               const res = await axios({
                 method: 'PATCH',
-                url: `/api/articles/images/${articleId}`,
+                url: `${host}/api/articles/images/${articleId}`,
                 editFormData,
               });
               if (res.data.status === 'success') {
                 console.log('Updating with Images');
-                setTimeout(() => (window.location.href = `/article/${localStorage.getItem('goToSlug')}`), 2500);
+                setTimeout(() => (location.href = `${host}/article/${localStorage.getItem('goToSlug')}`), 2500);
               }
             } catch (e) {
               console.log(e.response.data.message);

@@ -1,5 +1,8 @@
 /* eslint-disable */
 
+//LOCAL HOST OR SERVER
+const host = 'http://127.0.0.1:3000' || 'https://dry-caverns-52406.herokuapp.com';
+
 //HTML CONSTANTS
 const top_menu_text = document.getElementById('article_menu-top').querySelectorAll('p');
 const bottom_menu_text = document.getElementById('article_menu-bottom').querySelectorAll('p');

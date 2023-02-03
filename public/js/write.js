@@ -3,11 +3,11 @@
 const writeForm = document.getElementById('writeForm');
 const writeUserId = writeForm.dataset.userid;
 
-if (window.location.href === '/write') {
+if (location.href === `${host}/write`) {
   //localStorage.clear();
   document.querySelector('#art_header').textContent = 'nytt inlägg';
   backFromMenu.textContent = '🖹';
-  backFromMenu.addEventListener('click', () => (window.location.href = '/articles'));
+  backFromMenu.addEventListener('click', () => (location.href = `${host}/articles`));
 
   // CHECKS IF IMAGES HAS BEEN SWAPPED
 
@@ -60,7 +60,7 @@ if (window.location.href === '/write') {
       try {
         const res = await axios({
           method: 'POST',
-          url: '/api/articles',
+          url: `${host}/api/articles`,
           data,
         });
 
@@ -80,11 +80,11 @@ if (window.location.href === '/write') {
         const articleId = await returnedDataId;
         const res = await axios({
           method: 'PATCH',
-          url: `/api/articles/images/${articleId}`,
+          url: `${host}/api/articles/images/${articleId}`,
           data,
         });
         if (res.data.status === 'success') {
-          setTimeout(() => (window.location.href = `/article/${localStorage.getItem('goToSlug')}`), 1500);
+          setTimeout(() => (location.href = `${host}/article/${localStorage.getItem('goToSlug')}`), 1500);
         }
       } catch (e) {
         console.log(res.status);

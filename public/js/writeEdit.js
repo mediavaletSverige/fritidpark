@@ -44,7 +44,7 @@ btnFileNew.addEventListener('click', function (e) {
 // CHANGING EXCHANGE BUTTON AND TEXT DEPENDING ON HOW MANY IMAGES ARE PRESENT AND RESETS IMAGES
 
 function checkImageLength(param, len) {
-  if (window.location.href === `/${param}`) {
+  if (location.href === `${host}/${param}`) {
     const dispExchangeBtn = function (p1 = 'none') {
       exchangeImg.style.display = p1;
       if (checkParam('write')) {
@@ -118,7 +118,7 @@ write_art.addEventListener('change', () => {
         i: [fritidInp, parkInp, badInp].some((el) => el.checked),
       };
 
-      if (window.location.href === '/edit') delete elements.c;
+      if (location.href === `${host}/edit`) delete elements.c;
 
       if (Object.values(elements).every((c) => !!c)) {
         button.removeAttribute('disabled');

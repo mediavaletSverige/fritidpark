@@ -55,12 +55,12 @@ function useMarker(page, type = null) {
 }
 
 // ARTICLES
-if (location.href !== '/write' && !location.href.includes('/article/')) {
+if (location.href !== `${host}/write` && !location.href.includes('/article/')) {
   const getArticles = async () => {
     try {
       const res = await axios({
         method: 'GET',
-        url: `/api/articles`,
+        url: `${host}/api/articles`,
       });
 
       if (res.data.status === 'success') {
@@ -149,7 +149,7 @@ if (location.href !== '/write' && !location.href.includes('/article/')) {
 }
 
 // PREVIEW
-if (location.href === '/write') {
+if (location.href === `${host}/write`) {
   navigator.geolocation.getCurrentPosition((e) => {
     const { latitude, longitude } = e.coords;
     const map = L.map('map').setView([latitude, longitude], 13);

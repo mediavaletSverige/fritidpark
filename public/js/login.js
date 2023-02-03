@@ -6,7 +6,7 @@ const loginEmail = document.getElementById('form-email');
 const loginPassword = document.getElementById('form-password');
 const userLogo = document.querySelector('#logo-wrap .logo-big');
 
-if (window.location.href === '/') {
+if (location.href === `${host}/`) {
   main.style.display = 'none';
 }
 
@@ -16,7 +16,7 @@ const login = async (email, password) => {
   try {
     const res = await axios({
       method: 'POST',
-      url: '/api/users/login',
+      url: `${host}/api/users/login`,
       data: {
         email,
         password,

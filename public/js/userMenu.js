@@ -12,25 +12,25 @@ const userMenuLogoImg = document.querySelector('.logo-big.bytLogga');
 
 toUserMenu.addEventListener('click', function (e) {
   e.preventDefault();
-  window.location.href = '/userMenu';
+  location.href = `${host}/userMenu`;
 });
 
 // Användarmeny gränssnitt + tillbakaknapp
 
-if (window.location.href === '/userMenu') {
+if (location.href === `${host}/userMenu`) {
   document.querySelector('#art_header').textContent = 'användarmeny';
   document.querySelector('main').style.display = 'block';
   backFromMenu.textContent = '🖹';
-  backFromMenu.addEventListener('click', () => (window.location.href = '/articles'));
+  backFromMenu.addEventListener('click', () => (location.href = `${host}/articles`));
 }
 
 // Mina artiklar gränssnitt + tillbakaknapp
 
-if (window.location.href === '/myArticles') {
+if (location.href === `${host}/myArticles`) {
   document.querySelector('#art_header').textContent = 'mina artiklar';
   document.querySelector('main').style.display = 'block';
   backFromMenu.textContent = '←';
-  backFromMenu.addEventListener('click', () => (window.location.href = '/userMenu'));
+  backFromMenu.addEventListener('click', () => (location.href = `${host}/userMenu`));
 }
 
 // Uppdatera namn, epost och lösenord
@@ -39,7 +39,7 @@ const updateUserData = async (data, type) => {
   try {
     const res = await axios({
       method: 'PATCH',
-      url: `/api/users/${type === 'data' ? 'updateMe' : 'updateMyPassword'}`,
+      url: `${host}/api/users/${type === 'data' ? 'updateMe' : 'updateMyPassword'}`,
       data,
     });
 
@@ -50,7 +50,7 @@ const updateUserData = async (data, type) => {
         userMenuSubmitButton.textContent = `sparar${(dot += '.')}`;
       }, 250);
       setTimeout(function () {
-        location.href = '/userMenu';
+        location.href = `${host}/userMenu`;
       }, 2000);
     }
   } catch (e) {
@@ -58,7 +58,7 @@ const updateUserData = async (data, type) => {
         <h3 style="color: black; text-align: center; font-size: 2rem;">${e.response.data.message}</h3>
       `;
     setTimeout(function () {
-      location.href = '/userMenu';
+      location.href = `${host}/userMenu`;
     }, 2000);
   }
 };
@@ -98,14 +98,14 @@ userMenuSubmit.addEventListener('submit', function (e) {
 const logout = async () => {
   const res = await axios({
     method: 'GET',
-    url: '/api/users/logout',
+    url: `${host}/api/users/logout`,
   });
   if (res.data.status === 'success') location.reload(true);
-  location.href = '/';
+  location.href = `${host}/`;
 };
 
 document.getElementById('loggingOutBtn').addEventListener('click', () => logout());
 
 // Mina artiklar
 
-document.querySelector('.toMyArticles').addEventListener('click', () => (location.href = '/myArticles'));
+document.querySelector('.toMyArticles').addEventListener('click', () => (location.href = `${host}/myArticles`));
