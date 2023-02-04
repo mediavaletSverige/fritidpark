@@ -37,13 +37,20 @@ if (window.location.href.includes('/myArticles')) {
 
 const updateUserData = async (data, type) => {
   try {
-    const res = await axios({
+    const res = await fetch(`/api/users/${type === 'data' ? 'updateMe' : 'updateMyPassword'}`, {
       method: 'PATCH',
-      url: `/api/users/${type === 'data' ? 'updateMe' : 'updateMyPassword'}`,
-      data,
+      headers:
+        data instanceof FormData
+          ? data
+          : {
+              'Content-Type': 'application/json',
+            },
+      body: data instanceof FormData ? data : JSON.stringify(data),
     });
 
-    if (res.data.status === 'success') {
+    const response = await res.json();
+
+    if (response.status === 'success') {
       let dot = '';
       setInterval(function () {
         if (dot.length === 3) dot = '';
@@ -55,7 +62,7 @@ const updateUserData = async (data, type) => {
     }
   } catch (e) {
     document.querySelector('body').innerHTML = `
-        <h3 style="color: black; text-align: center; font-size: 2rem;">${e.response.data.message}</h3>
+        <h3 style="color: black; text-align: center; font-size: 2rem;">${e}</h3>
       `;
     setTimeout(function () {
       window.location.href = `/userMenu`;
@@ -96,12 +103,14 @@ userMenuSubmit.addEventListener('submit', function (e) {
 // Logga ut
 
 const logout = async () => {
-  const res = await axios({
+  const res = await fetch('/api/users/logout', {
     method: 'GET',
-    url: `/api/users/logout`,
   });
-  if (res.data.status === 'success') location.reload(true);
-  window.location.href = `/`;
+  const data = await res.json();
+  if (data.status === 'success') {
+    location.reload(true);
+    window.location.href = `/`;
+  }
 };
 
 document.getElementById('loggingOutBtn').addEventListener('click', () => logout());

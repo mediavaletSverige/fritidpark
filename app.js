@@ -18,18 +18,44 @@ const globalErrorHandler = require('./controllers/errorController');
 
 const app = express();
 
-app.use((req, res, next) => {
-  res.setHeader('Content-Security-Policy', 'default-src *;');
-  next();
-});
-
 app.set('view engine', 'pug');
 app.set('views', path.join(__dirname, 'views'));
 
 // 1) MIDDLEWARES
 
 // Set Security HTTP headers
-app.use(helmet());
+
+app.use(
+  helmet({
+    contentSecurityPolicy: false,
+    crossOriginEmbedderPolicy: false,
+  })
+);
+
+/*
+const scriptSrc = ['https://unpkg.com/leaflet@1.9.3/dist/'];
+const styleSrc = ['https://unpkg.com/leaflet@1.9.3/dist/'];
+const connectSrc = ['*'];
+const fontSrc = ['https://img1.wsimg.com/gfonts/s/kaushanscript/v14/vm8vdRfvXFLG3OLnsO15WYS5DG74wNI.woff2'];
+
+app.use(
+  helmet.contentSecurityPolicy({
+    directives: {
+      defaultSrc: ["'self'"],
+      connectSrc: ["'self'", ...connectSrc],
+      scriptSrc: ["'self'", ...scriptSrc],
+      styleSrc: ["'self'", "'unsafe-inline'", ...styleSrc],
+      workerSrc: ["'self'", 'blob:'],
+      objectSrc: [],
+      imgSrc: ["'self'", 'blob:', 'data:'],
+      fontSrc: ["'self'", ...fontSrc],
+    },
+  })
+);
+*/
+
+// Serving static files
+app.use(express.static(path.join(__dirname, 'public')));
 
 // Development logging
 if (process.env.NODE_ENV === 'development') app.use(morgan('dev'));
@@ -55,9 +81,6 @@ app.use(xss());
 
 // Prevent parameter pollution
 app.use(hpp({ whitelist: ['h'] }));
-
-// Serving static files
-app.use(express.static(path.join(__dirname, 'public')));
 
 // COMPRESSES TEXT THAT IS SENT TO CLIENT
 app.use(compression());

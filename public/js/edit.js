@@ -29,15 +29,12 @@ if (window.location.href.includes('/edit')) {
 
   const getArticle = async (articleId) => {
     try {
-      const res = await axios({
-        method: 'GET',
-        url: `/api/articles/${articleId}`,
-      });
+      const res = await fetch(`/api/articles/${articleId}`).then((response) => response.json());
 
-      if (res.data.status === 'success') {
+      if (res.status === 'success') {
         // FETCHES THE ARTICLE AS AN OBJECT
 
-        const articleData = res.data.data.data;
+        const articleData = res.data.data;
 
         // ASSIGNS ARTICLE VALUES
 
@@ -152,23 +149,27 @@ if (window.location.href.includes('/edit')) {
           // PATCHES DATA TO API EXCEPT IMAGES
           const updateArticle = async () => {
             try {
-              const res = await axios({
+              const res = await fetch(`/api/articles/${articleId}`, {
                 method: 'PATCH',
-                url: `/api/articles/${articleId}`,
-                data,
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(data),
               });
 
-              if (res.data.status === 'success') {
+              const response = await res.json();
+
+              if (response.status === 'success') {
                 // CREATES A FORMDATA AND APPENDS IMAGES DEPENDING ON HOW MANY IMAGES ARE PRESENT
-                await updateArticleImages();
+                //await updateArticleImages();
+                setTimeout(() => (window.location.href = `/article/${localStorage.getItem('goToSlug')}`), 2500);
               }
             } catch (e) {
-              console.log(e.response.data.message);
+              console.log(e.message);
             }
           };
 
           updateArticle();
 
+          /*
           // THE SECOND PATCH WITH ONLY FILE IMAGES
           async function updateArticleImages() {
             try {
@@ -185,10 +186,11 @@ if (window.location.href.includes('/edit')) {
               console.log(e.response.data.message);
             }
           }
+          */
         });
       }
     } catch (e) {
-      console.log(e.response.data.message);
+      console.log(e.message);
     }
   };
 

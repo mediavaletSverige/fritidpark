@@ -58,18 +58,20 @@ if (window.location.href.includes('/write')) {
 
     const createArticle = async (data) => {
       try {
-        const res = await axios({
+        const res = await fetch(`/api/articles`, {
           method: 'POST',
-          url: `/api/articles`,
-          data,
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify(data),
         });
-
-        if (res.data.status === 'success') {
-          localStorage.setItem('goToSlug', res.data.data.slug);
-          return res.data.data.id;
+        const response = await res.json();
+        if (response.status === 'success') {
+          localStorage.setItem('goToSlug', response.data.slug);
+          return response.data.id;
         }
       } catch (e) {
-        console.log(e.response.data.message);
+        console.log(e);
       }
     };
 
@@ -78,18 +80,19 @@ if (window.location.href.includes('/write')) {
     async function updateArticle(data) {
       try {
         const articleId = await returnedDataId;
-        const res = await axios({
+        const res = await fetch(`/api/articles/images/${articleId}`, {
           method: 'PATCH',
-          url: `/api/articles/images/${articleId}`,
-          data,
+          body: data,
         });
-        if (res.data.status === 'success') {
+        const response = await res.json();
+        if (response.status === 'success') {
           setTimeout(() => (window.location.href = `/article/${localStorage.getItem('goToSlug')}`), 1500);
         }
       } catch (e) {
-        console.log(res.status);
+        console.log(e);
       }
     }
+
     updateArticle(writeFormData);
   });
 }

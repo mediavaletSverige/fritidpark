@@ -55,25 +55,26 @@ function useMarker(page, type = null) {
 }
 
 // ARTICLES
-if (!window.location.href.includes('/write') && !window.location.href.includes('/article/')) {
+if (!window.location.href.includes('/write')) {
   const getArticles = async () => {
     try {
-      const res = await axios({
+      const res = await fetch(`/api/articles`, {
         method: 'GET',
-        url: `/api/articles`,
       });
 
-      if (res.data.status === 'success') {
-        return res.data.data;
+      const data = await res.json();
+      if (data.status === 'success') {
+        return data.data;
       }
     } catch (e) {
-      console.log(e.response.data.message);
+      console.log(e);
     }
   };
 
   getArticles().then(function (articles) {
     navigator.geolocation.getCurrentPosition((e) => {
       const { latitude, longitude } = e.coords;
+
       const map = L.map('map').setView(localStorage.getItem('coords').split(',') || [latitude, longitude], 13);
       L.tileLayer('https://{s}.tile.openstreetmap.fr/hot/{z}/{x}/{y}.png', {
         attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',

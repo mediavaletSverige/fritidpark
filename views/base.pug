@@ -9,7 +9,7 @@ mixin scripts(...files)
 html  
     head
         link(rel="stylesheet" href="https://unpkg.com/leaflet@1.9.3/dist/leaflet.css" integrity="sha256-kLaT2GOSpHechhsozzB+flnD+zUyjE2LlfWPgU04xyI=" crossorigin="")
-        +stylesheets('components', 'leaflet', 'body', 'spins', 'header', 'main', 'preview', 'footer', 'card', 'comments', 'article', 'login', 'userMenu', 'removeImage')
+        +stylesheets('components', 'body', 'spins', 'header', 'main', 'preview', 'footer', 'card', 'comments', 'article', 'login', 'userMenu', 'removeImage')
         link(rel='shortcut icon' type='image/svg' href='/img/images/fp_logo.svg')
         meta(charset='UTF-8')
         meta(name='viewport' content='width=device-width, initial-scale=1.0')
@@ -49,6 +49,6 @@ html
                 a.logo-link(href=`/login`)    
                     div.logo-big(style=`background-image: url(/img/users/default.jpg)`)
         script(src="https://unpkg.com/leaflet@1.9.3/dist/leaflet.js" integrity="sha256-WBkoXOwTeyKclOHuWtc+i2uENFpDZ9YPdf5Hf+D7ewM=" crossorigin="")
-        +scripts('axios.min', 'constants', 'login', 'leaflet', 'script', 'writeEdit', 'reset', 'userMenu', 'write', 'edit', 'preview','articles', 'leafletAddons')
+        +scripts('axios.min', 'constants', 'login', 'script', 'writeEdit', 'reset', 'userMenu', 'write', 'edit', 'preview','articles', 'leafletAddons')
         noscript Du behöver aktivera JavaScript för att få tillgång till sidan!
-        div#map    
+        div#map(style="z-index: 0") 

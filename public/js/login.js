@@ -14,15 +14,14 @@ dialog.showModal();
 
 const login = async (email, password) => {
   try {
-    const res = await axios({
+    const res = await fetch(`/api/users/login`, {
       method: 'POST',
-      url: `/api/users/login`,
-      data: {
-        email,
-        password,
-      },
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ email, password }),
     });
-    if (res.data.status === 'success') {
+
+    const data = await res.json();
+    if (data.status === 'success') {
       dialog.innerHTML = `
         <h3 style="color: white;">Välkommen till:</h3>
         <div style="display: flex;">

@@ -90,16 +90,16 @@ if (window.location.href.includes(articleSlug) && articleOwner === read_art.data
     if (clickedDeleteButtonOnce) {
       const deleteArticle = async () => {
         try {
-          const res = await axios({
+          const res = await fetch(`/api/articles/${localStorage.getItem('articleId')}`, {
             method: 'DELETE',
-            url: `/api/articles/${localStorage.getItem('articleId')}`,
           });
-          console.log('Article is deleted!');
+
           window.location.href = `/myArticles`;
         } catch (e) {
           console.log(e.message);
         }
       };
+
       deleteArticle();
     }
     artContainer.querySelector('.toDelete').style.backgroundColor = 'red';
@@ -114,18 +114,24 @@ if (window.location.href.includes(articleSlug) && articleOwner === read_art.data
   const data = {
     private: articlePrivacy ? false : true,
   };
+
+  // FETCH
   async function updateArticle(data) {
     try {
-      const res = await axios({
+      const res = await fetch(`/api/articles/privacy/${localStorage.getItem('articleId')}`, {
         method: 'PATCH',
-        url: `/api/articles/privacy/${localStorage.getItem('articleId')}`,
-        data,
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(data),
       });
-      if (res.data.status === 'success') {
+      const json = await res.json();
+
+      if (json.status === 'success') {
         setTimeout(() => (window.location.href = `/article/${localStorage.getItem('goToSlug')}`), 100);
       }
     } catch (e) {
-      console.log(e.message);
+      console.log(e);
     }
   }
 
