@@ -42,12 +42,11 @@ html
         
         //- logo + scripts + map
         div#logo-wrap
-            - const host = 'http://127.0.0.1:3000' || 'https://dry-caverns-52406.herokuapp.com'
             -if (user)
-                a.logo-link.loggingIn(href=`${host}/userMenu`)
+                a.logo-link.loggingIn(href=`/userMenu`)
                     div.logo-big(style=`background-image: url(/img/users/${user.logo})`)
             -else
-                a.logo-link(href=`${host}/login`)    
+                a.logo-link(href=`/login`)    
                     div.logo-big(style=`background-image: url(/img/users/default.jpg)`)
         script(src="https://unpkg.com/leaflet@1.9.3/dist/leaflet.js" integrity="sha256-WBkoXOwTeyKclOHuWtc+i2uENFpDZ9YPdf5Hf+D7ewM=" crossorigin="")
         +scripts('axios.min', 'constants', 'login', 'leaflet', 'script', 'writeEdit', 'reset', 'userMenu', 'write', 'edit', 'preview','articles', 'leafletAddons')

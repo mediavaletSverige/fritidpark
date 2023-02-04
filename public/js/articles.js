@@ -9,7 +9,7 @@ const localArticleImages = document.querySelectorAll('.pImg');
 let clickedDeleteButtonOnce = false;
 
 // GOES BACK TO ARTICLES WHEN CLICKING THE CLOSE BUTTON
-if (location.href === `${host}/article/${articleSlug}`) {
+if (window.location.href.includes(articleSlug)) {
   localStorage.setItem('coords', articleArticle.location.coordinates);
   add_button.forEach((button) =>
     button.addEventListener('click', function () {
@@ -43,7 +43,7 @@ if (artImg2.clientHeight < 100) {
 }
 
 // THIS CONDITION WILL ONLY WORK IF YOU ARE THE OWNER OF THE ARTICLE
-if (location.href === `${host}/article/${articleSlug}` && articleOwner === read_art.dataset.user) {
+if (window.location.href.includes(articleSlug) && articleOwner === read_art.dataset.user) {
   localStorage.clear();
 
   // STORES CRUCIAL VALES FOR EDITING ARTICLE
@@ -92,10 +92,10 @@ if (location.href === `${host}/article/${articleSlug}` && articleOwner === read_
         try {
           const res = await axios({
             method: 'DELETE',
-            url: `${host}/api/articles/${localStorage.getItem('articleId')}`,
+            url: `/api/articles/${localStorage.getItem('articleId')}`,
           });
           console.log('Article is deleted!');
-          location.href = `${host}/myArticles`;
+          window.location.href = `/myArticles`;
         } catch (e) {
           console.log(e.message);
         }
@@ -118,11 +118,11 @@ if (location.href === `${host}/article/${articleSlug}` && articleOwner === read_
     try {
       const res = await axios({
         method: 'PATCH',
-        url: `${host}/api/articles/privacy/${localStorage.getItem('articleId')}`,
+        url: `/api/articles/privacy/${localStorage.getItem('articleId')}`,
         data,
       });
       if (res.data.status === 'success') {
-        setTimeout(() => (location.href = `${host}/article/${localStorage.getItem('goToSlug')}`), 100);
+        setTimeout(() => (window.location.href = `/article/${localStorage.getItem('goToSlug')}`), 100);
       }
     } catch (e) {
       console.log(e.message);

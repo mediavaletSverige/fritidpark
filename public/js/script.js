@@ -48,9 +48,9 @@ function changeMainButton() {
       localStorage.clear();
       e.currentTarget.querySelector('p').textContent = '🖹';
       artHeader.textContent = 'Nytt inlägg';
-      location.href = '/write';
+      window.location.href = '/write';
     } else if (e.currentTarget.querySelector('p').textContent === '🖹') {
-      location.href = '/articles';
+      window.location.href = '/articles';
       e.currentTarget.querySelector('p').textContent = '🖌';
       artHeader.textContent = 'Artiklar';
     }
@@ -108,7 +108,7 @@ const responsiveAddButtons = function (w = false, h = false) {
 responsiveAddButtons(450);
 
 // CLOSES ARTICLE CONTAINER WHEN COMING FROM SLUG (SEE ARTICLES.JS)
-if (location.href === `${host}/articles`) {
+if (window.location.href.includes('/articles')) {
   if (localStorage.getItem('articleContainerIsClosed') === 'true') {
     main.style.display = 'none';
     add_button.forEach(function (button) {

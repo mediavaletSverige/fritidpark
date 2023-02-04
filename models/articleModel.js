@@ -121,14 +121,6 @@ articleSchema.pre('save', function (next) {
   next();
 });
 
-/*
-// HIDES PRIVATE ARTICLES
-articleSchema.pre(/^find/, function (next) {
-  this.find({ private: { $ne: true } });
-  next();
-});
-*/
-
 const Article = mongoose.model('Article', articleSchema);
 
 module.exports = Article;

@@ -6,7 +6,7 @@ const loginEmail = document.getElementById('form-email');
 const loginPassword = document.getElementById('form-password');
 const userLogo = document.querySelector('#logo-wrap .logo-big');
 
-if (location.href === `${host}/`) {
+if (/^\/$/.test(window.location.pathname)) {
   main.style.display = 'none';
 }
 
@@ -16,7 +16,7 @@ const login = async (email, password) => {
   try {
     const res = await axios({
       method: 'POST',
-      url: `${host}/api/users/login`,
+      url: `/api/users/login`,
       data: {
         email,
         password,
@@ -31,7 +31,7 @@ const login = async (email, password) => {
         </div>
       `;
       setTimeout(function () {
-        location.href = '/articles';
+        window.location.href = '/articles';
       }, 2000);
     }
   } catch (e) {
@@ -40,7 +40,7 @@ const login = async (email, password) => {
         <h3 style="color: white; text-align: center; font-size: 2rem;">Försök igen!</h3>
       `;
     setTimeout(function () {
-      location.href = '/login';
+      window.location.href = '/login';
     }, 2000);
   }
 };

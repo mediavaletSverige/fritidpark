@@ -8,7 +8,7 @@ const articleImgHeightsLength =
     .filter((el) => +el > 100).length;
 
 pImgs = articleImgHeightsLength;
-const checkParam = (param) => window.location.href === `/${param}`;
+const checkParam = (param) => window.window.location.href.includes(`/${param}`);
 
 let previewImage1;
 let previewImage2;
@@ -44,7 +44,7 @@ btnFileNew.addEventListener('click', function (e) {
 // CHANGING EXCHANGE BUTTON AND TEXT DEPENDING ON HOW MANY IMAGES ARE PRESENT AND RESETS IMAGES
 
 function checkImageLength(param, len) {
-  if (location.href === `${host}/${param}`) {
+  if (window.location.href.includes(`/${param}`)) {
     const dispExchangeBtn = function (p1 = 'none') {
       exchangeImg.style.display = p1;
       if (checkParam('write')) {
@@ -118,7 +118,7 @@ write_art.addEventListener('change', () => {
         i: [fritidInp, parkInp, badInp].some((el) => el.checked),
       };
 
-      if (location.href === `${host}/edit`) delete elements.c;
+      if (window.location.href.includes('/edit')) delete elements.c;
 
       if (Object.values(elements).every((c) => !!c)) {
         button.removeAttribute('disabled');
