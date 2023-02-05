@@ -93,6 +93,6 @@ if (window.location.href.includes('/write')) {
       }
     }
 
-    updateArticle(writeFormData);
+    setTimeout(() => updateArticle(writeFormData), 2000);
   });
 }
