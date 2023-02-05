@@ -82,6 +82,7 @@ if (window.location.href.includes('/write')) {
         const articleId = await returnedDataId;
         const res = await fetch(`/api/articles/images/${articleId}`, {
           method: 'PATCH',
+          headers: { 'Content-Type': 'multipart/form-data' },
           body: data,
         });
         const response = await res.json();
@@ -93,6 +94,6 @@ if (window.location.href.includes('/write')) {
       }
     }
 
-    setTimeout(() => updateArticle(writeFormData), 2000);
+    updateArticle(writeFormData);
   });
 }
