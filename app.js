@@ -32,28 +32,6 @@ app.use(
   })
 );
 
-/*
-const scriptSrc = ['https://unpkg.com/leaflet@1.9.3/dist/'];
-const styleSrc = ['https://unpkg.com/leaflet@1.9.3/dist/'];
-const connectSrc = ['*'];
-const fontSrc = ['https://img1.wsimg.com/gfonts/s/kaushanscript/v14/vm8vdRfvXFLG3OLnsO15WYS5DG74wNI.woff2'];
-
-app.use(
-  helmet.contentSecurityPolicy({
-    directives: {
-      defaultSrc: ["'self'"],
-      connectSrc: ["'self'", ...connectSrc],
-      scriptSrc: ["'self'", ...scriptSrc],
-      styleSrc: ["'self'", "'unsafe-inline'", ...styleSrc],
-      workerSrc: ["'self'", 'blob:'],
-      objectSrc: [],
-      imgSrc: ["'self'", 'blob:', 'data:'],
-      fontSrc: ["'self'", ...fontSrc],
-    },
-  })
-);
-*/
-
 // Serving static files
 app.use(express.static(path.join(__dirname, 'public')));
 

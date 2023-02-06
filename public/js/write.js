@@ -82,12 +82,11 @@ if (window.location.href.includes('/write')) {
         const articleId = await returnedDataId;
         const res = await fetch(`/api/articles/images/${articleId}`, {
           method: 'PATCH',
-          headers: { 'Content-Type': 'multipart/form-data' },
           body: data,
         });
         const response = await res.json();
         if (response.status === 'success') {
-          setTimeout(() => (window.location.href = `/article/${localStorage.getItem('goToSlug')}`), 1500);
+          setTimeout(() => (window.location.href = `/article/${localStorage.getItem('goToSlug')}`), 5000);
         }
       } catch (e) {
         console.log(e);

@@ -32,15 +32,17 @@ articlePContainers.forEach(function (el, i) {
 });
 
 // REMOVES SECOND IMAGE IF ONLY ONE ARE PRESENT
-const artImg2 = document.querySelector('.artImg2');
-const artFig2 = document.querySelector('.artFig2');
-const artCap2 = document.querySelector('.artCap2');
+window.addEventListener('load', () => {
+  const artImg2 = document.querySelector('.artImg2');
+  const artFig2 = document.querySelector('.artFig2');
+  const artCap2 = document.querySelector('.artCap2');
 
-if (artImg2.clientHeight < 100) {
-  artImg2.style.display = 'none';
-  artFig2.style.display = 'none';
-  artCap2.style.display = 'none';
-}
+  if (artImg2.clientHeight < 100) {
+    artImg2.style.display = 'none';
+    artFig2.style.display = 'none';
+    artCap2.style.display = 'none';
+  }
+});
 
 // THIS CONDITION WILL ONLY WORK IF YOU ARE THE OWNER OF THE ARTICLE
 if (window.location.href.includes(articleSlug) && articleOwner === read_art.dataset.user) {
@@ -52,9 +54,12 @@ if (window.location.href.includes(articleSlug) && articleOwner === read_art.data
   localStorage.setItem('goToSlug', JSON.parse(read_art.dataset.article).slug);
   localStorage.setItem('localImg1', localArticleImages[0].src);
   localStorage.setItem('localImg2', localArticleImages[1].src);
-  localStorage.setItem(
-    'articleImgHeights',
-    Array.prototype.map.call(localArticleImages, (node) => node.clientHeight)
+
+  window.addEventListener('load', () =>
+    localStorage.setItem(
+      'articleImgHeights',
+      Array.prototype.map.call(localArticleImages, (node) => node.clientHeight)
+    )
   );
 
   // PUTS AN EDIT, HIDE AND A DELETE BUTTON TO ARTICLE
@@ -75,6 +80,7 @@ if (window.location.href.includes(articleSlug) && articleOwner === read_art.data
   artContainer.querySelector('.toDelete').style.backgroundColor = 'rgb(232, 156, 156)';
   artContainer.querySelector('.toDelete').style.borderBottomLeftRadius = '0';
   artContainer.querySelector('.toDelete').style.fontSize = '2rem';
+  artContainer.querySelector('.toDelete').querySelector('p').style.marginTop = '-.1rem';
 
   if (articlePrivacy) artContainer.querySelector('.toHide').style.color = 'rgb(232, 156, 156)';
   if (articlePrivacy) artContainer.querySelector('.toHide').querySelector('p').style.textShadow = '0 0 .15rem black';

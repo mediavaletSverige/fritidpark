@@ -55,6 +55,7 @@ function useMarker(page, type = null) {
 }
 
 // ARTICLES
+
 if (!window.location.href.includes('/write')) {
   const getArticles = async () => {
     try {
@@ -74,8 +75,12 @@ if (!window.location.href.includes('/write')) {
   getArticles().then(function (articles) {
     navigator.geolocation.getCurrentPosition((e) => {
       const { latitude, longitude } = e.coords;
+      const coordinates = localStorage
+        .getItem('coords')
+        .split(',')
+        .map((el) => +el);
 
-      const map = L.map('map').setView(localStorage.getItem('coords').split(',') || [latitude, longitude], 13);
+      const map = L.map('map').setView([latitude, longitude], 13);
       L.tileLayer('https://{s}.tile.openstreetmap.fr/hot/{z}/{x}/{y}.png', {
         attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
       }).addTo(map);
@@ -120,10 +125,14 @@ if (!window.location.href.includes('/write')) {
         const articleHTML = `<section class="card-container">
                                 <a class="card" href="/article/${
                                   article.slug
-                                }" style="background-image: url('img/articles/${article.img1}')">
+                                }" style="background-image: url('https://storage.cloud.google.com/fp_storage/public/img/articles/${
+          article.img1
+        }')">
                                   <div class="card_top">
                                     <div class="card_top_left">
-                                      <img id="pLogga" src="/img/users/user-${article.owner}.jpeg">
+                                      <img id="pLogga" src="https://storage.cloud.google.com/fp_storage/public/img/users/user-${
+                                        article.owner
+                                      }.jpeg">
                                       <p id="pSkribent">${authorArr[0][0]}. ${authorArr[authorArr.length - 1]}</p>
                                     </div>
                                     <div class="card_top_right">
@@ -143,8 +152,13 @@ if (!window.location.href.includes('/write')) {
           .setPopupContent(articleHTML)
           .openPopup();
 
-        map.addEventListener('zoomend', () => (map.getZoom() >= 13 ? marker.openPopup() : marker.closePopup()));
+        map.on('zoom', () => (map.getZoom() >= 13 ? marker.openPopup() : marker.closePopup()));
       });
+
+      // GOES TO THE LAST VISITED COORDINATES
+      if (coordinates) {
+        map.setView(coordinates);
+      }
     });
   });
 }

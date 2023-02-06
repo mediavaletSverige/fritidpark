@@ -44,11 +44,11 @@ html
         div#logo-wrap
             -if (user)
                 a.logo-link.loggingIn(href=`/userMenu`)
-                    div.logo-big(style=`background-image: url(/img/users/${user.logo})`)
+                    div.logo-big(style=`background-image: url(https://storage.cloud.google.com/fp_storage/public/img/users/${user.logo})`)
             -else
                 a.logo-link(href=`/login`)    
-                    div.logo-big(style=`background-image: url(/img/users/default.jpg)`)
+                    div.logo-big(style=`background-image: url(https://storage.cloud.google.com/fp_storage/public/img/users/default.jpg)`)
         script(src="https://unpkg.com/leaflet@1.9.3/dist/leaflet.js" integrity="sha256-WBkoXOwTeyKclOHuWtc+i2uENFpDZ9YPdf5Hf+D7ewM=" crossorigin="")
-        +scripts('axios.min', 'constants', 'login', 'script', 'writeEdit', 'reset', 'userMenu', 'write', 'edit', 'preview','articles', 'leafletAddons')
+        +scripts('constants', 'login', 'script', 'writeEdit', 'reset', 'userMenu', 'write', 'edit', 'preview','articles', 'leafletAddons')
         noscript Du behöver aktivera JavaScript för att få tillgång till sidan!
         div#map(style="z-index: 0") 

@@ -4,7 +4,7 @@ mixin reviewCard(review)
     div.comment
         div.topCommentArea
             div.topCommentArea-left
-                img#pLogga(src=`/img/users/${review.user.logo}` alt=`${review.user.name}` width='100%')
+                img#pLogga(src=`https://storage.cloud.google.com/fp_storage/public/img/users/${review.user.logo}` alt=`${review.user.name}` width='100%')
                 - const reviewUserArr = review.user.name.split(' ')
                 p#pSkribent.mrg-left=`${reviewUserArr[0][0]}. ${reviewUserArr[reviewUserArr.length-1]}`
             span.dot.commentDot
@@ -19,7 +19,7 @@ block content
         include variables
             article.articleContainer(style=`background: ${backgroundTopic};`)
                 div#pCredWrapper
-                    img#pLogga(src=`/img/users/user-${article.owner}.jpeg` width='100%')
+                    img#pLogga(src=`https://storage.cloud.google.com/fp_storage/public/img/users/user-${article.owner}.jpeg` width='100%')
                     span.dot
                     p#pSkribent=article.author
                     span.dot
@@ -28,13 +28,13 @@ block content
                 h3#pRubrik=article.h
                 div.pParagraphContainer
                 figure
-                    img.pImg(src=`/img/articles/${article.img1}` alt=`${article.alt1}`)
+                    img.pImg(src=`https://storage.cloud.google.com/fp_storage/public/img/articles/${article.img1}` alt=`${article.alt1}`)
                     figcaption#pFig=article.fig1
                 div.pParagraphContainer
                 q#pQuote=article.q
                 - if (article.img2)
                     figure.artFig2
-                        img.artImg2.pImg(src=`/img/articles/${article.img2}` alt=`${article.alt2}`)
+                        img.artImg2.pImg(src=`https://storage.cloud.google.com/fp_storage/public/img/articles/${article.img2}` alt=`${article.alt2}`)
                         figcaption#pFig.artCap2=article.fig2
                 div.pParagraphContainer
                 div.commentsContainer

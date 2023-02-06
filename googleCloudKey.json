@@ -1,0 +1,12 @@
+{
+  "type": "service_account",
+  "project_id": "fritidpark",
+  "private_key_id": "108372d0148a8fa03ed4ca84a5471d5729d12ebb",
+  "private_key": "-----BEGIN PRIVATE KEY-----\nMIIEvgIBADANBgkqhkiG9w0BAQEFAASCBKgwggSkAgEAAoIBAQCOp/QOpU8ufFTd\nWNfptKdiN1VHnL6TP5+K+Axm76txfwFtMqbYt+yFumhyY3r4ulO2Cki6AIxSzoG4\nr8Hw7GdHXygFGUF6NDKTQkmr8eynIo6Dz7FlAeJ/kBbB10fQrMr6NjpsLKKvJ9VF\nRnwiLlooLnu0osLkijgYfUAvim9WKM3imJmTF5AVaj9rQgJU48I9YQ9k6jnw7fup\nFK5VJKYSyY5ujoAtQ80tJZ4WehVXHEffMes32ad0M8hVtGw8Tq9hdKsuSJ0jz4fO\nZX2Y/A4wP7vGqAZiK8ZcHiztfTfAIu1G5CYTG8Z1AZFeyUj8sLhzSAQGEh1aM6xR\nM0N6CSYlAgMBAAECggEAKIhmGuczaVTgVAgTSQ8QZCKus2tA5tuz/Ctgcrr0booU\noK88ouUXaiO924qSfSuL73Ral6biOAD+8LfXlhnFeoz59QDpDszX9elmv1k80XxL\nG/6eO8HeVjpdjPQbLpp6Db/st6GzE6twuH8/dALRkQssEPYSBBeVureTzi46VjNT\nO40iETsJlQZ/8ctW5jsk4XIQaSC2xaUBAycU0naO2OPwqJICurIm+w5x7q28zMfv\ndBWRqTeLqRXBJbYqpWAOto+TCy+JVT7YQHrZpuEqcHZUePWs4pLgYcH7Hy3VzJxR\nDC9Hex88AUt6OL8oaWvUM45Luv0r4k6aIzuAw6ol3QKBgQC/Jgyn90Xrh08M5lWZ\nD/ZI4vALBEQzEZtDknmy446aA/ujK5L48XdIKUb4vpY6gtboLIw10p7MhC9e7QjT\n5hJn0UxF1odhVlvhfOb+YfEycLKrtSB2Ya1a7bUNdcEEa/tIyw6jBOxEk/eOBaBQ\nk0MMuZlZH4rNgcVBYn0B80AwbwKBgQC/DiY25KdpaSMPwqzb2a31BX5sXTk9ri1p\ndjiMJZUYH1GMOqDbStrAzUxhxUXl/EDqkLeVmXSVnKTm2is2SwHrHRVxY6cM6VD7\n/avyHC52C9dmDscmFaQzFWbQnwb9TpleuEr6j4CeSepUrYof7dvaEHPLiL3aBOmz\n8y9ZAXH0qwKBgQCoIiHTxK8d4yDnads1DVNG/UbDifcrLHtzzm15qquOUZ6QAg3/\nJvYS5SvmNE4UHW5HPpf958uCfWrlhn3TVXYvF2yNqYvfVITxLFpKu3/bLEIcwu9Q\n8c34Q0qUElW7O/gGKYYwYm4oTDbeF5jSBxZdJQv71sDSzyjgwG7QvlRhxQKBgAnQ\nCjpriAWr9rcKgqJQDdU10QZzy0rVtVNjVQgtrfitMx0GrdhVgeLBKJkk7rAfQp5J\njIRMe2ZrwzRwJCQHujN/LOjD+4J4QUaQAtLOi7xYY1nEjInyNprBEKTKZiuAa/Qn\ndwJjeHGozjZHK370UoRir+/WOBoIgpBRfy8NGfM9AoGBAKsZClzk7VeMXXDqwHUp\ndqzcGWnOP4vJKAt2ZhJEJftlusADUxnjfcZWA2xgUuUKk+Or1uyA9t6UCzqXG1ff\nTQq4rvaBCI3X8VUt5EU0JHkIp4TiVOXKyuzcDzut3JhrvMrY876g2i30DZDYK2bv\ntdIkiT6VU0ExcmdXvL4yT5sV\n-----END PRIVATE KEY-----\n",
+  "client_email": "fritidpark@appspot.gserviceaccount.com",
+  "client_id": "104685218037304620637",
+  "auth_uri": "https://accounts.google.com/o/oauth2/auth",
+  "token_uri": "https://oauth2.googleapis.com/token",
+  "auth_provider_x509_cert_url": "https://www.googleapis.com/oauth2/v1/certs",
+  "client_x509_cert_url": "https://www.googleapis.com/robot/v1/metadata/x509/fritidpark%40appspot.gserviceaccount.com"
+}

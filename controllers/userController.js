@@ -1,3 +1,4 @@
+const { Storage } = require('@google-cloud/storage');
 const multer = require('multer');
 const sharp = require('sharp');
 const User = require('../models/userModel');
@@ -26,11 +27,28 @@ exports.resizeUserLogo = catchAsync(async (req, res, next) => {
   if (!req.file) return next();
   req.file.filename = `user-${req.user.id}.jpeg`;
 
+  // GOOGLE STORAGE ----------
+  const { STORAGE_PROJECT_ID } = process.env;
+  const { STORAGE_KEY_FILE_NAME } = process.env;
+  const BUCKET_NAME = 'fp_storage';
+
+  const storage = new Storage({
+    STORAGE_PROJECT_ID,
+    STORAGE_KEY_FILE_NAME,
+  });
+
+  const buffer = await sharp(req.file.buffer).resize(250, 250).toFormat('jpeg').jpeg({ quality: 50 }).toBuffer();
+
+  await storage.bucket(BUCKET_NAME).file(`public/img/users/${req.file.filename}`).save(buffer);
+  // -------------------------
+
+  /* INTERNAL STORAGE
   await sharp(req.file.buffer)
     .resize(250, 250)
     .toFormat('jpeg')
     .jpeg({ quality: 50 })
     .toFile(`public/img/users/${req.file.filename}`);
+  */
 
   next();
 });

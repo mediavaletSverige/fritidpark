@@ -15,6 +15,12 @@ const time = new Date().toLocaleString('sv-SE', timeObj);
 
 // ACCURATE IMAGE DISPLAY
 
+if (checkParam('write')) {
+  previewImage1 = `https://storage.cloud.google.com/fp_storage/public/img/articles/${localImages(1)}`;
+  previewImage2 =
+    pImgs < 2 ? null : `https://storage.cloud.google.com/fp_storage/public/img/articles/${localImages(2)}`;
+}
+
 if (checkParam('edit')) {
   previewImage1 = `img/articles/${localImages(1)}`;
   previewImage2 = pImgs < 2 ? null : `img/articles/${localImages(2)}`;
@@ -51,7 +57,7 @@ function previewHTML() {
   preview.style.background = checkTopic();
   preview.innerHTML = `
         <div id="pCredWrapper">
-          <img id="pLogga" src="/img/users/user-${writeUserId}.jpeg" alt="logga" />
+          <img id="pLogga" src="https://storage.cloud.google.com/fp_storage/public/img/users/user-${writeUserId}.jpeg" alt="logga" />
           <span class="dot"></span>
           <p id="pSkribent">${skribent.value}</p>
           <span class="dot"></span>
