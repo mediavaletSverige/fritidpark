@@ -131,13 +131,15 @@ if (window.location.href.includes(articleSlug) && articleOwner === read_art.data
         },
         body: JSON.stringify(data),
       });
+
       const json = await res.json();
 
       if (json.status === 'success') {
-        setTimeout(() => (window.location.href = `/article/${localStorage.getItem('goToSlug')}`), 100);
+        setTimeout(() => (window.location.href = `/article/${localStorage.getItem('goToSlug')}`), 500);
       }
     } catch (e) {
       console.log(e);
+      setTimeout(() => (window.location.href = `/article/${localStorage.getItem('goToSlug')}`), 500);
     }
   }
 

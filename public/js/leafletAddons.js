@@ -78,12 +78,17 @@ if (!window.location.href.includes('/write')) {
       const coordinates = localStorage
         .getItem('coords')
         .split(',')
-        .map((el) => +el);
+        .map((el) => +el) || [latitude, longitude];
 
-      const map = L.map('map').setView([latitude, longitude], 13);
+      const map = L.map('map', { zoomSnap: 0.25, minZoom: 2 }).setView(coordinates, 13);
       L.tileLayer('https://{s}.tile.openstreetmap.fr/hot/{z}/{x}/{y}.png', {
         attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
       }).addTo(map);
+
+      var bounds = L.latLngBounds(L.latLng(-89.98155760646617, -180), L.latLng(89.99346179538875, 180));
+
+      map.setMaxBounds(bounds);
+      map.on('drag', () => map.panInsideBounds(bounds, { animate: false }));
 
       const popupOptions = { autoClose: false, minWidth: 1, closeOnClick: false };
 
@@ -152,7 +157,7 @@ if (!window.location.href.includes('/write')) {
           .setPopupContent(articleHTML)
           .openPopup();
 
-        map.on('zoom', () => (map.getZoom() >= 13 ? marker.openPopup() : marker.closePopup()));
+        map.on('zoomstart', () => (map.getZoom() >= 13 ? marker.openPopup() : marker.closePopup()));
       });
 
       // GOES TO THE LAST VISITED COORDINATES

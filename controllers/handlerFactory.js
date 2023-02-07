@@ -2,6 +2,7 @@
 
 const util = require('util');
 const fs = require('fs');
+const { Storage } = require('@google-cloud/storage');
 
 const rename = util.promisify(fs.rename);
 const unlink = util.promisify(fs.unlink);
@@ -10,6 +11,18 @@ const catchAsync = require('../utils/catchAsync');
 const AppError = require('../utils/appError');
 const APIFeatures = require('../utils/apiFeatures');
 
+// GOOGLE STORAGE ----------
+const { STORAGE_PROJECT_ID } = process.env;
+const { STORAGE_KEY_FILE_NAME } = process.env;
+const BUCKET_NAME = 'fp_storage';
+
+const storage = new Storage({
+  STORAGE_PROJECT_ID,
+  STORAGE_KEY_FILE_NAME,
+});
+// -------------------------
+
+/*
 exports.deleteOne = (Model) =>
   catchAsync(async (req, res, next) => {
     const doc = await Model.findByIdAndDelete(req.params.id);
@@ -18,6 +31,33 @@ exports.deleteOne = (Model) =>
     if (!doc) {
       return next(new AppError('no document found with that ID', 404));
     }
+
+    res.status(204).json({
+      status: 'success',
+      data: null,
+    });
+  });
+  */
+
+exports.deleteOne = (Model) =>
+  catchAsync(async (req, res, next) => {
+    const bucket = storage.bucket(BUCKET_NAME);
+
+    const doc = await Model.findByIdAndDelete(req.params.id);
+    console.log(res.status);
+
+    if (!doc) {
+      return next(new AppError('no document found with that ID', 404));
+    }
+
+    // Get all files in the bucket
+    const [files] = await bucket.getFiles();
+
+    // Filter files that have the article ID in their file names
+    const articleFiles = files.filter((file) => file.name.includes(req.params.id));
+
+    // Delete each file
+    await Promise.all(articleFiles.map((file) => file.delete()));
 
     res.status(204).json({
       status: 'success',
