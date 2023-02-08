@@ -15,15 +15,10 @@ const time = new Date().toLocaleString('sv-SE', timeObj);
 
 // ACCURATE IMAGE DISPLAY
 
-if (checkParam('write')) {
+if (checkParam('edit')) {
   previewImage1 = `https://storage.cloud.google.com/fp_storage/public/img/articles/${localImages(1)}`;
   previewImage2 =
     pImgs < 2 ? null : `https://storage.cloud.google.com/fp_storage/public/img/articles/${localImages(2)}`;
-}
-
-if (checkParam('edit')) {
-  previewImage1 = `img/articles/${localImages(1)}`;
-  previewImage2 = pImgs < 2 ? null : `img/articles/${localImages(2)}`;
 }
 
 // DISPLAYS ARTICLE IN EDIT MODE AND SHOWS REAL TIME CHANGES

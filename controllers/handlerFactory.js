@@ -1,28 +1,13 @@
+/* eslint-disable no-unused-expressions */
 /* eslint-disable node/no-unsupported-features/es-builtins */
 
-const util = require('util');
-const fs = require('fs');
-const { Storage } = require('@google-cloud/storage');
-
-const rename = util.promisify(fs.rename);
-const unlink = util.promisify(fs.unlink);
-const exists = util.promisify(fs.existsSync);
 const catchAsync = require('../utils/catchAsync');
 const AppError = require('../utils/appError');
 const APIFeatures = require('../utils/apiFeatures');
+const StorageHandler = require('../utils/storageHandler');
 
-// GOOGLE STORAGE ----------
-const { STORAGE_PROJECT_ID } = process.env;
-const { STORAGE_KEY_FILE_NAME } = process.env;
-const BUCKET_NAME = 'fp_storage';
+const SH = new StorageHandler();
 
-const storage = new Storage({
-  STORAGE_PROJECT_ID,
-  STORAGE_KEY_FILE_NAME,
-});
-// -------------------------
-
-/*
 exports.deleteOne = (Model) =>
   catchAsync(async (req, res, next) => {
     const doc = await Model.findByIdAndDelete(req.params.id);
@@ -32,32 +17,7 @@ exports.deleteOne = (Model) =>
       return next(new AppError('no document found with that ID', 404));
     }
 
-    res.status(204).json({
-      status: 'success',
-      data: null,
-    });
-  });
-  */
-
-exports.deleteOne = (Model) =>
-  catchAsync(async (req, res, next) => {
-    const bucket = storage.bucket(BUCKET_NAME);
-
-    const doc = await Model.findByIdAndDelete(req.params.id);
-    console.log(res.status);
-
-    if (!doc) {
-      return next(new AppError('no document found with that ID', 404));
-    }
-
-    // Get all files in the bucket
-    const [files] = await bucket.getFiles();
-
-    // Filter files that have the article ID in their file names
-    const articleFiles = files.filter((file) => file.name.includes(req.params.id));
-
-    // Delete each file
-    await Promise.all(articleFiles.map((file) => file.delete()));
+    await SH.deleteImages(req.params.id);
 
     res.status(204).json({
       status: 'success',
@@ -73,6 +33,8 @@ exports.updateOne = (Model, type = 'text') =>
       new: true,
       runValidators: true,
     };
+
+    console.log(req.body);
 
     // PRIVACY
     if (type === 'privacy') {
@@ -111,23 +73,25 @@ exports.updateOne = (Model, type = 'text') =>
       });
 
       const docE1 = await Model.findByIdAndUpdate(req.params.id, update, docObj);
+
       const imgWithPath = (n) => `public/img/articles/article-${docE1.id}-img${n}.jpeg`;
-      const deleteSecondImage = () => unlink(imgWithPath(2));
-      const secondImageExist = () => exists(imgWithPath(2));
-      const IMAGES = [docE1.img1.includes('img'), docE1.img2.includes('img')].filter((el) => !!el).length;
+
+      const IMAGES = req.body.IMAGE_LEN;
       const FILES = req.body.FILE_LEN;
       const IMG_1_1 = docE1.img1.includes('img1');
       const IMG_1_2 = docE1.img1.includes('img2');
       const IMG_2_1 = docE1.img2.includes('img1');
       const NO_NULL = docE1.img2 !== 'null';
-      const NO_FILE = !secondImageExist();
+      const NO_FILE = !SH.checkImage(docE1.id, 2);
+
+      console.log(IMAGES, FILES, IMG_1_1, NO_NULL);
 
       // RENAMES ARTICLE IMAGE FILES
       const replaceImages = (arg = false) =>
-        rename(imgWithPath(1), imgWithPath(3))
-          .then(() => rename(imgWithPath(2), imgWithPath(1)))
-          .then(() => rename(imgWithPath(3), imgWithPath(2)))
-          .then(() => arg === 'andDelete' && deleteSecondImage());
+        SH.renameImageFile(imgWithPath(1), imgWithPath(3))
+          .then(() => SH.renameImageFile(imgWithPath(2), imgWithPath(1)))
+          .then(() => SH.renameImageFile(imgWithPath(3), imgWithPath(2)))
+          .then(() => arg === 'andDelete' && SH.deleteImage(docE1.id, 2));
 
       if (!docE1) {
         return next(new AppError('No document found with that ID', 404));
@@ -137,9 +101,10 @@ exports.updateOne = (Model, type = 'text') =>
       if (IMAGES === 2 && FILES === 0 && IMG_1_2 && IMG_2_1) replaceImages();
 
       //DELETES SECOND IMAGE
-      if (IMAGES === 1 && FILES === 0 && IMG_1_1 && NO_NULL) deleteSecondImage();
+
+      if (IMAGES === 1 && FILES === 0 && IMG_1_1 && NO_NULL) SH.deleteImage(docE1.id, 2);
       if (IMAGES === 1 && FILES === 0 && IMG_1_2) replaceImages('andDelete');
-      if (IMAGES === 1 && FILES === 1 && IMG_1_1 && NO_FILE) deleteSecondImage();
+      if (IMAGES === 1 && FILES === 1 && IMG_1_1 && NO_FILE) SH.deleteImage(docE1.id, 2);
       if (IMAGES === 1 && FILES === 1 && IMG_1_2) replaceImages('andDelete');
 
       // SECOND SET OF DATA UPDATING IMAGE PATHS

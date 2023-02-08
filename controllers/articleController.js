@@ -2,16 +2,17 @@
 /* eslint-disable no-return-assign */
 /* eslint-disable node/no-unsupported-features/es-syntax */
 
-//const fs = require('fs');
-const { Storage } = require('@google-cloud/storage');
 const multer = require('multer');
-const sharp = require('sharp');
 const Article = require('../models/articleModel');
 const catchAsync = require('../utils/catchAsync');
 const factory = require('./handlerFactory');
 const AppError = require('../utils/appError');
 const User = require('../models/userModel');
+const StorageHandler = require('../utils/storageHandler');
 
+const SH = new StorageHandler();
+
+// CREATES STORAGE FOR THE NEXT HANDLE MIDDLEWARE
 const multerStorage = multer.memoryStorage();
 
 const multerFilter = (req, file, cb) => {
@@ -27,105 +28,35 @@ const upload = multer({
   fileFilter: multerFilter,
 });
 
-exports.uploadArticleImages = upload.fields([
+// HANDLES THE IMAGES BEING UPLOADED
+exports.handleArticleImages = upload.fields([
   { name: 'img1', maxCount: 1 },
   { name: 'img2', maxCount: 1 },
 ]);
 
-/* INTERNAL STORAGE
-const storage = new Storage();
-*/
-
-// GOOGLE STORAGE ----------
-const { STORAGE_PROJECT_ID } = process.env;
-const { STORAGE_KEY_FILE_NAME } = process.env;
-const BUCKET_NAME = 'fp_storage';
-
-const storage = new Storage({
-  STORAGE_PROJECT_ID,
-  STORAGE_KEY_FILE_NAME,
-});
-// -------------------------
-
-exports.resizeArticleImages = catchAsync(async (req, res, next) => {
-  // 1) First image
+// UPLOADS COMPRESSED AND RESIZED IMAGES THE IMAGES
+exports.uploadArticleImages = catchAsync(async (req, res, next) => {
+  // FIRST IMAGE
   if (!req.files.img1) return next();
   req.body.img1 = `article-${req.params.id}-img1.jpeg`;
 
   const articleById = await Article.findById(req.params.id);
 
-  /* INTERNAL STORAGE
-  if (articleById.img1 && fs.existsSync(`public/img/articles/${articleById.img1}`)) {
-    fs.unlinkSync(`public/img/articles/${articleById.img1}`);
-  }
-  */
+  // GOOGLE STORAGE
+  await SH.uploadImage(req.files.img1[0], articleById.img1, [1200, 900], 'jpeg', 75);
 
-  /*
-  // GOOGLE STORAGE ----------
-  if (articleById.img1) {
-    await storage.bucket(BUCKET_NAME).file(`public/img/articles/${articleById.img1}`).delete();
-  }
-  // -------------------------
-  */
-
-  /* INTERNAL STORAGE
-  await sharp(req.files.img1[0].buffer)
-    .resize(2000, 1333)
-    .toFormat('jpeg')
-    .jpeg({ quality: 50 })
-    .toFile(`public/img/articles/${req.body.img1}`);
-  */
-
-  // GOOGLE STORAGE ----------
-  const buffer = await sharp(req.files.img1[0].buffer)
-    .resize(1200, 900)
-    .toFormat('jpeg')
-    .jpeg({ quality: 25 })
-    .toBuffer();
-
-  await storage.bucket(BUCKET_NAME).file(`public/img/articles/${articleById.img1}`).createWriteStream().end(buffer);
-  // -------------------------
-
-  // 2) Second image
+  // SECOND IMAGE
   if (!req.files.img2) return next();
   req.body.img2 = `article-${req.params.id}-img2.jpeg`;
 
-  /* INTERNAL STORAGE
-  if (articleById.img2 && fs.existsSync(`public/img/articles/${articleById.img2}`)) {
-    fs.unlinkSync(`public/img/articles/${articleById.img2}`);
-  }
-  */
-
-  /*
-  // GOOGLE STORAGE ----------
-  if (articleById.img2) {
-    await storage.bucket(BUCKET_NAME).file(`public/img/articles/${articleById.img2}`).delete();
-  }
-  // -------------------------
-  */
-
-  /* INTERNAL STORAGE
-  await sharp(req.files.img2[0].buffer)
-    .resize(2000, 1333)
-    .toFormat('jpeg')
-    .jpeg({ quality: 50 })
-    .toFile(`public/img/articles/${req.body.img2}`);
-  */
-
-  // GOOGLE STORAGE ----------
-  const buffer2 = await sharp(req.files.img2[0].buffer)
-    .resize(1200, 900)
-    .toFormat('jpeg')
-    .jpeg({ quality: 25 })
-    .toBuffer();
-
-  await storage.bucket(BUCKET_NAME).file(`public/img/articles/${articleById.img2}`).createWriteStream().end(buffer2);
-  // -------------------------
+  // GOOGLE STORAGE
+  await SH.uploadImage(req.files.img2[0], articleById.img2, [1200, 900], 'jpeg', 75);
 
   next();
 });
 
-void (function exportTopics(...args) {
+// CREATES TOPIC MIDDLEWARES FOR THE ARTICLE CONTROLLER
+void (function (...args) {
   return args.forEach(
     (topic) =>
       (exports[`${topic}Articles`] = (req, _, next) => {

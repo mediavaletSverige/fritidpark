@@ -68,8 +68,8 @@ router
     authController.protect(true),
     authController.restrictTo('admin', 'coadmin', 'author', 'advertiser'),
     articleController.updateArticleImages,
-    articleController.uploadArticleImages,
-    articleController.resizeArticleImages
+    articleController.handleArticleImages,
+    articleController.uploadArticleImages
   );
 
 // MAKES ARTICLE PRIVATE OR PUBLIC

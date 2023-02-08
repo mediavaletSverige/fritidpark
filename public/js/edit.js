@@ -96,7 +96,7 @@ if (window.location.href.includes('/edit')) {
           }
         });
 
-        img2 = 'null';
+        //img2 = 'null';
 
         // SUBMITS THE CHANGES TO THE API
 
@@ -124,12 +124,18 @@ if (window.location.href.includes('/edit')) {
 
           // CONVERTS IMAGES
 
-          img1 = img1.includes('img') ? img1.replace('img/articles/', '') : img1;
-          img2 = img2.includes('img') ? img2.replace('img/articles/', '') : img2;
+          img1 = img1.includes('img')
+            ? img1.replace('https://storage.cloud.google.com/fp_storage/public/img/articles/', '')
+            : img1;
+
+          img2 = img2.includes('img')
+            ? img2.replace('https://storage.cloud.google.com/fp_storage/public/img/articles/', '')
+            : img2;
 
           // CREATES AN DATA OBJECT FROM THE VALUES ABOVE
 
           const data = {
+            IMAGE_LEN: [imgs[0]?.src.includes('img'), imgs[1]?.src.includes('img')].filter((el) => !!el).length,
             FILE_LEN: btnFileOld.files.length,
             img1,
             img2,
