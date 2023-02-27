@@ -12,7 +12,7 @@ module.exports = class Email {
 
   newTransport() {
     if (process.env.NODE_ENV === 'production') {
-      // Sendgrid
+      // SENDGRID
       return nodemailer.createTransport({
         service: 'SendGrid',
         auth: {
@@ -29,20 +29,19 @@ module.exports = class Email {
         user: process.env.EMAIL_USERNAME,
         pass: process.env.EMAIL_PASSWORD,
       },
-      // Activate in gmail "less secure app" option
     });
   }
 
-  // Send the actual email
+  // SEND MAIN
   async send(template, subject) {
-    // 1) Render HTML based on a pug template
+    // RENDER TEMPLATE
     const html = pug.renderFile(`${__dirname}/../views/email/${template}.pug`, {
       firstName: this.firstName,
       url: this.url,
       subject,
     });
 
-    // 2) Define email options NOT WORKING!
+    // DEFINE EMAIL OPTIONS -> NOT WORKING!
 
     const mailOptions = {
       from: process.env.SENDGRID_EMAIL_FROM,
@@ -52,7 +51,7 @@ module.exports = class Email {
       text: convert(html, { wordwrap: false }),
     };
 
-    // 3) Create a transport and send email
+    // CREATE TRANSPORT AND SEND MAIL
     await this.newTransport().sendMail(mailOptions);
   }
 

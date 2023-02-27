@@ -27,7 +27,6 @@ exports.resizeUserLogo = catchAsync(async (req, res, next) => {
   if (!req.file) return next();
   req.file.filename = `user-${req.user.id}.jpeg`;
 
-  // GOOGLE STORAGE ----------
   const { STORAGE_PROJECT_ID } = process.env;
   const { STORAGE_KEY_FILE_NAME } = process.env;
   const BUCKET_NAME = 'fp_storage';
@@ -40,15 +39,6 @@ exports.resizeUserLogo = catchAsync(async (req, res, next) => {
   const buffer = await sharp(req.file.buffer).resize(250, 250).toFormat('jpeg').jpeg({ quality: 50 }).toBuffer();
 
   await storage.bucket(BUCKET_NAME).file(`public/img/users/${req.file.filename}`).save(buffer);
-  // -------------------------
-
-  /* INTERNAL STORAGE
-  await sharp(req.file.buffer)
-    .resize(250, 250)
-    .toFormat('jpeg')
-    .jpeg({ quality: 50 })
-    .toFile(`public/img/users/${req.file.filename}`);
-  */
 
   next();
 });
@@ -67,16 +57,16 @@ exports.getMe = (req, res, next) => {
 };
 
 exports.updateMe = catchAsync(async (req, res, next) => {
-  // 1) Create error if user posts password data
+  // CREATE ERROR IF USER POSTS PASSWORD DATA
   if (req.body.password || req.body.passwordConfirm) {
     return next(new AppError('This route is not for password updates. Please use /updateMyPassword.', 400));
   }
 
-  // 2) Filtered our unwanted fields names that are not allowed to be updated
+  // FILTER OUT UNWANTED FIELD NAMES THAT'S NOT ALLOWED TO BE UPDATED
   const filteredBody = filterObj(req.body, 'name', 'email');
   if (req.file) filteredBody.logo = req.file.filename;
 
-  // 3) Update user document
+  // UPDATE USER DOCUMENT
   const updateUser = await User.findByIdAndUpdate(req.user.id, filteredBody, {
     new: true,
     runValidators: true,
@@ -103,6 +93,5 @@ exports.createUser = (req, res) => {
 
 exports.getUser = factory.getOne(User);
 exports.getAllUsers = factory.getAll(User);
-// Do not update passwords with this!
 exports.updateUser = factory.updateOne(User);
 exports.deleteUser = factory.deleteOne(User);

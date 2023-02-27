@@ -18,13 +18,12 @@ const globalErrorHandler = require('./controllers/errorController');
 
 const app = express();
 
+app.enable('trust proxy');
+
 app.set('view engine', 'pug');
 app.set('views', path.join(__dirname, 'views'));
 
-// 1) MIDDLEWARES
-
-// Set Security HTTP headers
-
+// PROVIDES SECURITY-RELATED HTTP HEADERS
 app.use(
   helmet({
     contentSecurityPolicy: false,
@@ -32,39 +31,38 @@ app.use(
   })
 );
 
-// Serving static files
+// SERVING STATIC FILES
 app.use(express.static(path.join(__dirname, 'public')));
 
-// Development logging
+// CREATED LOG IN DEVELOPMENT MODE
 if (process.env.NODE_ENV === 'development') app.use(morgan('dev'));
 
-// Limit requests from same API
-const limiter = rateLimit({
+// LIMITS REQUESTS
+const rateLimitOptions = {
   max: 200,
   windowMs: 60 * 60 * 1000,
   message: 'Too many requests from this IP, please try again in an hour',
-});
-app.use('/api', limiter);
+};
+app.use('/api', rateLimit(rateLimitOptions));
 
-// Body parser, reading data from body into req.body
+// READING DATA FROM BODY TO REQ.BODY
 app.use(express.json({ limit: '10kb' }));
 app.use(express.urlencoded({ extended: true, limit: '10kb' }));
 app.use(cookieParser());
 
-// Data sanitization against NoSQL query injection like { "$gt": "" }
+// DATA SANITIZATION AGAINST NOSQL INJENCTIONS LIKE { "$gt": "" }
 app.use(mongoSanitize());
 
-// Data sanitization agains XSS
+// DATA SANITIZATION AGAINST XSS
 app.use(xss());
 
-// Prevent parameter pollution
+// PREVENTS PARAMETER PLLUTION
 app.use(hpp({ whitelist: ['h'] }));
 
 // COMPRESSES TEXT THAT IS SENT TO CLIENT
 app.use(compression());
 
-// 2) ROUTES
-
+// ROUTES
 app.use('/', viewRouter);
 app.use('/api/articles', articleRouter);
 app.use('/api/users', userRouter);

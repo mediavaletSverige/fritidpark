@@ -16,11 +16,10 @@ html
         title Fritid & Park i Sverige | #{title}
     body
 
-        //- article menus + header
+        //- ARTICLE MENUS + HEADER
         include _header
 
-        //- article container + read and write sections
-        
+        //- ARTICLE CONTAINER + READ AND WRITE SECTIONS
         main   
             div#art_container 
                 div#art_header_container
@@ -37,10 +36,10 @@ html
           
             block content 
           
-        //- footer
+        //- FOOTER
         include _footer
         
-        //- logo + scripts + map
+        //- LOGO + SCRIPTS + MAP
         div#logo-wrap
             -if (user)
                 a.logo-link.loggingIn(href=`/userMenu`)

@@ -34,7 +34,9 @@ exports.updateOne = (Model, type = 'text') =>
       runValidators: true,
     };
 
-    console.log(req.body);
+    req.data = Object.assign({}, req.body);
+
+    //console.log(req.body);
 
     // PRIVACY
     if (type === 'privacy') {
@@ -159,7 +161,7 @@ exports.getOne = (Model, popOptions) =>
 
 exports.getAll = (Model, popOptions) =>
   catchAsync(async (req, res, next) => {
-    // To allow for nested get reviews on article (hack)
+    // TO ALLOW FOR NESTED GET REVIEWS ON ARTICLE
     let filter = {};
     if (req.params.articleId) filter = { article: req.params.articleId };
 

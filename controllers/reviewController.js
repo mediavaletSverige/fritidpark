@@ -2,7 +2,7 @@ const Review = require('../models/reviewModel');
 const factory = require('./handlerFactory');
 
 exports.setArticleUserIds = (req, res, next) => {
-  // Allow nested routes
+  // ALLOW NESTED ROUTES
   if (!req.body.article) req.body.article = req.params.articleId;
   if (!req.body.user) req.body.user = req.user.id;
   next();

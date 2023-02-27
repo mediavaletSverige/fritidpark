@@ -55,7 +55,6 @@ function useMarker(page, type = null) {
 }
 
 // ARTICLES
-
 if (!window.location.href.includes('/write')) {
   const getArticles = async () => {
     try {

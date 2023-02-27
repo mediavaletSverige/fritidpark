@@ -138,12 +138,9 @@ if (window.location.href.includes(articleSlug) && articleOwner === read_art.data
         setTimeout(() => (window.location.href = `/article/${localStorage.getItem('goToSlug')}`), 500);
       }
     } catch (e) {
-      console.log(e);
       setTimeout(() => (window.location.href = `/article/${localStorage.getItem('goToSlug')}`), 500);
     }
   }
 
-  document.querySelector('.toHide').addEventListener('click', function (e) {
-    updateArticle(data);
-  });
+  document.querySelector('.toHide').addEventListener('click', () => updateArticle(data));
 }

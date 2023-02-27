@@ -9,35 +9,29 @@ if (window.location.href.includes('/edit')) {
   backFromMenu.textContent = '←';
 
   // DISPLAYS INITIAL IMAGE COUNT ON LABEL
-
   (() => checkImageLength('edit', articleImgHeightsLength))();
 
   // GOES BACK TO ARTICLES
-
   art_btn.addEventListener('click', function () {
     window.history.go(-1);
   });
 
   // RESETS ARTICLE TO INITIAL STATE
-
   reset.addEventListener('click', function (e) {
     e.preventDefault();
     location.reload(true);
   });
 
   // FETCHES ARTICLE FROM API
-
   const getArticle = async (articleId) => {
     try {
       const res = await fetch(`/api/articles/${articleId}`).then((response) => response.json());
 
       if (res.status === 'success') {
         // FETCHES THE ARTICLE AS AN OBJECT
-
         const articleData = res.data.data;
 
         // ASSIGNS ARTICLE VALUES
-
         skribent.value = articleData.author;
         rubrik.value = articleData.h;
         koordinater.value = articleData.location.coordinates.join(',');
@@ -51,7 +45,6 @@ if (window.location.href.includes('/edit')) {
         paragraf3.value = articleData.p3;
 
         // DISPLAYS ALL PARARAPHS PROPERLY IN ALL INPUT FIELDS
-
         const removeTagsFromParagraph = function (p) {
           const tags = p.match(/<[^<>]+>/g);
           let text = p;
@@ -66,20 +59,17 @@ if (window.location.href.includes('/edit')) {
         if (paragraf3.value) paragraf3.value = removeTagsFromParagraph(articleData.p3);
 
         // DISPLAYS ALL TAGS PROPERLY IN INPUT FIELD
-
         taggar.value = articleData.tags.map((el) => `#${el}`).join(' ');
 
         // CHECKS THE CORRECT TOPIC(S)
-
         articleData.topics.includes('fritid') && fritidInp.setAttribute('checked', true);
         articleData.topics.includes('park') && parkInp.setAttribute('checked', true);
         articleData.topics.includes('bad') && badInp.setAttribute('checked', true);
 
         img1 = previewImage1;
-        img2 = previewImage2;
+        img2 = previewImage2 || previewImage1.replace('img1', 'img2');
 
         // SWAPPING IMAGES
-
         let imageIsSwappedForEdit = false;
 
         exchangeImg.addEventListener('click', (e) => {
@@ -96,15 +86,11 @@ if (window.location.href.includes('/edit')) {
           }
         });
 
-        //img2 = 'null';
-
         // SUBMITS THE CHANGES TO THE API
-
         editForm.addEventListener('submit', (e) => {
           e.preventDefault();
 
           // CREATES CONSTANTS FROM INPUTS
-
           let fig1 = bildtext.value;
           let fig2 = bildtext2.value;
           const author = skribent.value;
@@ -119,9 +105,6 @@ if (window.location.href.includes('/edit')) {
           const p2 = insertText(paragraf2.value).replace(/\n/g, '');
           const p3 = insertText(paragraf3.value).replace(/\n/g, '');
 
-          const editFormData = new FormData();
-          editFormData.append('img2', img2);
-
           // CONVERTS IMAGES
 
           img1 = img1.includes('img')
@@ -133,7 +116,6 @@ if (window.location.href.includes('/edit')) {
             : img2;
 
           // CREATES AN DATA OBJECT FROM THE VALUES ABOVE
-
           const data = {
             IMAGE_LEN: [imgs[0]?.src.includes('img'), imgs[1]?.src.includes('img')].filter((el) => !!el).length,
             FILE_LEN: btnFileOld.files.length,
@@ -142,7 +124,6 @@ if (window.location.href.includes('/edit')) {
             fig1,
             fig2,
             author,
-            //location: { coordinates: location },
             h,
             tags,
             topics,
@@ -161,42 +142,56 @@ if (window.location.href.includes('/edit')) {
                 body: JSON.stringify(data),
               });
 
-              const response = await res.json();
+              const json = await res.json();
 
-              if (response.status === 'success') {
-                // CREATES A FORMDATA AND APPENDS IMAGES DEPENDING ON HOW MANY IMAGES ARE PRESENT
-                //await updateArticleImages();
-                setTimeout(() => (window.location.href = `/article/${localStorage.getItem('goToSlug')}`), 2500);
+              if (json.status === 'success') {
+                console.log('data');
+                //setTimeout(() => (window.location.href = `/article/${localStorage.getItem('goToSlug')}`), 2500);
               }
-            } catch (e) {
-              console.log(e.message);
+            } catch (err) {
+              console.log(err.message);
+              //setTimeout(() => (window.location.href = `/article/${localStorage.getItem('goToSlug')}`), 2500);
             }
           };
 
           updateArticle();
 
-          /*
           // THE SECOND PATCH WITH ONLY FILE IMAGES
-          async function updateArticleImages() {
-            try {
-              const res = await axios({
-                method: 'PATCH',
-                url: `/api/articles/images/${articleId}`,
-                editFormData,
-              });
-              if (res.data.status === 'success') {
-                console.log('Updating with Images');
-                setTimeout(() => (window.location.href = `/article/${localStorage.getItem('goToSlug')}`), 2500);
-              }
-            } catch (e) {
-              console.log(e.response.data.message);
+
+          const editFormData = new FormData();
+
+          if (btnFileOld.files.length === 1) {
+            if (previewImage1.includes('storage') && previewImage2.includes('blob')) {
+              editFormData.append('img2', btnFileOld.files[0]);
+            }
+            if (previewImage1.includes('blob') && previewImage2.includes('storage')) {
+              editFormData.append('img1', btnFileOld.files[0]);
             }
           }
-          */
+
+          const updateArticleImages = async (data) => {
+            try {
+              const res = await fetch(`/api/articles/existingimages/${articleId}`, {
+                method: 'PATCH',
+                body: data,
+              });
+
+              const json = await res.json();
+              if (json.status === 'success') {
+                console.log('images');
+                setTimeout(() => (window.location.href = `/article/${localStorage.getItem('goToSlug')}`), 2500);
+              }
+            } catch (err) {
+              console.log(err.massage);
+              setTimeout(() => (window.location.href = `/article/${localStorage.getItem('goToSlug')}`), 2500);
+            }
+          };
+
+          updateArticleImages(editFormData);
         });
       }
-    } catch (e) {
-      console.log(e.message);
+    } catch (err) {
+      console.log(err.message);
     }
   };
 

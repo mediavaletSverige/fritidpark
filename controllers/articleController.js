@@ -12,7 +12,7 @@ const StorageHandler = require('../utils/storageHandler');
 
 const SH = new StorageHandler();
 
-// CREATES STORAGE FOR THE NEXT HANDLE MIDDLEWARE
+// CREATES STORAGE
 const multerStorage = multer.memoryStorage();
 
 const multerFilter = (req, file, cb) => {
@@ -29,14 +29,16 @@ const upload = multer({
 });
 
 // HANDLES THE IMAGES BEING UPLOADED
+
 exports.handleArticleImages = upload.fields([
   { name: 'img1', maxCount: 1 },
   { name: 'img2', maxCount: 1 },
 ]);
 
-// UPLOADS COMPRESSED AND RESIZED IMAGES THE IMAGES
+// UPLOADS ARTICLE IMAGES
 exports.uploadArticleImages = catchAsync(async (req, res, next) => {
   // FIRST IMAGE
+  console.log(req.files);
   if (!req.files.img1) return next();
   req.body.img1 = `article-${req.params.id}-img1.jpeg`;
 
@@ -51,6 +53,23 @@ exports.uploadArticleImages = catchAsync(async (req, res, next) => {
 
   // GOOGLE STORAGE
   await SH.uploadImage(req.files.img2[0], articleById.img2, [1200, 900], 'jpeg', 75);
+
+  next();
+});
+
+// UPLOADS ON EXISTING ARTICLE IMAGES
+exports.uploadExistingArticleImages = catchAsync(async (req, _, next) => {
+  const articleById = await Article.findById(req.params.id);
+
+  // FIRST IMAGE
+  if (articleById.img1.includes('blob')) {
+    await SH.uploadImage(req.files.img1[0], `article-${req.params.id}-img1.jpeg`, [1200, 900], 'jpeg', 75);
+  }
+
+  // SECOND IMAGE
+  if (articleById.img2.includes('blob')) {
+    await SH.uploadImage(req.files.img2[0], `article-${req.params.id}-img2.jpeg`, [1200, 900], 'jpeg', 75);
+  }
 
   next();
 });

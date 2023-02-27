@@ -4,13 +4,11 @@ const writeForm = document.getElementById('writeForm');
 const writeUserId = writeForm.dataset.userid;
 
 if (window.location.href.includes('/write')) {
-  //localStorage.clear();
   document.querySelector('#art_header').textContent = 'nytt inlägg';
   backFromMenu.textContent = '🖹';
   backFromMenu.addEventListener('click', () => (window.location.href = `/articles`));
 
   // CHECKS IF IMAGES HAS BEEN SWAPPED
-
   let imageIsSwapped = false;
   exchangeImg.addEventListener('click', (e) => {
     if (imageIsSwapped) {
@@ -65,10 +63,10 @@ if (window.location.href.includes('/write')) {
           },
           body: JSON.stringify(data),
         });
-        const response = await res.json();
-        if (response.status === 'success') {
-          localStorage.setItem('goToSlug', response.data.slug);
-          return response.data.id;
+        const json = await res.json();
+        if (json.status === 'success') {
+          localStorage.setItem('goToSlug', json.data.slug);
+          return json.data.id;
         }
       } catch (e) {
         console.log(e);
@@ -84,8 +82,8 @@ if (window.location.href.includes('/write')) {
           method: 'PATCH',
           body: data,
         });
-        const response = await res.json();
-        if (response.status === 'success') {
+        const json = await res.json();
+        if (json.status === 'success') {
           setTimeout(() => (window.location.href = `/article/${localStorage.getItem('goToSlug')}`), 5000);
         }
       } catch (e) {

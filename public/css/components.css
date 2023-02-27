@@ -89,6 +89,17 @@
   font-weight: bold;
 }
 
+.btn-style:hover {
+  background: white;
+  color: var(--park-color);
+}
+
+.btn-style:active {
+  filter: drop-shadow(0 0.1px 0.1rem rgba(0, 0, 0, 0.1));
+  outline: 1px solid lightgray;
+  transform: scale(0.95);
+}
+
 /* Main buttons */
 
 .main-btn {

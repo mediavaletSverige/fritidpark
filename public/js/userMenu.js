@@ -15,8 +15,7 @@ toUserMenu.addEventListener('click', function (e) {
   window.location.href = `/userMenu`;
 });
 
-// Användarmeny gränssnitt + tillbakaknapp
-
+// USER MENU WITH BACK BUTTON
 if (window.location.href.includes('/userMenu')) {
   document.querySelector('#art_header').textContent = 'användarmeny';
   document.querySelector('main').style.display = 'block';
@@ -24,8 +23,7 @@ if (window.location.href.includes('/userMenu')) {
   backFromMenu.addEventListener('click', () => (window.location.href = `/articles`));
 }
 
-// Mina artiklar gränssnitt + tillbakaknapp
-
+// MY ARTICLES WITH BACK BUTTON
 if (window.location.href.includes('/myArticles')) {
   document.querySelector('#art_header').textContent = 'mina artiklar';
   document.querySelector('main').style.display = 'block';
@@ -33,8 +31,7 @@ if (window.location.href.includes('/myArticles')) {
   backFromMenu.addEventListener('click', () => (window.location.href = `/userMenu`));
 }
 
-// Uppdatera namn, epost och lösenord
-
+// UPDATE NAME, MAIL AND PASSWORD
 const updateUserData = async (data, type) => {
   try {
     const res = await fetch(`/api/users/${type === 'data' ? 'updateMe' : 'updateMyPassword'}`, {
@@ -100,8 +97,7 @@ userMenuSubmit.addEventListener('submit', function (e) {
   else updateUserData({ passwordCurrent, password, passwordConfirm }, 'password');
 });
 
-// Logga ut
-
+// LOG OUT
 const logout = async () => {
   const res = await fetch('/api/users/logout', {
     method: 'GET',
@@ -115,6 +111,5 @@ const logout = async () => {
 
 document.getElementById('loggingOutBtn').addEventListener('click', () => logout());
 
-// Mina artiklar
-
+// MY ARTICLES
 document.querySelector('.toMyArticles').addEventListener('click', () => (window.location.href = `/myArticles`));

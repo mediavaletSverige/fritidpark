@@ -100,7 +100,6 @@ articleSchema.virtual('reviews', {
 });
 
 // CREATES ARTICLE ADDRESS
-
 articleSchema.pre('save', function (next) {
   this.slug = slugify(this.h.split(' ').join('-'), { lower: true });
   next();

@@ -22,7 +22,6 @@ let file2;
 let imgs = null;
 
 // INSERTS BR TAGS BETWEEN P TAGS (IN BOTH PREVIEW AND DATA)
-
 function insertText(el) {
   if (!el) {
     return el;
@@ -35,14 +34,12 @@ function insertText(el) {
 }
 
 // SELECTS THE HIDDEN FILE BUTTON
-
 btnFileNew.addEventListener('click', function (e) {
   e.preventDefault();
   btnFileOld.click();
 });
 
 // CHANGING EXCHANGE BUTTON AND TEXT DEPENDING ON HOW MANY IMAGES ARE PRESENT AND RESETS IMAGES
-
 function checkImageLength(param, len) {
   if (window.location.href.includes(`/${param}`)) {
     const dispExchangeBtn = function (p1 = 'none') {
@@ -61,7 +58,6 @@ function checkImageLength(param, len) {
 }
 
 // SELECTS FILE IMAGES AND CHECKS LENGTH
-
 btnFileOld.addEventListener('change', function (e) {
   file1 = btnFileOld.files[0];
   file2 = btnFileOld.files[1];
@@ -85,7 +81,6 @@ btnFileOld.addEventListener('change', function (e) {
   }
 
   // ACCURATE IMAGE DISPLAY
-
   if (checkParam('write')) {
     previewImage1 = img1;
     previewImage2 = this.files.length === 1 ? null : img2;
@@ -102,7 +97,6 @@ btnFileOld.addEventListener('change', function (e) {
 });
 
 // ENABLE AND DISABLE "SPARA" AND "PUBLICERA" BUTTONS (WRITE & EDIT)
-
 write_art.addEventListener('change', () => {
   void (function publishSave(...buttons) {
     buttons.forEach((button) => {
@@ -127,4 +121,17 @@ write_art.addEventListener('change', () => {
       }
     });
   })(spara, publicera);
+});
+
+// BUTTONS
+let rotatedExchange = true;
+
+exchangeImg.addEventListener('click', function () {
+  if (rotatedExchange) {
+    this.style.transform = 'rotateY(180deg)';
+    rotatedExchange = false;
+  } else if (!rotatedExchange) {
+    this.style.transform = 'rotateY(0)';
+    rotatedExchange = true;
+  }
 });

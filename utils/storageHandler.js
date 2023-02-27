@@ -13,13 +13,13 @@ class storageHandler {
     this.bucket = this.storage.bucket(this.BUCKET_NAME);
   }
 
-  async uploadImage(img, id, size, format, quality) {
-    const buffer = await sharp(img.buffer)
+  async uploadImage(file, name, size, format, quality) {
+    const buffer = await sharp(file.buffer)
       .resize(...size)
       .toFormat(format)
       .jpeg({ quality })
       .toBuffer();
-    this.bucket.file(`public/img/articles/${id}`).createWriteStream().end(buffer);
+    this.bucket.file(`public/img/articles/${name}`).createWriteStream().end(buffer);
   }
 
   async deleteImages(id) {

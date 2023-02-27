@@ -14,7 +14,6 @@ const time = new Date().toLocaleString('sv-SE', timeObj);
 ['change', 'input'].forEach((el) => document.addEventListener(el, previewHTML));
 
 // ACCURATE IMAGE DISPLAY
-
 if (checkParam('edit')) {
   previewImage1 = `https://storage.cloud.google.com/fp_storage/public/img/articles/${localImages(1)}`;
   previewImage2 =
@@ -22,14 +21,12 @@ if (checkParam('edit')) {
 }
 
 // DISPLAYS ARTICLE IN EDIT MODE AND SHOWS REAL TIME CHANGES
-
 if (checkParam('edit')) {
   const instantPreview = (delay) => Promise.resolve(setTimeout(() => previewHTML(), delay));
   instantPreview(300).then(() => instantPreview(400));
 }
 
 // DISPLAYS ARTICLE BACKGROUND
-
 const checkTopic = function () {
   let color;
   let f = 'rgba(233, 203, 176, 0.75)';
@@ -47,7 +44,6 @@ const checkTopic = function () {
 };
 
 // DISPLAYS ARTICLE WHEN WRITING, EDITING AND READING
-
 function previewHTML() {
   preview.style.background = checkTopic();
   preview.innerHTML = `
@@ -77,7 +73,6 @@ function previewHTML() {
         `;
 
   // REMOVES FIGURES
-
   const firstFig = document.querySelector('#pFig1');
   const secondFig = document.querySelector('#pFig2');
 
@@ -85,7 +80,6 @@ function previewHTML() {
   previewImage2 === null && secondFig.remove();
 
   // ADDS BUTTONS AND REMOVES ARTICLES IN EDIT MODE
-
   if (checkParam('edit')) {
     imgs[1].insertAdjacentHTML(
       'afterend',
@@ -111,7 +105,6 @@ function previewHTML() {
   }
 
   // REMOVES NON NECESSARY TAGS
-
   void (function checkTextContent(...elements) {
     const p2 = elements.forEach((el) => {
       const pEl = preview.querySelector(el);
@@ -121,7 +114,6 @@ function previewHTML() {
   })('q', '.pPC2', '.pPC3');
 
   // DISPLAYS TAGS
-
   function insertTags() {
     const tagArray = taggar.value.match(/[A-ZÅÄÖa-zåäö\d]+/gi);
     if (!tagArray) return '';
@@ -129,14 +121,12 @@ function previewHTML() {
   }
 
   // PUTS ALL THE PARAGRAPH VALUES INSIDE LOCALSTORAGE FOR ACCESSIBILITY
-
   localStorage.setItem('p1', insertText(paragraf1.value).replace(/\n/g, ''));
   localStorage.setItem('p2', insertText(paragraf2.value).replace(/\n/g, ''));
   localStorage.setItem('p3', insertText(paragraf3.value).replace(/\n/g, ''));
 }
 
 // SWAPPING IMAGES
-
 exchangeImg.addEventListener('click', (e) => {
   e.preventDefault();
 

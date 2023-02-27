@@ -8,7 +8,6 @@ const router = express.Router();
 router.use('/:articleId/reviews', reviewRouter);
 
 // ALIASES
-
 const aliases = function (alias, func) {
   router.route(`/${alias}`).get(func, articleController.getAllArticles);
 };
@@ -18,7 +17,6 @@ aliases('park', articleController.parkArticles);
 aliases('bad', articleController.badArticles);
 
 // GET ARTICLE STATS
-
 router
   .route('/stats')
   .get(
@@ -28,11 +26,9 @@ router
   );
 
 // GEO ROUTES
-
 router.route('/articles-within/:distance/center/:latlng/unit/:unit').get(articleController.getArticlesWithin);
 
 // GET ALL & CREATE
-
 router
   .route('/')
   .get(
@@ -47,7 +43,6 @@ router
   );
 
 //  GET ONE, UPDATE AND DELETE
-
 router
   .route('/:id')
   .get(articleController.getArticle)
@@ -72,8 +67,17 @@ router
     articleController.uploadArticleImages
   );
 
-// MAKES ARTICLE PRIVATE OR PUBLIC
+router
+  .route('/existingimages/:id')
+  .patch(
+    authController.protect(true),
+    authController.restrictTo('admin', 'coadmin', 'author', 'advertiser'),
+    articleController.updateArticleImages,
+    articleController.handleArticleImages,
+    articleController.uploadExistingArticleImages
+  );
 
+// MAKES ARTICLE PRIVATE OR PUBLIC
 router
   .route('/privacy/:id')
   .patch(

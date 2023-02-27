@@ -66,7 +66,6 @@ reviewSchema.statics.calcAverageRatings = async function (articleId) {
 };
 
 reviewSchema.post('save', function () {
-  // this points to current review
   this.constructor.calcAverageRatings(this.article);
 });
 
