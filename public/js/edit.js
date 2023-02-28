@@ -118,10 +118,10 @@ if (window.location.href.includes('/edit')) {
           const editFormData = new FormData();
 
           if (btnFileOld.files.length === 1) {
-            if (/storage/.test(previewImage1) && /blob/.test(previewImage2)) {
+            if (previewImage1.indexOf('storage') !== -1 && previewImage2.indexOf('blob') !== -1) {
               editFormData.append('img2', btnFileOld.files[0]);
             }
-            if (/blob/.test(previewImage1) && /storage/.test(previewImage2)) {
+            if (previewImage1.indexOf('blob') !== -1 && previewImage2.indexOf('storage') !== -1) {
               editFormData.append('img1', btnFileOld.files[0]);
             }
           }
