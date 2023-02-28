@@ -134,19 +134,13 @@ if (window.location.href.includes('/edit')) {
           };
 
           // PATCHES DATA TO API EXCEPT IMAGES
-          const updateArticle = () => {
-            try {
-              const res = fetch(`/api/articles/${articleId}`, {
-                method: 'PATCH',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify(data),
-              });
-            } catch (err) {
-              console.log(err.message);
-            }
-          };
-
-          updateArticle();
+          void (function () {
+            fetch(`/api/articles/${articleId}`, {
+              method: 'PATCH',
+              headers: { 'Content-Type': 'application/json' },
+              body: JSON.stringify(data),
+            });
+          })();
 
           // THE SECOND PATCH WITH ONLY FILE IMAGES
 
@@ -161,22 +155,13 @@ if (window.location.href.includes('/edit')) {
             }
           }
 
-          const updateArticleImages = (data) => {
-            try {
-              const res = fetch(`/api/articles/existingimages/${articleId}`, {
-                method: 'PATCH',
-                body: data,
-              });
-
-              console.log('images');
-              setTimeout(() => (window.location.href = `/article/${localStorage.getItem('goToSlug')}`), 2500);
-            } catch (err) {
-              console.log(err.massage);
-              setTimeout(() => (window.location.href = `/article/${localStorage.getItem('goToSlug')}`), 2500);
-            }
-          };
-
-          updateArticleImages(editFormData);
+          void (function () {
+            fetch(`/api/articles/existingimages/${articleId}`, {
+              method: 'PATCH',
+              body: editFormData,
+            });
+            setTimeout(() => (window.location.href = `/article/${localStorage.getItem('goToSlug')}`), 2500);
+          })();
         });
       }
     } catch (err) {
