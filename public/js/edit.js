@@ -138,7 +138,7 @@ if (window.location.href.includes('/edit')) {
           let secondPatch = false;
 
           const updateArticle = () => {
-            const res = fetch(`/api/articles/${articleId}`, {
+            fetch(`/api/articles/${articleId}`, {
               method: 'PATCH',
               headers: { 'Content-Type': 'application/json' },
               body: JSON.stringify(data),
@@ -164,18 +164,18 @@ if (window.location.href.includes('/edit')) {
           }
 
           if (secondPatch) {
-            const updateArticleImages = (data) => {
+            const updateArticleImages = () => {
               secondPatch = false;
-              const res = fetch(`/api/articles/existingimages/${articleId}`, {
+              fetch(`/api/articles/existingimages/${articleId}`, {
                 method: 'PATCH',
-                body: data,
+                body: editFormData,
               });
 
               console.log('second patch!');
 
               setTimeout(() => (window.location.href = `/article/${localStorage.getItem('goToSlug')}`), 2500);
             };
-            updateArticleImages(editFormData);
+            updateArticleImages();
           }
         });
       }
