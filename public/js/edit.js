@@ -134,13 +134,27 @@ if (window.location.href.includes('/edit')) {
           };
 
           // PATCHES DATA TO API EXCEPT IMAGES
-          void (function () {
-            fetch(`/api/articles/${articleId}`, {
-              method: 'PATCH',
-              headers: { 'Content-Type': 'application/json' },
-              body: JSON.stringify(data),
-            });
-          })();
+          const updateArticle = async () => {
+            try {
+              const res = await fetch(`/api/articles/${articleId}`, {
+                method: 'PATCH',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(data),
+              });
+
+              const json = await res.json();
+
+              if (json.status === 'success') {
+                console.log('data');
+                //setTimeout(() => (window.location.href = `/article/${localStorage.getItem('goToSlug')}`), 2500);
+              }
+            } catch (err) {
+              console.log(err.message);
+              //setTimeout(() => (window.location.href = `/article/${localStorage.getItem('goToSlug')}`), 2500);
+            }
+          };
+
+          updateArticle();
 
           // THE SECOND PATCH WITH ONLY FILE IMAGES
 
@@ -155,13 +169,25 @@ if (window.location.href.includes('/edit')) {
             }
           }
 
-          void (function () {
-            fetch(`/api/articles/existingimages/${articleId}`, {
-              method: 'PATCH',
-              body: editFormData,
-            });
-            setTimeout(() => (window.location.href = `/article/${localStorage.getItem('goToSlug')}`), 2500);
-          })();
+          const updateArticleImages = async (data) => {
+            try {
+              const res = await fetch(`/api/articles/existingimages/${articleId}`, {
+                method: 'PATCH',
+                body: data,
+              });
+
+              const json = await res.json();
+              if (json.status === 'success') {
+                console.log('images');
+                setTimeout(() => (window.location.href = `/article/${localStorage.getItem('goToSlug')}`), 2500);
+              }
+            } catch (err) {
+              console.log(err.massage);
+              setTimeout(() => (window.location.href = `/article/${localStorage.getItem('goToSlug')}`), 2500);
+            }
+          };
+
+          updateArticleImages(editFormData);
         });
       }
     } catch (err) {
