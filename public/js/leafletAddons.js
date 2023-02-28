@@ -37,7 +37,7 @@ function useMarker(page, type = null) {
         topics.includes('park') &&
         topics.includes('park')
       )
-        marker = pb;
+        marker = fpb;
       else if (isPrivate === true) marker = '/img/images/marker-icon-2x-grey.png';
     }
 
