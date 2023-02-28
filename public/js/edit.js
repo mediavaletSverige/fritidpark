@@ -115,17 +115,6 @@ if (window.location.href.includes('/edit')) {
             ? img2.replace('https://storage.cloud.google.com/fp_storage/public/img/articles/', '')
             : img2;
 
-          const editFormData = new FormData();
-
-          if (btnFileOld.files.length === 1) {
-            if (previewImage1.indexOf('storage') !== -1 && previewImage2.indexOf('blob') !== -1) {
-              editFormData.append('img2', btnFileOld.files[0]);
-            }
-            if (previewImage1.indexOf('blob') !== -1 && previewImage2.indexOf('storage') !== -1) {
-              editFormData.append('img1', btnFileOld.files[0]);
-            }
-          }
-
           // CREATES AN DATA OBJECT FROM THE VALUES ABOVE
           const data = {
             IMAGE_LEN: [imgs[0]?.src.includes('img'), imgs[1]?.src.includes('img')].filter((el) => !!el).length,
@@ -145,49 +134,49 @@ if (window.location.href.includes('/edit')) {
           };
 
           // PATCHES DATA TO API EXCEPT IMAGES
-          const updateArticle = async () => {
-            try {
-              const res = await fetch(`/api/articles/${articleId}`, {
-                method: 'PATCH',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify(data),
-              });
 
-              const json = await res.json();
+          let secondPatch = false;
 
-              if (json.status === 'success') {
-                console.log('data');
-              }
-            } catch (err) {
-              console.log(err.message);
-            }
+          const updateArticle = () => {
+            const res = fetch(`/api/articles/${articleId}`, {
+              method: 'PATCH',
+              headers: { 'Content-Type': 'application/json' },
+              body: JSON.stringify(data),
+            });
+
+            secondPatch = true;
+            console.log('first patch!');
           };
 
           updateArticle();
 
           // THE SECOND PATCH WITH ONLY FILE IMAGES
 
-          console.log(...editFormData);
+          const editFormData = new FormData();
 
-          const updateArticleImages = async (data) => {
-            try {
-              const res = await fetch(`/api/articles/existingimages/${articleId}`, {
+          if (btnFileOld.files.length === 1) {
+            if (previewImage1.indexOf('storage') !== -1 && previewImage2.indexOf('blob') !== -1) {
+              editFormData.append('img2', btnFileOld.files[0]);
+            }
+            if (previewImage1.indexOf('blob') !== -1 && previewImage2.indexOf('storage') !== -1) {
+              editFormData.append('img1', btnFileOld.files[0]);
+            }
+          }
+
+          if (secondPatch) {
+            const updateArticleImages = (data) => {
+              secondPatch = false;
+              const res = fetch(`/api/articles/existingimages/${articleId}`, {
                 method: 'PATCH',
                 body: data,
               });
 
-              const json = await res.json();
-              if (json.status === 'success') {
-                console.log('images');
-                //setTimeout(() => (window.location.href = `/article/${localStorage.getItem('goToSlug')}`), 2500);
-              }
-            } catch (err) {
-              console.log(err.massage);
-              //setTimeout(() => (window.location.href = `/article/${localStorage.getItem('goToSlug')}`), 2500);
-            }
-          };
+              console.log('second patch!');
 
-          updateArticleImages(editFormData);
+              setTimeout(() => (window.location.href = `/article/${localStorage.getItem('goToSlug')}`), 2500);
+            };
+            updateArticleImages(editFormData);
+          }
         });
       }
     } catch (err) {

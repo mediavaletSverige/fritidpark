@@ -69,7 +69,7 @@ if (window.location.href.includes('/write')) {
           return json.data.id;
         }
       } catch (e) {
-        console.log(e);
+        console.log(err.message);
       }
     };
 
