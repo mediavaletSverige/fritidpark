@@ -115,6 +115,17 @@ if (window.location.href.includes('/edit')) {
             ? img2.replace('https://storage.cloud.google.com/fp_storage/public/img/articles/', '')
             : img2;
 
+          const editFormData = new FormData();
+
+          if (btnFileOld.files.length === 1) {
+            if (/storage/.test(previewImage1) && /blob/.test(previewImage2)) {
+              editFormData.append('img2', btnFileOld.files[0]);
+            }
+            if (/blob/.test(previewImage1) && /storage/.test(previewImage2)) {
+              editFormData.append('img1', btnFileOld.files[0]);
+            }
+          }
+
           // CREATES AN DATA OBJECT FROM THE VALUES ABOVE
           const data = {
             IMAGE_LEN: [imgs[0]?.src.includes('img'), imgs[1]?.src.includes('img')].filter((el) => !!el).length,
@@ -146,11 +157,9 @@ if (window.location.href.includes('/edit')) {
 
               if (json.status === 'success') {
                 console.log('data');
-                //setTimeout(() => (window.location.href = `/article/${localStorage.getItem('goToSlug')}`), 2500);
               }
             } catch (err) {
               console.log(err.message);
-              //setTimeout(() => (window.location.href = `/article/${localStorage.getItem('goToSlug')}`), 2500);
             }
           };
 
@@ -158,16 +167,7 @@ if (window.location.href.includes('/edit')) {
 
           // THE SECOND PATCH WITH ONLY FILE IMAGES
 
-          const editFormData = new FormData();
-
-          if (btnFileOld.files.length === 1) {
-            if (previewImage1.includes('storage') && previewImage2.includes('blob')) {
-              editFormData.append('img2', btnFileOld.files[0]);
-            }
-            if (previewImage1.includes('blob') && previewImage2.includes('storage')) {
-              editFormData.append('img1', btnFileOld.files[0]);
-            }
-          }
+          console.log(...editFormData);
 
           const updateArticleImages = async (data) => {
             try {
@@ -179,11 +179,11 @@ if (window.location.href.includes('/edit')) {
               const json = await res.json();
               if (json.status === 'success') {
                 console.log('images');
-                setTimeout(() => (window.location.href = `/article/${localStorage.getItem('goToSlug')}`), 2500);
+                //setTimeout(() => (window.location.href = `/article/${localStorage.getItem('goToSlug')}`), 2500);
               }
             } catch (err) {
               console.log(err.massage);
-              setTimeout(() => (window.location.href = `/article/${localStorage.getItem('goToSlug')}`), 2500);
+              //setTimeout(() => (window.location.href = `/article/${localStorage.getItem('goToSlug')}`), 2500);
             }
           };
 

@@ -36,7 +36,7 @@ exports.handleArticleImages = upload.fields([
 ]);
 
 // UPLOADS ARTICLE IMAGES
-exports.uploadArticleImages = catchAsync(async (req, res, next) => {
+exports.uploadArticleImages = catchAsync(async (req, _, next) => {
   // FIRST IMAGE
   console.log(req.files);
   if (!req.files.img1) return next();
@@ -62,12 +62,13 @@ exports.uploadExistingArticleImages = catchAsync(async (req, _, next) => {
   const articleById = await Article.findById(req.params.id);
 
   // FIRST IMAGE
-  if (articleById.img1.includes('blob')) {
+
+  if (/blob/.test(articleById.img1)) {
     await SH.uploadImage(req.files.img1[0], `article-${req.params.id}-img1.jpeg`, [1200, 900], 'jpeg', 75);
   }
 
   // SECOND IMAGE
-  if (articleById.img2.includes('blob')) {
+  if (/blob/.test(articleById.img2)) {
     await SH.uploadImage(req.files.img2[0], `article-${req.params.id}-img2.jpeg`, [1200, 900], 'jpeg', 75);
   }
 
