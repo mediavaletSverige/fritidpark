@@ -1,6 +1,8 @@
 /* eslint-disable */
 
 //HTML CONSTANTS
+const top_menu_textContainer = document.getElementById('article_menu-top');
+const bottom_menu_textContainer = document.getElementById('article_menu-bottom');
 const top_menu_text = document.getElementById('article_menu-top').querySelectorAll('p');
 const bottom_menu_text = document.getElementById('article_menu-bottom').querySelectorAll('p');
 const main = document.querySelector('main');
@@ -11,6 +13,10 @@ const read_art = document.getElementById('read_art');
 const write_art = document.getElementById('write_art');
 const header = document.querySelector('header');
 const footer = document.querySelector('footer');
+const userLogoContainer = document.getElementById('logo-wrap');
+const articleContainer = document.querySelector('article');
+const articleLogo = document.getElementById('pLogga');
+const articleTags = document.querySelectorAll('.pTag');
 
 //FORM CONSTANTS
 const formEmail = document.getElementById('form-email');

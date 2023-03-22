@@ -4,7 +4,7 @@ block content
     div#read_art  
         section.card-container
             each article in articles.filter(el => el.owner === user.id || el.private === false)
-                a.card(href=`/article/${article.slug}` style=`background-image: url("https://storage.cloud.google.com/fp_storage/public/img/articles/${article.img1}")`) 
+                a.card(href=`/artikel/${article.slug}` style=`background-image: url("https://storage.cloud.google.com/fp_storage/public/img/articles/${article.img1}")`) 
                     div.card_top
                         div.card_top_left
                             img#pLogga(src=`https://storage.cloud.google.com/fp_storage/public/img/users/user-${article.owner}.jpeg`)

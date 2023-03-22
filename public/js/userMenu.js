@@ -19,12 +19,12 @@ toUserMenu.addEventListener('click', function (e) {
 if (window.location.href.includes('/userMenu')) {
   document.querySelector('#art_header').textContent = 'användarmeny';
   document.querySelector('main').style.display = 'block';
-  backFromMenu.textContent = '🖹';
-  backFromMenu.addEventListener('click', () => (window.location.href = `/articles`));
+  backFromMenu.textContent = ' 🖹';
+  backFromMenu.addEventListener('click', () => (window.location.href = `/artiklar`));
 }
 
 // MY ARTICLES WITH BACK BUTTON
-if (window.location.href.includes('/myArticles')) {
+if (window.location.href.includes('/mina-artiklar')) {
   document.querySelector('#art_header').textContent = 'mina artiklar';
   document.querySelector('main').style.display = 'block';
   backFromMenu.textContent = '←';
@@ -112,4 +112,4 @@ const logout = async () => {
 document.getElementById('loggingOutBtn').addEventListener('click', () => logout());
 
 // MY ARTICLES
-document.querySelector('.toMyArticles').addEventListener('click', () => (window.location.href = `/myArticles`));
+document.querySelector('.toMyArticles').addEventListener('click', () => (window.location.href = `/mina-artiklar`));

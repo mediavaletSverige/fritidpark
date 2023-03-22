@@ -1,31 +1,231 @@
-dialog {
+@import url('https://fonts.googleapis.com/css2?family=Titan+One&display=swap');
+
+.head-container {
+  position: relative;
   position: absolute;
+  inset: 50%;
+  translate: -50% -50%;
+  width: calc(20rem * var(--head-scale));
+  height: calc(20rem * var(--head-scale));
+  border-radius: 50%;
+  background-image: linear-gradient(-180deg, rgba(178, 194, 157, 1) 30%, rgba(127, 138, 112, 0.7) 100%);
+  backdrop-filter: blur(3px);
+  border-top: calc(0.5rem * var(--head-scale)) solid var(--bad-color);
+  border-bottom: calc(7rem * var(--head-scale)) solid var(--bad-color);
+  box-shadow: 0 -0.25rem 0.75rem black;
+  z-index: 4;
+  animation: headMovement 2s Infinite alternate var(--head-animation-timing-function) var(--head-animation-pause-state);
+}
+
+@keyframes headMovement {
+  to {
+    margin-top: calc(-1rem * var(--head-scale));
+    transform: rotateY(-10deg);
+    border-top: 0 solid var(--bad-color);
+    border-bottom: calc(8rem * var(--head-scale)) solid var(--bad-color);
+    box-shadow: 0 calc(0.25 * var(--head-scale)) calc(0.75rem * var(--head-scale)) black;
+  }
+}
+
+.upper-face-container {
+  display: flex;
+  justify-content: space-between;
+  padding: calc(4rem * var(--head-scale));
+}
+
+.eyebrow {
+  width: calc(4rem * var(--head-scale));
+  height: calc(1rem * var(--head-scale));
+  margin-top: calc(-1rem * var(--head-scale));
+  background-color: #90cccb;
+  filter: drop-shadow(0 0.1rem 0.1rem rgba(0, 0, 0, 0.5));
+}
+
+.left-eyebrow {
+  tranform-origin: left;
+  rotate: 5deg;
+  border-top-right-radius: calc(2rem * var(--head-scale));
+  border-bottom-left-radius: calc(2rem * var(--head-scale));
+  animation: leftEyebrowMovement 2s Infinite alternate var(--head-animation-timing-function)
+    var(--head-animation-pause-state);
+}
+
+@keyframes leftEyebrowMovement {
+  to {
+    rotate: -15deg;
+    filter: drop-shadow(0 0.2rem 0.1rem rgba(0, 0, 0, 0.5));
+  }
+}
+
+.right-eyebrow {
+  tranform-origin: left;
+  rotate: -5deg;
+  border-top-left-radius: calc(2rem * var(--head-scale));
+  border-bottom-right-radius: calc(2rem * var(--head-scale));
+  animation: rightEyebrowMovement 2s Infinite alternate var(--head-animation-timing-function)
+    var(--head-animation-pause-state);
+}
+
+@keyframes rightEyebrowMovement {
+  to {
+    rotate: 15deg;
+    filter: drop-shadow(0 0.2rem 0.1rem rgba(0, 0, 0, 0.5));
+  }
+}
+
+.eye {
+  position: relative;
+  margin-top: calc(1rem * var(--head-scale));
+  width: calc(4rem * var(--head-scale));
+  height: calc(4rem * var(--head-scale));
+  overflow: clip;
+  border: calc(0.2rem * var(--head-scale)) solid rgba(122, 122, 122, 0.2);
+  transition: all 500ms;
+  transition: transform 250ms;
+  border-radius: 50%;
+}
+
+.eye:active {
+  transform: scale(0.9);
+  outline: calc(0.1rem * var(--head-scale)) solid var(--bad-color);
+}
+
+.left-eye {
+  filter: drop-shadow(0 0.25rem 0.25rem rgba(0, 0, 0, 0.5));
+  animation: leftEyeMovement 2s Infinite alternate var(--head-animation-timing-function)
+    var(--head-animation-pause-state);
+}
+
+@keyframes leftEyeMovement {
+  to {
+    filter: drop-shadow(0 0.5rem 0.5rem rgba(0, 0, 0, 0.5));
+  }
+}
+
+.right-eye {
+  filter: drop-shadow(0 0.25rem 0.25rem rgba(0, 0, 0, 0.5));
+  animation: rightEyeMovement 2s Infinite alternate var(--head-animation-timing-function)
+    var(--head-animation-pause-state);
+}
+
+@keyframes rightEyeMovement {
+  to {
+    filter: drop-shadow(0 0.5rem 0.5rem rgba(0, 0, 0, 0.5));
+  }
+}
+
+.eyelid {
+  position: relative;
+  width: calc(5rem * var(--head-scale));
+  height: calc(5rem * var(--head-scale));
+  z-index: 1;
+  background-image: linear-gradient(-180deg, rgba(178, 194, 157, 1) 23%, rgba(127, 138, 112, 1) 77%);
+  border-bottom: calc(0.15rem * var(--head-scale)) solid var(--park-color);
+  transition: all 500ms;
+  animation: eyeLidMovement 2s Infinite alternate var(--head-animation-timing-function)
+    var(--head-animation-pause-state);
+}
+
+.left-eyelid {
+  margin-left: calc(-0.65rem * var(--head-scale));
+}
+
+.right-eyelid {
+  margin-left: calc(-0.65rem * var(--head-scale));
+}
+
+@keyframes eyeLidMovement {
+  to {
+    margin-top: calc(-1.25rem * var(--head-scale));
+  }
+}
+
+.eyeball {
+  position: absolute;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  top: 0;
+  width: calc(5rem * var(--head-scale));
+  height: calc(5rem * var(--head-scale));
+  background-color: white;
+  font-size: calc(2rem * var(--head-scale));
+  color: black;
+}
+
+.left-eyeball {
+  margin-left: calc(-0.65rem * var(--head-scale));
+}
+
+.right-eyeball {
+  margin-left: calc(-0.65rem * var(--head-scale));
+}
+
+.lower-face-container {
+  display: flex;
+  justify-content: center;
+}
+
+.nose {
+  position: absolute;
+  top: 70%;
   left: 50%;
-  top: 50%;
-  transform: translate(-50%, -50%);
-  display: flex;
-  flex-direction: column;
-  padding: 2rem;
-  gap: 1rem;
-  background: var(--fritid-color);
-  border: none;
-  border-radius: 2rem;
-  box-shadow: 0 1px 1.5rem rgba(132, 132, 132, 0.75);
+  transform: translate(-50%, 50%);
+  width: calc(2rem * var(--head-scale));
+  height: calc(2rem * var(--head-scale));
+  border-radius: 50%;
+  background-image: linear-gradient(-180deg, rgba(178, 194, 157, 0.7) 23%, rgba(127, 138, 112, 0.7) 77%);
+  backdrop-filter: blur(3px);
+  filter: drop-shadow(0 0.1rem 0.25rem rgba(0, 0, 0, 0.5));
+  backdrop-filter: blur(3px);
+  animation: noseMovement 2s Infinite alternate var(--head-animation-timing-function) var(--head-animation-pause-state);
 }
 
-dialog > div {
-  display: flex;
-  gap: 1rem;
-  align-self: baseline;
-  flex-wrap: wrap;
+@keyframes noseMovement {
+  to {
+    margin-top: calc(-0.2 * var(--head-scale));
+    filter: drop-shadow(0 0.5rem 0.5rem rgba(0, 0, 0, 0.5));
+  }
 }
 
-.btn-login-style {
+.mouth {
+  position: relative;
+  height: calc(2rem * var(--head-scale));
+  width: calc(3rem * var(--head-scale));
+  padding: 0 calc(1rem * var(--head-scale)) 0 calc(1rem * var(--head-scale));
+  margin-top: calc(0.5rem * var(--head-scale));
+  line-height: calc(20rem * var(--head-scale));
+  border-radius: 50%;
+  border-color: hsl(182, 53%, 87%);
+  caret-color: var(--fritid-color);
+  color: var(--fritid-color);
+  clip-path: circle(50%);
+  transition: all 250ms;
+  font-family: 'Titan One', cursive;
+  font-size: calc(1rem * var(--head-scale));
+  animation: mouthMovement 2s Infinite alternate ease-in-out var(--head-animation-pause-state);
+}
+
+.mouth:focus {
+  outline: none;
+}
+
+@keyframes mouthMovement {
+  to {
+    width: calc(6rem * var(--head-scale));
+    height: calc(3rem * var(--head-scale));
+    margin-top: 0;
+    border-radius: 20% / 40%;
+  }
+}
+
+.mouth + p {
+  position: absolute;
+  width: calc(4rem * var(--head-scale));
+  color: white;
   background: var(--bad-color);
-}
-
-::backdrop {
-  background: #90cccb81;
-  opacity: 90%;
-  backdrop-filter: blur(5rem);
+  pointerevents: none;
+  user-select: none;
+  text-align: center;
+  font-size: calc(1rem * var(--head-scale));
 }

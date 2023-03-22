@@ -23,7 +23,7 @@ exports.getArticle = catchAsync(async (req, res, next) => {
   });
 
   if (!article) {
-    return next(new AppError('There is no article with that name', 404));
+    return next(new AppError('Det finns ingen artikel vid det namnet!', 404));
   }
 
   // RENDER TEMPLATE
@@ -33,14 +33,10 @@ exports.getArticle = catchAsync(async (req, res, next) => {
   });
 });
 
-exports.login = (req, res) => {
-  res.status(200).render('login', {
-    title: 'Log into your account',
-  });
-};
-
 exports.index = (req, res) => {
-  res.status(200).render('base');
+  res.status(200).render('login', {
+    title: 'Inloggning',
+  });
 };
 
 exports.userMenu = (req, res) => {

@@ -7,6 +7,9 @@
   --bad-color: #90cccb;
   --footer-header-width: 80%;
   --header-components-margin-top: 2.75rem;
+  --head-scale: 1.5;
+  --head-animation-timing-function: linear;
+  --head-animation-pause-state: running;
 }
 
 /* hide element */

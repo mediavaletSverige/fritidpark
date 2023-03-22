@@ -21,11 +21,12 @@
 
 footer {
   height: 100%;
-  background: var(--park-color);
+  /*background: var(--park-color);*/
+  background: linear-gradient(273deg, rgba(99, 140, 140, 1) 24%, rgba(178, 194, 157, 1) 100%);
   border-bottom-left-radius: 2.5rem;
   border-bottom-right-radius: 2.5rem;
   border-bottom: 0.5rem dotted rgba(0, 128, 0, 0.54);
-  border-inline: 0.5rem dotted rgba(0, 128, 0, 0.54);
+
   display: flex;
   justify-content: end;
   align-items: flex-end;

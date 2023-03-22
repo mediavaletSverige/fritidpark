@@ -5,8 +5,8 @@ const writeUserId = writeForm.dataset.userid;
 
 if (window.location.href.includes('/write')) {
   document.querySelector('#art_header').textContent = 'nytt inlägg';
-  backFromMenu.textContent = '🖹';
-  backFromMenu.addEventListener('click', () => (window.location.href = `/articles`));
+  backFromMenu.textContent = ' 🖹';
+  backFromMenu.addEventListener('click', () => (window.location.href = `/artiklar`));
 
   // CHECKS IF IMAGES HAS BEEN SWAPPED
   let imageIsSwapped = false;
@@ -84,7 +84,7 @@ if (window.location.href.includes('/write')) {
         });
         const json = await res.json();
         if (json.status === 'success') {
-          setTimeout(() => (window.location.href = `/article/${localStorage.getItem('goToSlug')}`), 5000);
+          setTimeout(() => (window.location.href = `/artikel/${localStorage.getItem('goToSlug')}`), 5000);
         }
       } catch (e) {
         console.log(e);

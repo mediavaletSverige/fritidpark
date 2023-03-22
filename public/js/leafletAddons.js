@@ -20,7 +20,7 @@ function useMarker(page, type = null) {
       else if (fritidInp.checked && parkInp.checked && badInp.checked) marker = fpb;
       else marker = '/img/images/marker-icon-2x-grey.png';
     }
-    if (page === 'article') {
+    if (page === 'artikel') {
       const length = type.topics.length;
       const topics = type.topics;
       const isPrivate = type.private;
@@ -127,30 +127,24 @@ if (!window.location.href.includes('/write')) {
         const getYear = date.toLocaleDateString('sv-SE', { year: '2-digit' });
 
         const articleHTML = `<section class="card-container">
-                                <a class="card" href="/article/${
+                                <a class="card leaflet-card" href="/artikel/${
                                   article.slug
                                 }" style="background-image: url('https://storage.cloud.google.com/fp_storage/public/img/articles/${
           article.img1
         }')">
-                                  <div class="card_top">
-                                    <div class="card_top_left">
-                                      <img id="pLogga" src="https://storage.cloud.google.com/fp_storage/public/img/users/user-${
+                                    <div class="leaflet-logo-container">
+                                      <img id="pLogga" class="leaflet-pLogga" src="https://storage.cloud.google.com/fp_storage/public/img/users/user-${
                                         article.owner
                                       }.jpeg">
-                                      <p id="pSkribent">${authorArr[0][0]}. ${authorArr[authorArr.length - 1]}</p>
+                                      <h3 class="card-rubrik leaflet-card-rubrik" style="background: ${backgroundTopic()}">${
+          article.h
+        }</h3>
                                     </div>
-                                    <div class="card_top_right">
-                                      <p id="pTime">${getDay} ${getMonth} ${getYear}</p>
-                                    </div>
-                                  </div>
-                                  <div class="card_bottom">
-                                    <h3 class="card-rubrik" style="background: ${backgroundTopic()}">${article.h}</h3>
-                                  </div>
                                 </a>
                               </section>
                             `;
 
-        const marker = L.marker([lat, lng], { icon: useMarker('article', article) })
+        const marker = L.marker([lat, lng], { icon: useMarker('artikel', article) })
           .addTo(map)
           .bindPopup(L.popup(popupOptions))
           .setPopupContent(articleHTML)
@@ -168,13 +162,22 @@ if (!window.location.href.includes('/write')) {
 }
 
 // PREVIEW
-if (window.location.href.includes('/write')) {
+if (window.location.href.includes('/write') || window.location.href[window.location.href.length - 1] === '/') {
   navigator.geolocation.getCurrentPosition((e) => {
     const { latitude, longitude } = e.coords;
     const map = L.map('map', { zoomSnap: 0.25, minZoom: 2.75 }).setView([latitude, longitude], 13);
+
     L.tileLayer('https://{s}.tile.openstreetmap.fr/hot/{z}/{x}/{y}.png', {
       attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
     }).addTo(map);
+
+    if (window.location.href[window.location.href.length - 1] === '/') {
+      L.tileLayer('https://stamen-tiles-{s}.a.ssl.fastly.net/toner-background/{z}/{x}/{y}.png', {
+        attribution:
+          'Map tiles by <a href="http://stamen.com">Stamen Design</a>, under <a href="http://creativecommons.org/licenses/by/3.0">CC BY 3.0</a>. Data by <a href="http://openstreetmap.org">OpenStreetMap</a>, under <a href="http://creativecommons.org/licenses/by-sa/3.0">CC BY SA</a>',
+      }).addTo(map);
+    }
+
     let previewMarker;
 
     map.on('click', function (e) {

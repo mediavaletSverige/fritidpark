@@ -108,7 +108,7 @@ const responsiveAddButtons = function (w = false, h = false) {
 responsiveAddButtons(450);
 
 // CLOSES ARTICLE CONTAINER WHEN COMING FROM SLUG (SEE ARTICLES.JS)
-if (window.location.href.includes('/articles')) {
+if (window.location.href.includes('/artiklar')) {
   if (localStorage.getItem('articleContainerIsClosed') === 'true') {
     main.style.display = 'none';
     add_button.forEach(function (button) {

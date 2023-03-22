@@ -19,6 +19,48 @@ if (window.location.href.includes(articleSlug)) {
       }
     })
   );
+
+  // CHANGING BACKGROUND AND FONTCOLORS
+  artHeader.insertAdjacentHTML('beforeend', '<input id="articleInputRange" type="range" />');
+  artHeader.style.position = 'relative';
+  const articleInputRange = document.getElementById('articleInputRange');
+
+  const getColor = function (el, style) {
+    return getComputedStyle(el)
+      [style].match(/\d{3}/g)
+      .map((el) => +el);
+  };
+
+  const backColor = getColor(articleContainer, 'background');
+  const fontColor = getColor(articleContainer, 'color');
+
+  articleInputRange.addEventListener('input', function (e) {
+    console.log(e.target.value);
+    const contraster = function (color, dir) {
+      const max = 255;
+      const maxSteps = max - color;
+
+      if (e.target.value > 49) {
+        return dir === 'dir'
+          ? Math.round(color + maxSteps * (e.target.value / 100))
+          : Math.round(color - max * (e.target.value / 100));
+      }
+
+      if (e.target.value < 50) {
+        return dir === 'dir'
+          ? Math.round(color - (color / Math.abs(e.target.value)) * 2)
+          : Math.round(color + (color / Math.abs(e.target.value)) * 2);
+      }
+    };
+
+    const injectRGB = (color, dir = 'dir') =>
+      `rgba(${contraster(color[0], dir)}, ${contraster(color[1], dir)}, ${contraster(color[2], dir)}, 0.75)`;
+
+    articleContainer.style.background = injectRGB(backColor);
+    articleContainer.style.color = injectRGB(fontColor, 'reverse');
+    articleLogo.style.borderColor = injectRGB(fontColor, 'reverse');
+    articleTags.forEach((el) => (el.style.color = injectRGB(fontColor, 'reverse')));
+  });
 }
 
 // GOES BACK TO ARTICLES
@@ -100,7 +142,7 @@ if (window.location.href.includes(articleSlug) && articleOwner === read_art.data
             method: 'DELETE',
           });
 
-          window.location.href = `/myArticles`;
+          window.location.href = `/mina-artiklar`;
         } catch (e) {
           console.log(e.message);
         }
@@ -135,10 +177,10 @@ if (window.location.href.includes(articleSlug) && articleOwner === read_art.data
       const json = await res.json();
 
       if (json.status === 'success') {
-        setTimeout(() => (window.location.href = `/article/${localStorage.getItem('goToSlug')}`), 500);
+        setTimeout(() => (window.location.href = `/artikel/${localStorage.getItem('goToSlug')}`), 500);
       }
     } catch (e) {
-      setTimeout(() => (window.location.href = `/article/${localStorage.getItem('goToSlug')}`), 500);
+      setTimeout(() => (window.location.href = `/artikel/${localStorage.getItem('goToSlug')}`), 500);
     }
   }
 

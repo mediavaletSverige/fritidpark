@@ -1,14 +1,18 @@
 extends base
 
-block content
-    div#read_art 
-        form#loginForm
-            dialog
-                input#form-email.inp-err.inp-style(type='email' placeholder="epost" pattern='[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$')
-                input#form-password.inp-err.inp-style(type='password' placeholder='lösenord')
-                div
-                    button.btn-style.btn-login-style Logga in
-                    button.btn-style.btn-login-style Skapa konto
-
-        
-    
+block login
+    sector.head-container
+        div.upper-face-container
+            div.upper-left-face
+                div.eyebrow.left-eyebrow
+                div.eye.left-eye
+                    div.eyelid.left-eyelid
+                    div.eyeball.left-eyeball
+            div.upper-right-face
+                div.eyebrow.right-eyebrow
+                div.eye.right-eye
+                    div.eyelid.right-eyelid
+                    div.eyeball.right-eyeball
+        div.lower-face-container
+            input.mouth(type="password", title="Ange [epost] mellanslag [lösenord]", required)
+        div.nose

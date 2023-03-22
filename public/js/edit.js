@@ -173,7 +173,7 @@ if (window.location.href.includes('/edit')) {
 
               console.log('second patch!');
 
-              setTimeout(() => (window.location.href = `/article/${localStorage.getItem('goToSlug')}`), 2500);
+              setTimeout(() => (window.location.href = `/artikel/${localStorage.getItem('goToSlug')}`), 2500);
             };
             updateArticleImages();
           }
