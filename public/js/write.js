@@ -3,8 +3,8 @@
 const writeForm = document.getElementById('writeForm');
 const writeUserId = writeForm?.dataset.userid;
 
-if (window.location.href.includes('/write')) {
-  document.querySelector('#art_header').textContent = 'nytt inlägg';
+if (window.location.href.includes('/ny-artikel')) {
+  document.querySelector('#art_header').textContent = 'ny artikel';
   backFromMenu.textContent = ' 🖹';
   backFromMenu.addEventListener('click', () => (window.location.href = `/artiklar`));
 

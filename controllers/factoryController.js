@@ -1,20 +1,20 @@
 /* eslint-disable no-unused-expressions */
 /* eslint-disable node/no-unsupported-features/es-builtins */
 
-const catchAsync = require('../utils/catchAsync');
-const AppError = require('../utils/appError');
-const APIFeatures = require('../utils/apiFeatures');
+const catchWrapper = require('../utils/catchWrapper');
+const ErrorHandler = require('../utils/errorHandler');
+const DataHandler = require('../utils/dataHandler');
 const StorageHandler = require('../utils/storageHandler');
 
 const SH = new StorageHandler();
 
 exports.deleteOne = (Model) =>
-  catchAsync(async (req, res, next) => {
+  catchWrapper(async (req, res, next) => {
     const doc = await Model.findByIdAndDelete(req.params.id);
     console.log(res.status);
 
     if (!doc) {
-      return next(new AppError('no document found with that ID', 404));
+      return next(new ErrorHandler('no document found with that ID', 404));
     }
 
     await SH.deleteImages(req.params.id);
@@ -27,7 +27,7 @@ exports.deleteOne = (Model) =>
 
 // UPDATE DATA
 exports.updateOne = (Model, type = 'text') =>
-  catchAsync(async (req, res, next) => {
+  catchWrapper(async (req, res, next) => {
     let update;
     const docObj = {
       new: true,
@@ -96,7 +96,7 @@ exports.updateOne = (Model, type = 'text') =>
           .then(() => arg === 'andDelete' && SH.deleteImage(docE1.id, 2));
 
       if (!docE1) {
-        return next(new AppError('No document found with that ID', 404));
+        return next(new ErrorHandler('No document found with that ID', 404));
       }
 
       // REPLACES LOCAL IMG1 WITH IMG2 AND IMG2 WITH IMG1
@@ -130,7 +130,7 @@ exports.updateOne = (Model, type = 'text') =>
 
 // INCLUDES USER ID TO ARTICLE WHEN USERMODEL IS USED AS AN ARGUMENT
 exports.createOne = (Model, userModel = null) =>
-  catchAsync(async (req, res) => {
+  catchWrapper(async (req, res) => {
     const doc = await Model.create(req.body);
     const userDoc = await userModel.findById(req.user);
     Object.assign(doc, { owner: userDoc._id });
@@ -142,13 +142,13 @@ exports.createOne = (Model, userModel = null) =>
   });
 
 exports.getOne = (Model, popOptions) =>
-  catchAsync(async (req, res, next) => {
+  catchWrapper(async (req, res, next) => {
     let query = Model.findById(req.params.id);
     if (popOptions) query = query.populate(popOptions);
     const doc = await query;
 
     if (!doc) {
-      return next(new AppError('no document found with that ID', 404));
+      return next(new ErrorHandler('no document found with that ID', 404));
     }
 
     res.status(200).json({
@@ -160,7 +160,7 @@ exports.getOne = (Model, popOptions) =>
   });
 
 exports.getAll = (Model, popOptions) =>
-  catchAsync(async (req, res, next) => {
+  catchWrapper(async (req, res, next) => {
     // TO ALLOW FOR NESTED GET REVIEWS ON ARTICLE
     let filter = {};
     if (req.params.articleId) filter = { article: req.params.articleId };
@@ -173,9 +173,9 @@ exports.getAll = (Model, popOptions) =>
 
     if (popOptions) query = query.populate(popOptions);
 
-    const features = new APIFeatures(query, req.query).filter().sort().limit().paginate();
+    const data = new DataHandler(query, req.query).filter().sort().limit().paginate();
 
-    const doc = await features.query;
+    const doc = await data.query;
 
     res.status(200).json({
       status: 'success',

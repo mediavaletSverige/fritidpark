@@ -1,6 +1,6 @@
 /* eslint-disable node/no-unsupported-features/es-syntax */
 
-class APIFeatures {
+class DataHandler {
   constructor(query, queryString) {
     Object.assign(this, { query, queryString });
   }
@@ -48,4 +48,4 @@ class APIFeatures {
   }
 }
 
-module.exports = APIFeatures;
+module.exports = DataHandler;

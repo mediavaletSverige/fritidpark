@@ -44,10 +44,10 @@ function checkImageLength(param, len) {
   if (window.location.href.includes(`/${param}`)) {
     const dispExchangeBtn = function (p1 = 'none') {
       exchangeImg.style.display = p1;
-      if (checkParam('write')) {
+      if (checkParam('ny-artikel')) {
         bildtext2.style.display = len > 1 ? 'block' : 'none';
       }
-      if (checkParam('edit')) {
+      if (checkParam('redigera-artikel')) {
         bildtext.style.display = 'block';
         bildtext2.style.display = 'block';
       }
@@ -63,25 +63,25 @@ btnFileOld?.addEventListener('change', function (e) {
   file2 = btnFileOld.files[1];
   totalLength = this.files.length + pImgs;
 
-  checkImageLength('write', this.files.length);
-  checkImageLength('edit', totalLength);
+  checkImageLength('ny-artikel', this.files.length);
+  checkImageLength('redigera-artikel', totalLength);
 
   if (this.files.length > 2 || pImgs > 1 || this.files.length + pImgs > 2) {
     alert('Använd dig av max 2 bilder!');
     location.reload(true);
   }
 
-  if (checkParam('write')) {
+  if (checkParam('ny-artikel')) {
     if (file1) img1 = URL.createObjectURL(file1);
     if (file2) img2 = URL.createObjectURL(file2);
   }
 
-  if (checkParam('edit')) {
+  if (checkParam('redigera-artikel')) {
     if (file1) img2 = URL.createObjectURL(file1);
   }
 
   // ACCURATE IMAGE DISPLAY
-  if (checkParam('write')) {
+  if (checkParam('ny-artikel')) {
     previewImage1 = img1;
     previewImage2 = this.files.length === 1 ? null : img2;
   }
@@ -112,7 +112,7 @@ write_art?.addEventListener('change', () => {
         i: [fritidInp, parkInp, badInp].some((el) => el.checked),
       };
 
-      if (window.location.href.includes('/edit')) delete elements.c;
+      if (window.location.href.includes('/redigera-artikel')) delete elements.c;
 
       if (Object.values(elements).every((c) => !!c)) {
         button.removeAttribute('disabled');

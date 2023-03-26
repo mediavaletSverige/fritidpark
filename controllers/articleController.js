@@ -4,9 +4,9 @@
 
 const multer = require('multer');
 const Article = require('../models/articleModel');
-const catchAsync = require('../utils/catchAsync');
+const catchWrapper = require('../utils/catchWrapper');
 const factory = require('./factoryController');
-const AppError = require('../utils/appError');
+const ErrorHandler = require('../utils/errorHandler');
 const User = require('../models/userModel');
 const StorageHandler = require('../utils/storageHandler');
 
@@ -19,7 +19,7 @@ const multerFilter = (req, file, cb) => {
   if (file.mimetype.startsWith('image')) {
     cb(null, true);
   } else {
-    cb(new AppError('Not an image! Please upload only images.', 400), false);
+    cb(new ErrorHandler('Not an image! Please upload only images.', 400), false);
   }
 };
 
@@ -36,7 +36,7 @@ exports.handleArticleImages = upload.fields([
 ]);
 
 // UPLOADS ARTICLE IMAGES
-exports.uploadArticleImages = catchAsync(async (req, _, next) => {
+exports.uploadArticleImages = catchWrapper(async (req, _, next) => {
   // FIRST IMAGE
   console.log(req.files);
   if (!req.files.img1) return next();
@@ -58,7 +58,7 @@ exports.uploadArticleImages = catchAsync(async (req, _, next) => {
 });
 
 // UPLOADS ON EXISTING ARTICLE IMAGES
-exports.uploadExistingArticleImages = catchAsync(async (req, _, next) => {
+exports.uploadExistingArticleImages = catchWrapper(async (req, _, next) => {
   console.log(req.files);
 
   // FIRST IMAGE
@@ -96,7 +96,7 @@ exports.updateArticlePrivacy = factory.updateOne(Article, 'privacy');
 exports.updateArticleImages = factory.updateOne(Article, 'images');
 exports.deleteArticle = factory.deleteOne(Article);
 
-exports.getArticleStats = catchAsync(async (_, res) => {
+exports.getArticleStats = catchWrapper(async (_, res) => {
   const stats = await Article.aggregate([
     {
       $unwind: '$topics',
@@ -117,14 +117,14 @@ exports.getArticleStats = catchAsync(async (_, res) => {
   });
 });
 
-exports.getArticlesWithin = catchAsync(async (req, res, next) => {
+exports.getArticlesWithin = catchWrapper(async (req, res, next) => {
   const { distance, latlng, unit } = req.params;
   const [lat, lng] = latlng.split(',');
 
   const radius = unit === 'mi' ? distance / 3963.2 : distance / 6378.1;
 
   if (!lat || !lng) {
-    next(new AppError('Please provide latitude and longitude in the format lat, lng.', 400));
+    next(new ErrorHandler('Please provide latitude and longitude in the format lat, lng.', 400));
   }
 
   const articles = await Article.find({

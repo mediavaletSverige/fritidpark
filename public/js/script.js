@@ -47,10 +47,10 @@ function changeMainButton() {
     if (e.currentTarget.querySelector('p').textContent === '🖌') {
       localStorage.clear();
       e.currentTarget.querySelector('p').textContent = '🖹';
-      artHeader.textContent = 'Nytt inlägg';
-      window.location.href = '/write';
+      artHeader.textContent = 'Ny artikel';
+      window.location.href = '/ny-artikel';
     } else if (e.currentTarget.querySelector('p').textContent === '🖹') {
-      window.location.href = '/articles';
+      window.location.href = '/artiklar';
       e.currentTarget.querySelector('p').textContent = '🖌';
       artHeader.textContent = 'Artiklar';
     }

@@ -1,6 +1,6 @@
 /* eslint-disable node/no-unsupported-features/es-syntax */
 
-const AppError = require('../utils/appError');
+const ErrorHandler = require('../utils/errorHandler');
 
 const sendErrorDev = (err, req, res) => {
   // API
@@ -20,9 +20,9 @@ const sendErrorDev = (err, req, res) => {
   });
 };
 
-const handleJWTError = () => new AppError('Invalid token. Please log in again!', 401);
+const handleJWTError = () => new ErrorHandler('Invalid token. Please log in again!', 401);
 
-const handleJWTExpiredError = () => new AppError('Your token has expired! Please log in again.', 401);
+const handleJWTExpiredError = () => new ErrorHandler('Your token has expired! Please log in again.', 401);
 
 const sendErrorProd = (err, req, res) => {
   // API
@@ -61,19 +61,19 @@ const sendErrorProd = (err, req, res) => {
 
 const handleCastErrorDB = (err) => {
   const message = `Invalid ${err.path}: ${err.value}`;
-  return new AppError(message, 400);
+  return new ErrorHandler(message, 400);
 };
 
 const handleDuplicateFieldsDB = (err) => {
   const value = Object.values(err.keyValue)[0];
   const message = `Duplicate field value: ${value}. Please use another value!`;
-  return new AppError(message, 400);
+  return new ErrorHandler(message, 400);
 };
 
 const handleValidationErrorDB = (err) => {
   const errors = Object.values(err.errors).map((el) => el.message);
   const message = `Invalid input data. ${errors.join(' ')}`;
-  return new AppError(message, 400);
+  return new ErrorHandler(message, 400);
 };
 
 module.exports = (err, req, res, next) => {

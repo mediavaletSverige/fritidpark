@@ -1,9 +1,9 @@
 const Article = require('../models/articleModel');
-const catchAsync = require('../utils/catchAsync');
-const AppError = require('../utils/appError');
+const catchWrapper = require('../utils/catchWrapper');
+const ErrorHandler = require('../utils/errorHandler');
 
 exports.getArticles = function (arg) {
-  return catchAsync(async (_, res) => {
+  return catchWrapper(async (_, res) => {
     // GET ARTICLE DATA FROM COLLECTION
     const articles = await Article.find();
 
@@ -15,7 +15,7 @@ exports.getArticles = function (arg) {
   });
 };
 
-exports.getArticle = catchAsync(async (req, res, next) => {
+exports.getArticle = catchWrapper(async (req, res, next) => {
   // GET DATA FOR THE REQUESTED ARTICLE
   const article = await Article.findOne({ slug: req.params.slug }).populate({
     path: 'reviews',
@@ -23,7 +23,7 @@ exports.getArticle = catchAsync(async (req, res, next) => {
   });
 
   if (!article) {
-    return next(new AppError('Det finns ingen artikel vid det namnet!', 404));
+    return next(new ErrorHandler('Det finns ingen artikel vid det namnet!', 404));
   }
 
   // RENDER TEMPLATE
@@ -47,12 +47,12 @@ exports.userMenu = (req, res) => {
 
 exports.createArticle = (req, res) => {
   res.status(200).render('write', {
-    title: 'Nytt inlägg',
+    title: 'Ny artikel',
   });
 };
 
 exports.editArticle = (req, res) => {
   res.status(200).render('edit', {
-    title: 'Redigera inlägg',
+    title: 'Redigera artikel',
   });
 };

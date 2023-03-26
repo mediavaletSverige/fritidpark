@@ -3,13 +3,13 @@
 const editForm = document.getElementById('writeForm');
 const editUserId = editForm?.dataset.userid;
 
-if (window.location.href.includes('/edit')) {
+if (window.location.href.includes('/redigera-artikel')) {
   document.querySelector('#art_header').textContent = 'redigera artikel';
   document.querySelector('main').style.display = 'block';
   backFromMenu.textContent = '←';
 
   // DISPLAYS INITIAL IMAGE COUNT ON LABEL
-  (() => checkImageLength('edit', articleImgHeightsLength))();
+  (() => checkImageLength('redigera-artikel', articleImgHeightsLength))();
 
   // GOES BACK TO ARTICLES
   art_btn.addEventListener('click', function () {

@@ -14,14 +14,14 @@ const time = new Date().toLocaleString('sv-SE', timeObj);
 ['change', 'input'].forEach((el) => document.addEventListener(el, previewHTML));
 
 // ACCURATE IMAGE DISPLAY
-if (checkParam('edit')) {
+if (checkParam('redigera-artikel')) {
   previewImage1 = `https://storage.cloud.google.com/fp_storage/public/img/articles/${localImages(1)}`;
   previewImage2 =
     pImgs < 2 ? null : `https://storage.cloud.google.com/fp_storage/public/img/articles/${localImages(2)}`;
 }
 
 // DISPLAYS ARTICLE IN EDIT MODE AND SHOWS REAL TIME CHANGES
-if (checkParam('edit')) {
+if (checkParam('redigera-artikel')) {
   const instantPreview = (delay) => Promise.resolve(setTimeout(() => previewHTML(), delay));
   instantPreview(300).then(() => instantPreview(400));
 }
@@ -82,14 +82,14 @@ function previewHTML() {
   previewImage2 === null && secondFig.remove();
 
   // ADDS BUTTONS AND REMOVES ARTICLES IN EDIT MODE
-  if (checkParam('edit')) {
+  if (checkParam('redigera-artikel')) {
     imgs[1].insertAdjacentHTML(
       'afterend',
       '<div class="add_button deleteButton"><p class="add_button_text deleteButtonText">×</p></div>'
     );
     imgs[1].nextElementSibling.addEventListener('click', function (e) {
       pImgs = imgs.length - 1;
-      checkImageLength('edit', imgs.length - 1);
+      checkImageLength('redigera-artikel', imgs.length - 1);
 
       e.currentTarget.parentElement.remove();
 

@@ -55,7 +55,7 @@ function useMarker(page, type = null) {
 }
 
 // ARTICLES
-if (!window.location.href.includes('/write')) {
+if (!window.location.href.includes('/ny-artikel')) {
   const getArticles = async () => {
     try {
       const res = await fetch(`/api/articles`, {
@@ -162,7 +162,7 @@ if (!window.location.href.includes('/write')) {
 }
 
 // PREVIEW
-if (window.location.href.includes('/write') || window.location.href[window.location.href.length - 1] === '/') {
+if (window.location.href.includes('/ny-artikel') || window.location.href[window.location.href.length - 1] === '/') {
   navigator.geolocation.getCurrentPosition((e) => {
     const { latitude, longitude } = e.coords;
     const map = L.map('map', { zoomSnap: 0.25, minZoom: 2.75 }).setView([latitude, longitude], 13);

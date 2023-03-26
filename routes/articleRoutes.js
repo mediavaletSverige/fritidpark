@@ -21,7 +21,7 @@ router
   .route('/stats')
   .get(
     authController.protect(true),
-    authController.restrictTo('coadmin', 'author', 'advertiser'),
+    authController.restriction('coadmin', 'author', 'advertiser'),
     articleController.getArticleStats
   );
 
@@ -33,12 +33,12 @@ router
   .route('/')
   .get(
     authController.protect(true),
-    authController.restrictTo('admin', 'coadmin', 'author', 'advertiser'),
+    authController.restriction('admin', 'coadmin', 'author', 'advertiser'),
     articleController.getAllArticles
   )
   .post(
     authController.protect(true),
-    authController.restrictTo('admin', 'coadmin', 'author', 'advertiser'),
+    authController.restriction('admin', 'coadmin', 'author', 'advertiser'),
     articleController.createArticle
   );
 
@@ -48,12 +48,12 @@ router
   .get(articleController.getArticle)
   .patch(
     authController.protect(true),
-    authController.restrictTo('admin', 'coadmin', 'author', 'advertiser'),
+    authController.restriction('admin', 'coadmin', 'author', 'advertiser'),
     articleController.updateArticle
   )
   .delete(
     authController.protect(true),
-    authController.restrictTo('admin', 'coadmin', 'author', 'advertiser'),
+    authController.restriction('admin', 'coadmin', 'author', 'advertiser'),
     articleController.deleteArticle
   );
 
@@ -61,7 +61,7 @@ router
   .route('/images/:id')
   .patch(
     authController.protect(true),
-    authController.restrictTo('admin', 'coadmin', 'author', 'advertiser'),
+    authController.restriction('admin', 'coadmin', 'author', 'advertiser'),
     articleController.updateArticleImages,
     articleController.handleArticleImages,
     articleController.uploadArticleImages
@@ -71,7 +71,7 @@ router
   .route('/existingimages/:id')
   .patch(
     authController.protect(true),
-    authController.restrictTo('admin', 'coadmin', 'author', 'advertiser'),
+    authController.restriction('admin', 'coadmin', 'author', 'advertiser'),
     articleController.updateArticleImages,
     articleController.handleArticleImages,
     articleController.uploadExistingArticleImages
@@ -82,7 +82,7 @@ router
   .route('/privacy/:id')
   .patch(
     authController.protect(true),
-    authController.restrictTo('admin', 'coadmin', 'author', 'advertiser'),
+    authController.restriction('admin', 'coadmin', 'author', 'advertiser'),
     articleController.updateArticlePrivacy
   );
 

@@ -2,8 +2,8 @@ const { Storage } = require('@google-cloud/storage');
 const multer = require('multer');
 const sharp = require('sharp');
 const User = require('../models/userModel');
-const catchAsync = require('../utils/catchAsync');
-const AppError = require('../utils/appError');
+const catchWrapper = require('../utils/catchWrapper');
+const ErrorHandler = require('../utils/errorHandler');
 const factory = require('./factoryController');
 
 const multerStorage = multer.memoryStorage();
@@ -12,7 +12,7 @@ const multerFilter = (req, file, cb) => {
   if (file.mimetype.startsWith('image')) {
     cb(null, true);
   } else {
-    cb(new AppError('Not an image! Please upload only images.', 400), false);
+    cb(new ErrorHandler('Not an image! Please upload only images.', 400), false);
   }
 };
 
@@ -23,7 +23,7 @@ const upload = multer({
 
 exports.uploadUserLogo = upload.single('logo');
 
-exports.resizeUserLogo = catchAsync(async (req, res, next) => {
+exports.resizeUserLogo = catchWrapper(async (req, res, next) => {
   if (!req.file) return next();
   req.file.filename = `user-${req.user.id}.jpeg`;
 
@@ -56,10 +56,10 @@ exports.getMe = (req, res, next) => {
   next();
 };
 
-exports.updateMe = catchAsync(async (req, res, next) => {
+exports.updateMe = catchWrapper(async (req, res, next) => {
   // CREATE ERROR IF USER POSTS PASSWORD DATA
   if (req.body.password || req.body.passwordConfirm) {
-    return next(new AppError('This route is not for password updates. Please use /updateMyPassword.', 400));
+    return next(new ErrorHandler('This route is not for password updates. Please use /updateMyPassword.', 400));
   }
 
   // FILTER OUT UNWANTED FIELD NAMES THAT'S NOT ALLOWED TO BE UPDATED
@@ -75,7 +75,7 @@ exports.updateMe = catchAsync(async (req, res, next) => {
   res.status(200).json({ status: 'success', data: { user: updateUser } });
 });
 
-exports.deleteMe = catchAsync(async (req, res, next) => {
+exports.deleteMe = catchWrapper(async (req, res, next) => {
   await User.findByIdAndUpdate(req.user.id, { active: false });
 
   res.status(204).json({

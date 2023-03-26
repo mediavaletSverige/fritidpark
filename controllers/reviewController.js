@@ -1,5 +1,5 @@
 const Review = require('../models/reviewModel');
-const factory = require('./handlerFactory');
+const factory = require('./factoryController');
 
 exports.setArticleUserIds = (req, res, next) => {
   // ALLOW NESTED ROUTES

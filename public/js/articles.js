@@ -130,7 +130,7 @@ if (window.location.href.includes(articleSlug) && articleOwner === read_art.data
 
   document.querySelector('.toEdit').addEventListener('click', function (e) {
     e.preventDefault();
-    window.location.href = '/edit';
+    window.location.href = '/redigera-artikel';
   });
 
   // DELETES ARTICLE IF YOU CLICK THE BUTTON TWICE
