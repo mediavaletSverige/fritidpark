@@ -22,7 +22,7 @@ const body = document.querySelector('body');
 
 // LOGGING OUT
 if (window.location.href.at(-1) !== '/') {
-  const timeInit = 15 * 60;
+  const timeInit = 5 * 60;
   let timeLeft = timeInit;
 
   const logoutTimer = async () => {
