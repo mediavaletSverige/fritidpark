@@ -1,9 +1,10 @@
 /* eslint-disable */
 
-const articleSlug = JSON.parse(read_art.dataset.article).slug;
-const articleOwner = JSON.parse(read_art.dataset.article).owner;
-const articleArticle = JSON.parse(read_art.dataset.article);
-const articlePrivacy = JSON.parse(read_art.dataset.article).private;
+const dataSetArticle = read_art?.dataset.article;
+const articleSlug = JSON.parse(dataSetArticle || '{}').slug;
+const articleOwner = JSON.parse(dataSetArticle || '{}').owner;
+const articleArticle = JSON.parse(dataSetArticle || '{}');
+const articlePrivacy = JSON.parse(dataSetArticle || '{}').private;
 const articlePContainers = document.querySelectorAll('.pParagraphContainer');
 const localArticleImages = document.querySelectorAll('.pImg');
 let clickedDeleteButtonOnce = false;
@@ -35,7 +36,6 @@ if (window.location.href.includes(articleSlug)) {
   const fontColor = getColor(articleContainer, 'color');
 
   articleInputRange.addEventListener('input', function (e) {
-    console.log(e.target.value);
     const contraster = function (color, dir) {
       const max = 255;
       const maxSteps = max - color;
@@ -64,7 +64,7 @@ if (window.location.href.includes(articleSlug)) {
 }
 
 // GOES BACK TO ARTICLES
-document.querySelector('.toMyArticles2').addEventListener('click', function () {
+document.querySelector('.toMyArticles2')?.addEventListener('click', function () {
   window.history.go(-1);
 });
 
@@ -79,7 +79,7 @@ window.addEventListener('load', () => {
   const artFig2 = document.querySelector('.artFig2');
   const artCap2 = document.querySelector('.artCap2');
 
-  if (artImg2.clientHeight < 100) {
+  if (artImg2?.clientHeight < 100) {
     artImg2.style.display = 'none';
     artFig2.style.display = 'none';
     artCap2.style.display = 'none';

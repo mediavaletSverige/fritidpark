@@ -1,6 +1,6 @@
 /* eslint-disable */
 
-reset.addEventListener('click', () => {
+reset?.addEventListener('click', () => {
   preview.innerHTML = '';
   btnFileNewLbl.textContent = 'välj 1 eller 2 bilder';
   img = null;

@@ -1,7 +1,7 @@
 /* eslint-disable */
 
 const editForm = document.getElementById('writeForm');
-const editUserId = editForm.dataset.userid;
+const editUserId = editForm?.dataset.userid;
 
 if (window.location.href.includes('/edit')) {
   document.querySelector('#art_header').textContent = 'redigera artikel';

@@ -34,7 +34,7 @@ function insertText(el) {
 }
 
 // SELECTS THE HIDDEN FILE BUTTON
-btnFileNew.addEventListener('click', function (e) {
+btnFileNew?.addEventListener('click', function (e) {
   e.preventDefault();
   btnFileOld.click();
 });
@@ -58,7 +58,7 @@ function checkImageLength(param, len) {
 }
 
 // SELECTS FILE IMAGES AND CHECKS LENGTH
-btnFileOld.addEventListener('change', function (e) {
+btnFileOld?.addEventListener('change', function (e) {
   file1 = btnFileOld.files[0];
   file2 = btnFileOld.files[1];
   totalLength = this.files.length + pImgs;
@@ -97,7 +97,7 @@ btnFileOld.addEventListener('change', function (e) {
 });
 
 // ENABLE AND DISABLE "SPARA" AND "PUBLICERA" BUTTONS (WRITE & EDIT)
-write_art.addEventListener('change', () => {
+write_art?.addEventListener('change', () => {
   void (function publishSave(...buttons) {
     buttons.forEach((button) => {
       const elements = {
@@ -126,7 +126,7 @@ write_art.addEventListener('change', () => {
 // BUTTONS
 let rotatedExchange = true;
 
-exchangeImg.addEventListener('click', function () {
+exchangeImg?.addEventListener('click', function () {
   if (rotatedExchange) {
     this.style.transform = 'rotateY(180deg)';
     rotatedExchange = false;

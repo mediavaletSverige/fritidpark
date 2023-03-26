@@ -1,5 +1,16 @@
 /* eslint-disable */
 
+//UTILITY FUNCTIONS
+function tryCatchConstant(constant) {
+  try {
+    if (!constant) throw new TypeError();
+    return constant;
+  } catch (err) {
+    err.message = `Constant for later use!`;
+    console.error(err.message);
+  }
+}
+
 //HTML CONSTANTS
 const top_menu_textContainer = document.getElementById('article_menu-top');
 const bottom_menu_textContainer = document.getElementById('article_menu-bottom');
@@ -25,7 +36,7 @@ const artHeader = document.getElementById('art_header');
 const artHeaderButton = document.getElementById('art_header_button');
 const btnFileNew = document.getElementById('btn-file-new');
 const btnFileOld = document.getElementById('btn-file-old');
-const btnFileNewLbl = btnFileNew.nextElementSibling;
+const btnFileNewLbl = btnFileNew?.nextElementSibling;
 const exchangeImg = document.getElementById('btn-exchange-img');
 const skribent = document.querySelector('input[placeholder=skribent]');
 const koordinater = document.querySelector('input[placeholder=koordinater]');

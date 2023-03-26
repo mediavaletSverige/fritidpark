@@ -10,7 +10,7 @@ const userMenuPasswordConfirm = document.getElementById('userMenuPasswordConfirm
 const userMenuLogo = document.getElementById('userMenuLogo');
 const userMenuLogoImg = document.querySelector('.logo-big.bytLogga');
 
-toUserMenu.addEventListener('click', function (e) {
+toUserMenu?.addEventListener('click', function (e) {
   e.preventDefault();
   window.location.href = `/userMenu`;
 });
@@ -67,7 +67,7 @@ const updateUserData = async (data, type) => {
   }
 };
 
-userMenuSubmit.addEventListener('submit', function (e) {
+userMenuSubmit?.addEventListener('submit', function (e) {
   e.preventDefault();
   const name = userMenuName.value;
   const email = userMenuEmail.value;
@@ -98,7 +98,7 @@ userMenuSubmit.addEventListener('submit', function (e) {
 });
 
 // LOG OUT
-const logout = async () => {
+const logoutButton = async () => {
   const res = await fetch('/api/users/logout', {
     method: 'GET',
   });
@@ -109,7 +109,7 @@ const logout = async () => {
   }
 };
 
-document.getElementById('loggingOutBtn').addEventListener('click', () => logout());
+document.getElementById('loggingOutBtn')?.addEventListener('click', () => logoutButton());
 
 // MY ARTICLES
-document.querySelector('.toMyArticles').addEventListener('click', () => (window.location.href = `/mina-artiklar`));
+document.querySelector('.toMyArticles')?.addEventListener('click', () => (window.location.href = `/mina-artiklar`));

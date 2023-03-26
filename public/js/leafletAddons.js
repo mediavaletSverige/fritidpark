@@ -190,7 +190,7 @@ if (window.location.href.includes('/write') || window.location.href[window.locat
       koordinater.style.color = 'gray';
     });
 
-    formCat.addEventListener('change', function () {
+    formCat?.addEventListener('change', function () {
       const layersIdx = Object.entries(map._layers)[1][0];
       const { lat, lng } = map._layers[layersIdx]._latlng;
       if (previewMarker) map.removeLayer(previewMarker);
@@ -198,6 +198,6 @@ if (window.location.href.includes('/write') || window.location.href[window.locat
     });
 
     // RESETS MARKER
-    reset.addEventListener('click', () => map.removeLayer(previewMarker));
+    reset?.addEventListener('click', () => map.removeLayer(previewMarker));
   });
 }

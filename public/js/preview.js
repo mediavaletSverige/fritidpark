@@ -45,32 +45,34 @@ const checkTopic = function () {
 
 // DISPLAYS ARTICLE WHEN WRITING, EDITING AND READING
 function previewHTML() {
-  preview.style.background = checkTopic();
-  preview.innerHTML = `
+  preview ? (preview.style.background = checkTopic()) : false;
+  preview
+    ? (preview.innerHTML = `
         <div id="pCredWrapper">
           <img id="pLogga" src="https://storage.cloud.google.com/fp_storage/public/img/users/user-${writeUserId}.jpeg" alt="logga" />
           <span class="dot"></span>
-          <p id="pSkribent">${skribent.value}</p>
+          <p id="pSkribent">${skribent?.value}</p>
           <span class="dot"></span>
           <p id="pTime">${time}</p>
         </div>
         <hr>
-        <h3 id="pRubrik">${rubrik.value}</h3>
-        <div class="pParagraphContainer">${insertText(paragraf1.value)}</div>
+        <h3 id="pRubrik">${rubrik?.value}</h3>
+        <div class="pParagraphContainer">${insertText(paragraf1?.value)}</div>
         <figure id="pFig1">
           <img class="pImg" src="${previewImage1}" alt="${previewImage1}"/>
-          <figcaption id="pFig">${bildtext.value}</figcaption>
+          <figcaption id="pFig">${bildtext?.value}</figcaption>
         </figure>
-        <div class="pParagraphContainer pPC2">${insertText(paragraf2.value)}</div>
-        <q id="pQuote">${insertText(citat.value)}</q>
+        <div class="pParagraphContainer pPC2">${insertText(paragraf2?.value)}</div>
+        <q id="pQuote">${insertText(citat?.value)}</q>
         <figure id="pFig2">
           <img class="pImg" src="${previewImage2}" alt="${previewImage2}"/>
-          <figcaption id="pFig">${bildtext2.value}</figcaption>
+          <figcaption id="pFig">${bildtext2?.value}</figcaption>
         </figure>
-        <div class="pParagraphContainer pPC3">${insertText(paragraf3.value)}</div>
+        <div class="pParagraphContainer pPC3">${insertText(paragraf3?.value)}</div>
         <hr>
         <div id="pTags">${insertTags()}</div>
-        `;
+        `)
+    : false;
 
   // REMOVES FIGURES
   const firstFig = document.querySelector('#pFig1');
@@ -106,28 +108,28 @@ function previewHTML() {
 
   // REMOVES NON NECESSARY TAGS
   void (function checkTextContent(...elements) {
-    const p2 = elements.forEach((el) => {
-      const pEl = preview.querySelector(el);
-      if (pEl.textContent) return;
-      pEl.remove();
+    const p2 = elements?.forEach((el) => {
+      const pEl = preview?.querySelector(el);
+      if (pEl?.textContent) return;
+      pEl?.remove();
     });
   })('q', '.pPC2', '.pPC3');
 
   // DISPLAYS TAGS
   function insertTags() {
-    const tagArray = taggar.value.match(/[A-ZÅÄÖa-zåäö\d]+/gi);
+    const tagArray = taggar?.value.match(/[A-ZÅÄÖa-zåäö\d]+/gi);
     if (!tagArray) return '';
     return tagArray.map((c) => `<a class="pTag" href="#">${c}</a>`).join('');
   }
 
   // PUTS ALL THE PARAGRAPH VALUES INSIDE LOCALSTORAGE FOR ACCESSIBILITY
-  localStorage.setItem('p1', insertText(paragraf1.value).replace(/\n/g, ''));
-  localStorage.setItem('p2', insertText(paragraf2.value).replace(/\n/g, ''));
-  localStorage.setItem('p3', insertText(paragraf3.value).replace(/\n/g, ''));
+  localStorage.setItem('p1', insertText(paragraf1?.value)?.replace(/\n/g, ''));
+  localStorage.setItem('p2', insertText(paragraf2?.value)?.replace(/\n/g, ''));
+  localStorage.setItem('p3', insertText(paragraf3?.value)?.replace(/\n/g, ''));
 }
 
 // SWAPPING IMAGES
-exchangeImg.addEventListener('click', (e) => {
+exchangeImg?.addEventListener('click', (e) => {
   e.preventDefault();
 
   previewImage1 = imgs[1].src;

@@ -1,5 +1,6 @@
 /* eslint-disable */
 
+// HIDE ELEMENTS
 if (window.location.href.at(-1) === '/') {
   main.style.display = 'none';
   userLogoContainer.style.display = 'none';
@@ -8,6 +9,7 @@ if (window.location.href.at(-1) === '/') {
   footer.lastElementChild.style.display = 'none';
 }
 
+// CONSTANTS
 const eyes = document.querySelectorAll('.eye');
 const leftEye = document.querySelector('.left-eye');
 const rightEye = document.querySelector('.right-eye');
@@ -17,6 +19,49 @@ const eyeBrows = document.querySelectorAll('.eyebrow');
 const nose = document.querySelector('.nose');
 const mouth = document.querySelector('.mouth');
 const body = document.querySelector('body');
+
+// LOGGING OUT
+if (window.location.href.at(-1) !== '/') {
+  const timeInit = 15 * 60;
+  let timeLeft = timeInit;
+
+  const logoutTimer = async () => {
+    const res = await fetch('/api/users/logout', {
+      method: 'GET',
+    });
+    const data = await res.json();
+    if (data.status === 'success') {
+      location.reload(true);
+      window.location.href = `/`;
+    }
+  };
+
+  setInterval(function () {
+    timeLeft -= 1;
+
+    if (timeLeft === 59) {
+      const dialog = document.createElement('dialog');
+      dialog.setAttribute('class', 'countdownDialog');
+      body.append(dialog);
+      dialog.insertAdjacentHTML('beforeend', `<p>${timeLeft}</p>`);
+      p.textContent = timeLeft;
+      dialog.showModal();
+    }
+    if (timeLeft < 60) {
+      const p = document.querySelector('dialog > p');
+      p.textContent = timeLeft;
+    }
+
+    if (timeLeft > 59) {
+      document.querySelector('dialog')?.remove();
+    }
+
+    if (timeLeft === 0) logoutTimer();
+  }, 1000);
+
+  document.addEventListener('mousemove', () => (timeLeft = timeInit));
+  document.addEventListener('input', () => (timeLeft = timeInit));
+}
 
 // UTILITY FUNCTIONS
 const setRootProperty = (name, value) => document.documentElement.style.setProperty(name, value);
@@ -180,7 +225,8 @@ const headMovement = function (e) {
   })();
 };
 
-mouth.addEventListener('click', function (e) {
+// ANIMATION ON MOUTH CLICK
+mouth?.addEventListener('click', function (e) {
   // EYELIDS
   eyeLids[0].style.rotate = '-5deg';
   eyeLids[1].style.rotate = '5deg';

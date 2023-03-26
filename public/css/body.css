@@ -137,3 +137,26 @@ body {
   flex-direction: column !important;
   align-items: center;
 }
+
+/* Countdown timer */
+
+.countdownDialog {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  inset: 50%;
+  transform: translate(-50%, -50%);
+  border-radius: 50%;
+  overflow: hidden;
+  aspect-ratio: 1/1;
+}
+
+.countdownDialog > p {
+  padding: 10rem;
+}
+
+.countdownDialog::backdrop {
+  z-index: 5;
+  background-color: orangered;
+  opacity: 75%;
+}
