@@ -10,6 +10,7 @@ if (window.location.href.at(-1) === '/') {
 }
 
 // CONSTANTS
+const headC = document.querySelectorAll('.head-container');
 const eyes = document.querySelectorAll('.eye');
 const leftEye = document.querySelector('.left-eye');
 const rightEye = document.querySelector('.right-eye');
@@ -161,9 +162,9 @@ const headMovement = function (e) {
   mouth.style.borderBottom = `${1 * hScale}px solid white`;
 
   const mouthListenerFactory = (source, target, listener, message = '', position = [13.65 * hScale, 8 * hScale]) => {
-    source.addEventListener(listener, (e) => {
-      target.nextElementSibling.remove();
-      mouthMessage(this, message);
+    source.addEventListener(listener, async (e) => {
+      await new Promise((res) => res(target.nextElementSibling.remove()));
+      await new Promise((res) => res(mouthMessage(this, message)));
       target.nextElementSibling.style.top = `${position[0]}rem`;
       target.nextElementSibling.style.left = `${position[1]}rem`;
     });
@@ -182,20 +183,21 @@ const headMovement = function (e) {
     console.log(data.status);
     if (data.status === 'success') {
       // EYES
-      mouthListenerFactory(leftEye, mouth, 'mouseover', 'inställningar', [13.8 * hScale, 7.55 * hScale]);
+      mouthListenerFactory(leftEye, mouth, 'mouseover', 'min sida', [13.8 * hScale, 8 * hScale]);
       mouthListenerFactory(rightEye, mouth, 'mouseover', 'artiklar', [13.8 * hScale, 8 * hScale]);
       mouthListenerFactory(leftEye, mouth, 'mouseout');
       mouthListenerFactory(rightEye, mouth, 'mouseout');
       leftEye.addEventListener('click', function () {
-        window.location.href = '/usermenu';
+        window.location.href = '/min-sida';
       });
       rightEye.addEventListener('click', function () {
         window.location.href = '/artiklar';
       });
 
       // EYEBALLS
-      eyeBalls[0].style.top = `${-0.75 * hScale}rem`;
-      eyeBalls[1].style.top = `${-0.75 * hScale}rem`;
+      eyeBalls[0].style.top = `${-0.8 * hScale}rem`;
+      eyeBalls[1].style.top = `${-0.85 * hScale}rem`;
+      eyeBalls[0].style.left = `${-0.03 * hScale}rem`;
       eyeBalls[0].style.fontSize = `${2.5 * hScale}rem`;
       eyeBalls[0].textContent = '⚙';
       eyeBalls[1].textContent = '📚︎';
@@ -214,8 +216,13 @@ const headMovement = function (e) {
 
       // EYEBALLS
       eyeBalls[0].style.fontSize = `${1.5 * hScale}rem`;
+      eyeBalls[1].style.fontSize = `${2 * hScale}rem`;
       eyeBalls[0].textContent = '?';
       eyeBalls[1].textContent = '+';
+      eyeBalls[0].style.webkitTextStrokeWidth = `${0.1 * hScale}rem`;
+      eyeBalls[1].style.webkitTextStrokeWidth = `${0.1 * hScale}rem`;
+      setRootProperty('--bad-color', 'rgba(255, 64, 0, 0.9)');
+      setRootProperty('--park-color', 'rgba(255, 64, 0, 0.9)');
 
       // MOUTH
       mouthMessage(this, 'åtkomst nekad!');
@@ -245,6 +252,7 @@ mouth?.addEventListener('click', function (e) {
       this.addEventListener('change', headMovement);
       setKeyframeProperty('leftEyeMovement', 'to', 'filter', 'drop-shadow(0 .1rem 0.25rem rgba(0, 0, 0, 0.5))');
       setKeyframeProperty('rightEyeMovement', 'to', 'filter', 'drop-shadow(0 .1rem 0.25rem rgba(0, 0, 0, 0.5))');
+      mouth.readOnly = false;
     }
   });
 });

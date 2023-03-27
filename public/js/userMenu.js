@@ -12,12 +12,12 @@ const userMenuLogoImg = document.querySelector('.logo-big.bytLogga');
 
 toUserMenu?.addEventListener('click', function (e) {
   e.preventDefault();
-  window.location.href = `/userMenu`;
+  window.location.href = `/min-sida`;
 });
 
 // USER MENU WITH BACK BUTTON
-if (window.location.href.includes('/userMenu')) {
-  document.querySelector('#art_header').textContent = 'användarmeny';
+if (window.location.href.includes('/min-sida')) {
+  document.querySelector('#art_header').textContent = 'min sida';
   document.querySelector('main').style.display = 'block';
   backFromMenu.textContent = ' 🖹';
   backFromMenu.addEventListener('click', () => (window.location.href = `/artiklar`));
@@ -28,7 +28,7 @@ if (window.location.href.includes('/mina-artiklar')) {
   document.querySelector('#art_header').textContent = 'mina artiklar';
   document.querySelector('main').style.display = 'block';
   backFromMenu.textContent = '←';
-  backFromMenu.addEventListener('click', () => (window.location.href = `/userMenu`));
+  backFromMenu.addEventListener('click', () => (window.location.href = `/min-sida`));
 }
 
 // UPDATE NAME, MAIL AND PASSWORD
@@ -54,7 +54,7 @@ const updateUserData = async (data, type) => {
         userMenuSubmitButton.textContent = `sparar${(dot += '.')}`;
       }, 250);
       setTimeout(function () {
-        window.location.href = `/userMenu`;
+        window.location.href = `/min-sida`;
       }, 2000);
     }
   } catch (e) {
@@ -62,7 +62,7 @@ const updateUserData = async (data, type) => {
         <h3 style="color: black; text-align: center; font-size: 2rem;">${e}</h3>
       `;
     setTimeout(function () {
-      window.location.href = `/userMenu`;
+      window.location.href = `/min-sida`;
     }, 2000);
   }
 };

@@ -41,7 +41,7 @@ exports.index = (req, res) => {
 
 exports.userMenu = (req, res) => {
   res.status(200).render('userMenu', {
-    title: 'Inställningar',
+    title: 'Min sida',
   });
 };
 

@@ -76,7 +76,7 @@ if (!window.location.href.includes('/ny-artikel')) {
       const { latitude, longitude } = e.coords;
       const coordinates = localStorage
         .getItem('coords')
-        .split(',')
+        ?.split(',')
         .map((el) => +el) || [latitude, longitude];
 
       const map = L.map('map', { zoomSnap: 0.25, minZoom: 2.75 }).setView(coordinates, 13);
@@ -167,16 +167,15 @@ if (window.location.href.includes('/ny-artikel') || window.location.href[window.
     const { latitude, longitude } = e.coords;
     const map = L.map('map', { zoomSnap: 0.25, minZoom: 2.75 }).setView([latitude, longitude], 13);
 
-    L.tileLayer('https://{s}.tile.openstreetmap.fr/hot/{z}/{x}/{y}.png', {
-      attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
-    }).addTo(map);
-
     if (window.location.href[window.location.href.length - 1] === '/') {
       L.tileLayer('https://stamen-tiles-{s}.a.ssl.fastly.net/toner-background/{z}/{x}/{y}.png', {
         attribution:
           'Map tiles by <a href="http://stamen.com">Stamen Design</a>, under <a href="http://creativecommons.org/licenses/by/3.0">CC BY 3.0</a>. Data by <a href="http://openstreetmap.org">OpenStreetMap</a>, under <a href="http://creativecommons.org/licenses/by-sa/3.0">CC BY SA</a>',
       }).addTo(map);
-    }
+    } else
+      L.tileLayer('https://{s}.tile.openstreetmap.fr/hot/{z}/{x}/{y}.png', {
+        attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
+      }).addTo(map);
 
     let previewMarker;
 

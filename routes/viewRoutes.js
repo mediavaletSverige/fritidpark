@@ -5,7 +5,7 @@ const authController = require('../controllers/authController');
 const router = express.Router();
 
 router.get('/', viewsController.index);
-router.get('/userMenu', authController.protect(false), viewsController.userMenu);
+router.get('/min-sida', authController.protect(false), viewsController.userMenu);
 router.get('/artiklar', authController.protect(false), viewsController.getArticles('all'));
 router.get('/mina-artiklar', authController.protect(false), viewsController.getArticles('my'));
 router.get('/artikel/:slug', authController.protect(false), viewsController.getArticle);

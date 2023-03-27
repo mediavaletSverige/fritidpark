@@ -197,12 +197,12 @@
   line-height: calc(20rem * var(--head-scale));
   border-radius: 50%;
   border-color: hsl(182, 53%, 87%);
-  caret-color: var(--fritid-color);
+  caret-color: var(--bad-color);
   color: var(--fritid-color);
   clip-path: circle(50%);
   transition: all 250ms;
   font-family: 'Titan One', cursive;
-  font-size: calc(1rem * var(--head-scale));
+  font-size: calc(0.5rem * var(--head-scale));
   animation: mouthMovement 2s Infinite alternate ease-in-out var(--head-animation-pause-state);
 }
 
@@ -222,6 +222,7 @@
 .mouth + p {
   position: absolute;
   width: calc(4rem * var(--head-scale));
+  top: calc(13.35rem * var(--head-scale));
   color: white;
   background: var(--bad-color);
   pointerevents: none;
