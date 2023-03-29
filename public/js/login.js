@@ -21,19 +21,19 @@ const nose = document.querySelector('.nose');
 const mouth = document.querySelector('.mouth');
 const body = document.querySelector('body');
 
+const logoutTimer = async () => {
+  const res = await fetch('/api/users/logout', {
+    method: 'GET',
+  });
+  const data = await res.json();
+  if (data.status === 'success') {
+    location.reload(true);
+    window.location.href = `/`;
+  }
+};
+
 // LOGGING OUT AFTER A CERTAIN TIME HAS PASSED
 if (window.location.href.at(-1) !== '/') {
-  const logoutTimer = async () => {
-    const res = await fetch('/api/users/logout', {
-      method: 'GET',
-    });
-    const data = await res.json();
-    if (data.status === 'success') {
-      location.reload(true);
-      window.location.href = `/`;
-    }
-  };
-
   const timeInit = 5 * 60;
   let timeLeft = timeInit;
 
@@ -65,20 +65,7 @@ if (window.location.href.at(-1) !== '/') {
 }
 
 // LOGGING OUT WHEN LEAVING PAGE
-const leavingPage = async (e) => {
-  alert('leaving so soon?');
-  await {
-    then: (res) =>
-      res(
-        fetch('/api/users/logout', {
-          method: 'GET',
-        })
-      ),
-  };
-  e.returnValue = '';
-};
-
-window.addEventListener('unload', leavingPage);
+window.addEventListener('unload', logoutTimer);
 
 // UTILITY FUNCTIONS
 const setRootProperty = (name, value) => document.documentElement.style.setProperty(name, value);
