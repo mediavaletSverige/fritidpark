@@ -1,16 +1,5 @@
 /* eslint-disable */
 
-//UTILITY FUNCTIONS
-function tryCatchConstant(constant) {
-  try {
-    if (!constant) throw new TypeError();
-    return constant;
-  } catch (err) {
-    err.message = `Constant for later use!`;
-    console.error(err.message);
-  }
-}
-
 //HTML CONSTANTS
 const top_menu_textContainer = document.getElementById('article_menu-top');
 const bottom_menu_textContainer = document.getElementById('article_menu-bottom');

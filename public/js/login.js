@@ -106,6 +106,17 @@ const mouthMessage = async function (el, text) {
   }
 };
 
+function eyeLoader() {
+  eyeBalls.forEach((eyeBall) => (eyeBall.innerHTML = '<div class="loader"><div></div><div></div></div>'));
+  const top = '.4rem';
+  const left = '.1rem';
+  [...arguments].forEach((el) => {
+    console.log(el);
+    document.querySelectorAll(el).forEach((el) => (el.style.top = top));
+    document.querySelectorAll(el).forEach((el) => (el.style.left = left));
+  });
+}
+
 // UTIITY FUNCTION VALUES
 const hScale = getRootProperty('--head-scale');
 
@@ -176,6 +187,8 @@ const headMovement = function (e) {
   // LOGGING IN
   const [email, password] = mouth.value.split(' ');
   (async () => {
+    eyeLoader('.loader', '.loader div', '.loader div + div');
+
     const res = await fetch(`/api/users/login`, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
@@ -183,7 +196,7 @@ const headMovement = function (e) {
     });
 
     const data = await res.json();
-    console.log(data.status);
+
     if (data.status === 'success') {
       // EYES
       mouthListenerFactory(leftEye, mouth, 'mouseover', 'min sida', [13.8 * hScale, 8 * hScale]);
@@ -224,8 +237,8 @@ const headMovement = function (e) {
       eyeBalls[1].textContent = '+';
       eyeBalls[0].style.webkitTextStrokeWidth = `${0.1 * hScale}rem`;
       eyeBalls[1].style.webkitTextStrokeWidth = `${0.1 * hScale}rem`;
-      setRootProperty('--bad-color', 'rgba(255, 64, 0, 0.9)');
-      setRootProperty('--park-color', 'rgba(255, 64, 0, 0.9)');
+      //setRootProperty('--bad-color', 'rgba(255, 64, 0, 0.9)');
+      //setRootProperty('--park-color', 'rgba(255, 64, 0, 0.9)');
 
       // MOUTH
       mouthMessage(this, 'åtkomst nekad!');
