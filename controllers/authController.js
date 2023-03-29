@@ -87,7 +87,6 @@ exports.protect = (arg = true) =>
     }
 
     // VERIFYING TOKEN
-
     const decoded = await Promise.resolve(jwt.verify(token, process.env.JWT_SECRET));
 
     // CHECKS IF USER STILL EXISTS

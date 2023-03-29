@@ -21,11 +21,8 @@ const nose = document.querySelector('.nose');
 const mouth = document.querySelector('.mouth');
 const body = document.querySelector('body');
 
-// LOGGING OUT
+// LOGGING OUT AFTER A CERTAIN TIME HAS PASSED
 if (window.location.href.at(-1) !== '/') {
-  const timeInit = 5 * 60;
-  let timeLeft = timeInit;
-
   const logoutTimer = async () => {
     const res = await fetch('/api/users/logout', {
       method: 'GET',
@@ -36,6 +33,9 @@ if (window.location.href.at(-1) !== '/') {
       window.location.href = `/`;
     }
   };
+
+  const timeInit = 5 * 60;
+  let timeLeft = timeInit;
 
   setInterval(function () {
     timeLeft -= 1;
@@ -63,6 +63,22 @@ if (window.location.href.at(-1) !== '/') {
   document.addEventListener('mousemove', () => (timeLeft = timeInit));
   document.addEventListener('input', () => (timeLeft = timeInit));
 }
+
+// LOGGING OUT WHEN LEAVING PAGE
+const leavingPage = async (e) => {
+  alert('leaving so soon?');
+  await {
+    then: (res) =>
+      res(
+        fetch('/api/users/logout', {
+          method: 'GET',
+        })
+      ),
+  };
+  e.returnValue = '';
+};
+
+window.addEventListener('unload', leavingPage);
 
 // UTILITY FUNCTIONS
 const setRootProperty = (name, value) => document.documentElement.style.setProperty(name, value);
