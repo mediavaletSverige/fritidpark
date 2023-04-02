@@ -1,14 +1,5 @@
 /* eslint-disable */
 
-// HIDE ELEMENTS
-if (window.location.href.at(-1) === '/') {
-  main.style.display = 'none';
-  userLogoContainer.style.display = 'none';
-  top_menu_textContainer.style.display = 'none';
-  bottom_menu_textContainer.style.display = 'none';
-  footer.lastElementChild.style.display = 'none';
-}
-
 // CONSTANTS
 const headC = document.querySelectorAll('.head-container');
 const eyes = document.querySelectorAll('.eye');
@@ -20,6 +11,15 @@ const eyeBrows = document.querySelectorAll('.eyebrow');
 const nose = document.querySelector('.nose');
 const mouth = document.querySelector('.mouth');
 const body = document.querySelector('body');
+
+// HIDE ELEMENTS
+if (window.location.href.at(-1) === '/') {
+  main.style.display = 'none';
+  userLogoContainer.style.display = 'none';
+  top_menu_textContainer.style.display = 'none';
+  bottom_menu_textContainer.style.display = 'none';
+  footer.lastElementChild.style.display = 'none';
+}
 
 const logoutTimer = async () => {
   const res = await fetch('/api/users/logout', {
@@ -89,6 +89,30 @@ const eyeShadowFactory = (eye, listener, shadow) => {
     );
 };
 
+function addPartners({ position, size, distance, partners }) {
+  const pivot = document.querySelector(`.${position === 'far' ? 'primary' : 'secondary'}-pivot-partners`);
+  const radius = pivot.offsetWidth / distance;
+  const angle = 360 / partners.length;
+  const _partner = `${position === 'far' ? 'primary' : 'secondary'}-partner`;
+  for (let i = 0; i < partners.length; i++) {
+    pivot.insertAdjacentHTML('beforeend', `<div class="${_partner}"><p>${partners[i]}</p></div>`);
+    const partner = document.querySelectorAll(`.${_partner}`)[i];
+    const animationDelay = position === 'far' ? 0.25 : 0.1;
+    partner.style.zIndex = -1;
+    partner.style.transform = `rotate(${i * angle}deg) translate(${radius}px) rotate(-${i * angle}deg)`;
+    partner.style.scale = size;
+    partner.style.opacity = '0';
+    partner.style.transition = `opacity 1s ${i}s`;
+    partner.style.animation = `partnersBounceOut 1s ease forwards ${i * animationDelay}s`;
+    setTimeout(() => (partner.style.opacity = '1'), 1);
+  }
+}
+
+function removePartners() {
+  document.querySelector('.primary-pivot-partners').style.opacity = '0';
+  setTimeout(() => (document.querySelector('.secondary-pivot-partners').style.opacity = '0'), 1000);
+}
+
 const mouthMessage = async function (el, text) {
   el.insertAdjacentHTML('afterend', `<p></p>`);
   const p = el.nextElementSibling;
@@ -116,6 +140,22 @@ function eyeLoader() {
     document.querySelectorAll(el).forEach((el) => (el.style.left = left));
   });
 }
+
+// ADD PARTNERS
+
+addPartners({
+  position: 'far',
+  size: 1,
+  distance: 0.275,
+  partners: ['kiwi', 'apple', 'orange', 'pear', 'banana', 'mango'],
+});
+
+addPartners({
+  position: 'near',
+  size: 0.75,
+  distance: 0.325,
+  partners: ['kiwi', 'apple', 'orange', 'pear', 'banana', 'mango'],
+});
 
 // UTIITY FUNCTION VALUES
 const hScale = getRootProperty('--head-scale');
@@ -269,6 +309,7 @@ mouth?.addEventListener('click', function (e) {
       setKeyframeProperty('leftEyeMovement', 'to', 'filter', 'drop-shadow(0 .1rem 0.25rem rgba(0, 0, 0, 0.5))');
       setKeyframeProperty('rightEyeMovement', 'to', 'filter', 'drop-shadow(0 .1rem 0.25rem rgba(0, 0, 0, 0.5))');
       mouth.readOnly = false;
+      removePartners();
     }
   });
 });

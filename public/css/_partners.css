@@ -1,0 +1,95 @@
+.primary-pivot-partners,
+.secondary-pivot-partners {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  margin: auto;
+  width: 10rem;
+  height: 10rem;
+  border-radius: 50%;
+  transition: all 1s;
+  z-index: 1;
+}
+
+.primary-pivot-partners {
+  position: absolute;
+  animation: primary-partner 600s Infinite;
+}
+
+.secondary-pivot-partners {
+  position: absolute;
+  animation: secondary-partner 600s Infinite;
+}
+
+@keyframes primary-partner {
+  to {
+    transform: rotate(1800deg);
+  }
+}
+
+@keyframes secondary-partner {
+  to {
+    transform: rotate(-1800deg);
+  }
+}
+
+.primary-partner,
+.secondary-partner {
+  box-sizing: border-box;
+  position: absolute;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: inherit;
+  height: inherit;
+  background: gray;
+  border-radius: 50%;
+  border: 1rem solid lightgray;
+  z-index: 1;
+}
+
+.primary-partner p {
+  color: white;
+  font-size: 2rem;
+  animation: primaryPartnerContent 600s Infinite;
+}
+
+.secondary-partner p {
+  color: white;
+  font-size: 1rem;
+  animation: secondaryPartnerContent 600s Infinite;
+}
+
+@keyframes primaryPartnerContent {
+  to {
+    transform: rotate(-1800deg);
+  }
+}
+
+@keyframes secondaryPartnerContent {
+  to {
+    transform: rotate(1800deg);
+  }
+}
+
+@keyframes partnersBounceOut {
+  0% {
+    transform: translate(0);
+    opacity: 0;
+  }
+  25% {
+    opacity: 0;
+  }
+}
+
+@keyframes partnersBounceIn {
+  0% {
+    transform: translate(0);
+    opacity: 1;
+  }
+  25% {
+    opacity: 0;
+  }
+}
